@@ -1,0 +1,122 @@
+概念  
+     git  工具，版本控制
+	
+     github  网站，社交平台，开源项目，远程仓库
+	 
+  图解
+    svn与git区别
+	  集成式
+	  分布式
+	  github作用
+	
+	github官网   http://github.com
+	
+  git 工具
+    window下载
+	可视化
+	命令行（推荐）
+	
+  建立一个库
+    drag 
+	git  clone  [url]
+	设置贡献者
+	  name
+	  email
+	  git  config -global  user.name
+	  git  config -global  user.email
+	  git  config -list
+	     查看所有的配置项
+ git
+   工作区
+   暂存区
+      作为过渡层
+	  避免误操作
+	  保护工作区和版本区
+	  分支处理
+   版本区（库）
+   
+  
+  git命令
+    git  status  查看状态
+	git  add    reset HEAD demo1.html  撤回工作区
+	  name
+	  .
+	git commit
+	  -m
+	  -a  添加到暂存区  -m  加注释
+	  
+	对比
+	  git  diff  工作区和缓存区的对比
+	  git  diff --cached (--staged) 缓存区和版本去的对比 
+	  git  diff master  工作区和版本区的对比
+	
+	撤销
+	  git reset HEAD <file.name>  暂存区撤销回工作区
+	  git checkout -- <file.name>   工作区撤回版本区
+	  git commit --amend   版本区
+	  
+	删除
+	  git rm <file.name>  删除缓存区在工作区没有的文件
+	  git rm -f <file.name>  删除缓存区和工作区的文件
+	  git rm --caches <file.name>  删除缓存区的文件
+	
+	恢复
+	  git checkout commit id <file.name>  还原工作区文件
+	  git reset --hard commit id  还原到某个版本
+	    HEAD^ 指针  git reset --hard HEAD^ 回到上一个个版本
+	    HEAD~<num>  git reset --hard HEAD~3 回到上三个版本
+	  git reflog  回到现在
+	
+	同步到远程仓库
+	  git remote
+	    -v
+		origin
+      git push origin master
+	  多人协作解决冲突
+	    git fetch  同步更新
+		   Git diff master origin/master
+		   Git merge origin/master
+		 git pull  远端合并到本地
+		 
+	开源项目协做
+	  fork
+	  pull request
+	  
+	Git分支
+	  git branch  查看分支  或创建分支
+	    -d   删除分支
+		--merged  查看此分支合并的分支
+		--no-merged  查看此分支未合并的分支
+      git checkout  转换分支
+	    -b   创建并转换到此分支
+	  git merge   合并分支
+	  
+	github上的分支
+	  git push
+	  github上直接创建
+	
+	github上的标签
+	  git tag
+	  github上直接创建
+	  
+	创建组织
+	  github上创建
+	
+	创建博客
+	  git上创建
+	  https://pages.github.com/
+	  注意格式的正确性
+	  
+	 如何深入
+	 技巧
+	 资源
+	   http://git.oschina.net/progit/
+	   http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
+	   
+	   mkdir hello  创建一个hello文件夹
+	   notepad hello  创建一个文本文件
+	   
+	   tab 键自动补全单词
+	   
+	   git config --global alias.co checkout  把checkout改为co
+	   git confij --list 查看列表
