@@ -1,0 +1,114 @@
+事件捕获
+  标准下给一个对象绑定一个事件处理函数的第一种形式
+	obj.onclick = fn1;
+  
+  注意：但是这种形式后面会覆盖前面的函数，不利于该对象绑定多个事件函数，会覆盖前面绑定fn1
+
+	
+	给一个对象的同一个事件绑定多个不同函数  第二种绑定函数
+	
+  在ie浏览器的低版本下使用obj.attachEvent(on+事件名称，事件函数)
+	  1 没有捕获
+	  2 事件有on  如obj('onclick',fn1)
+	  3 事件执行的顺序（低版本ie为反序序），
+	  4 this指向window 
+    
+  在标准下obj.addEventListener(事件名称，事件函数，是否捕获（默认false  ，false：冒泡，true：捕获）)
+	  1 有捕获
+	  2 事件无on 如obj.EventListener('click',fn1,false)
+	  3 事件执行的顺序（正序），
+	  4 this指向触发该事件的对象
+    
+  事件的取消
+    第一种形式
+      obj.onclick = null; 将obj下的点击事件函数赋值为空
+      
+    第二种形式
+      在低版本的ie下
+        obj.detachEvent(事件名称，事件函数)
+      标准浏览器下
+        obj.removeEventListener(事件名称，事件函数)
+        
+  然后总结兼容处理封组一个函数
+    
+    事件的绑定
+    function addbind(obj,event,fn){
+      if(obj.addEventListener){    // 标准下
+        obj.addEventListener(event,fn,false);
+      }else if(obj.attachEvent){   // 低版本ie下
+        obj.attachEvent('on'+event,fn);
+      }else{   // 什么都不支持下
+        obj['on'+event] = fn
+      }
+    }
+    
+    事件的解绑
+    function removebind(obj,event,fn){
+      if(obj.addEventListener){  // 标准下
+        obj.removeEventListener(event,fn,fasle);
+      }else if(obj.attachEvent){  // 低版本ie下
+        obj.detachEvent('on'+event,fn);
+      }else{  // 什么都不支持下
+        obj['on'+event] = null;
+      }
+    }
+    
+    但是ie低版本的修改this指向时，有可能无法解除绑定事件
+    如
+      obj1.attachEvent('onclick',function(){
+        change.call(obj1)
+      });
+  
+      obj2.onclick = function(){
+       obj1.detachEvent('onclick',change)
+      }
+  
+      function change(){
+        alert(this)
+      }  
+      此时无法解除obj1的事件，因为在obj1身上绑定的是一个无名的函数
+      
+    如果想要解除obj1身上的无名的函数，就必须给这个函数起一个名字
+    
+    如下面的绑定函数形式
+    
+     绑定
+     function addEvent(obj,event,fn){
+       if(obj.addEventListener){  // 标准下
+         obj['bind'+event] = obj['bind'+event]||{};
+         obj['bind'+event]['bind'+fn] = obj['bind'+event]['bind'+fn]||function(){
+           fn.call(obj)
+         }
+         obj.addEventListener(event,obj['bind'+event]['bind'+fn],false)
+       }else if(obj.attachEvent){  // 非标准下
+         obj['bind'+event] = obj['bind'+event] || {};
+	       obj['bind'+event]['bind'+fn] = obj['bind'+event]['bind'+fn]||function(){
+	         fn.call(obj)
+	       }
+         obj.attachEvent('on'+event,obj['bind'+event]['bind'+fn])
+       }else{  // 什么都不支持下
+         obj['on'+event] = fn;
+       }    
+     }
+  
+    解绑
+    function removebind(obj,event,fn){
+       if(obj.addEventListener){  // 标准下
+         if(obj['bind'+event]&&obj['bind'+event]['bind'+fn])
+          obj.removeEventListener(event,obj['bind'+event]['bind'+fn],false)
+         }         
+	     }else if(obj.attachEvent){  // 非标准下
+         if(obj['bind'+event]&&obj['bind'+event]['bind'+fn]){
+           obj.detachEvent('on'+event,obj['bind'+event]['bind'+fn])
+	       }
+       }else{  // 什么都不支持下
+         obj['on'+event] = null;
+       }        
+    }
+      
+      
+      
+      
+      
+      
+      
