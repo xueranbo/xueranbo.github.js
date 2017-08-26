@@ -106,9 +106,75 @@
        }        
     }
       
+  
+  事件的冒泡：当一个元素接受到事件的时候，会把他接受的所有传播到给他的父级，直到传到window
+  
+  事件委托：事件委托就是利用冒泡的原理，把事件加到父元素或祖先元素上，触发执行效果。
+     优点：
+            1、提高性能。事件委托可以显著的提高事件的处理速度，减少内存的占用。  
+	    
+	    <ul id="ul1">
+	      <li id="li1"></li>  // 多个li子项
+	    </ul>
+	    
+	    var oul = document.getElementById('ul1')
+	    var oli = oul.getElementById('li1');
+	    
+	    oul.addEventListener('click',function(ev){
+	      var ev = ev||event;
+	      var target = ev.target||ev.srcElement;   // 此处为获取触发该事件的事件源  srcElement为ie下
+	      
+	      if(target == oli ){
+	        alert(1)
+	      }
+	      
+	      // 或者
+	      
+	      if(target.nodeName.toLowerCase() == 'li'){
+	        alert(2)
+	      }
+	      
+	    },false)
       
+           2  新添加元素继承父级的事件，传统的绑定形式再使用createElement创建新的元素时，新创建的元素无绑定事件。
+  
+   
+   阻止冒泡事件
+      事件冒泡、事件捕获阻止：
+         event.stopPropagation();      // 阻止事件的进一步传播，包括（冒泡，捕获），无参数
+         event.cancelBubble = true;             // true 为阻止冒泡
       
+ 
+
+   阻止默认事件：
+
+      1 return false  //（通过on这种方式）绑定的事件的默认事件
+
+         obj.onclick = function() {
+           ……                         
+           return false       // 通过返回false值阻止默认事件行为
+         }
+	 
+	 如阻止右键事件 oncontextmenu : 右键菜单事件，当右键菜单（环境菜单）显示出来的时候触发；
+  
+           document.oncontextmenu = function(){
+             return false;
+           }
+	 
+      2 event.preventDefault()  // 阻止通过 addEventListener() 添加的事件的默认事件
+
+         obj.addEventListener("click", function(ev){
+            var ev = ev || window.event
+            ……
+            ev.preventDefault()      // 阻止默认事件
+        }, false)
+	
+      3 event.returnValue = false  //  阻止通过 attachEvent() 添加的事件的默认事件
       
-      
-      
+          obj.attachEvent("onclick", function(ev){
+             var ev = ev || window.event;
+             ……
+             ev.returnValue = false;       // 阻止默认事件
+          },false); 
+	  
       
