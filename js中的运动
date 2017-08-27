@@ -1,0 +1,370 @@
+
+// js中的运动
+  // 一 速度版的运动 
+   // 首先获取元素的样式
+     function getstyle(obj, attr){
+       return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj, false)[attr]
+     }
+
+   // 1 普通的运动
+
+   function domove(target){
+     var odiv = document.getElementById('div');
+     clearInterval(odiv.timer);
+     odiv.timer = setInterval(function(){
+        var speen = 0;
+
+        if(odiv.offsetLeft < target){
+            speen = 10;
+        }else{
+            speen = -10;
+        }
+
+        if(odiv.offsetLeft>target){
+            clearInterval(odiv.timer);
+        }else{
+            odiv.style.left = odiv.offsetLeft + speen +'px';
+        }
+     },30);
+   }
+
+    // 2 缓冲运动
+
+       // 缓冲公式:
+         // var 速度 = (目标点 - 当前值)/系数;
+         // 速度取整
+
+      function startMove(obj, json, fn) {
+        clearInterval(obj.iTimer);
+        var iCur = 0;
+        var iSpeed = 0;
+
+        obj.iTimer = setInterval(function() {
+
+          var iBtn = true;
+
+           for ( var attr in json ) {
+
+              var iTarget = json[attr];
+
+              if (attr == 'opacity') {
+                 iCur = Math.round(css( obj, 'opacity' ) * 100);
+              } else {
+                 iCur = parseInt(css(obj, attr));
+              }
+
+              iSpeed = ( iTarget - iCur ) / 8;
+              iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+
+              if (iCur != iTarget) {
+                 iBtn = false;
+                 if (attr == 'opacity') {
+                    obj.style.opacity = (iCur + iSpeed) / 100;
+                    obj.style.filter = 'alpha(opacity='+ (iCur + iSpeed) +')';
+                 } else {
+                    obj.style[attr] = iCur + iSpeed + 'px';
+                 }
+              }
+
+           }
+
+           if (iBtn) {
+              clearInterval(obj.iTimer);
+              fn && fn.call(obj);
+           }
+
+        }, 30);
+      }
+
+    // 3 弹性运动
+
+    // 弹性公式:
+
+      // 速度 += (目标点 - 当前值)/系数;  //6 , 7 , 8
+      // 速度 *= 摩擦系数;   // 0.7 0.75
+
+    function startMove(){
+      clearInterval(timer);
+      timer = setInterval(function(){
+        iSpeed += (500 - oDiv.offsetLeft)/6;
+        iSpeed *= 0.75;
+
+        if( Math.abs(iSpeed)<=1 && Math.abs(500 - oDiv.offsetLeft)<=1 ){
+            clearInterval(timer);
+            oDiv.style.left = '500px';
+            iSpeed = 0;
+        }
+        else {
+            oDiv.style.left = oDiv.offsetLeft + iSpeed + 'px';
+        }
+      },30);
+    }
+
+    // 4 碰撞运动
+        // 当一个物体运动碰到边界时，物体回弹的效果
+
+   var oDiv = document.getElementById('div1');
+
+   var disX = 0;
+   var disY = 0;
+
+   var prevX = 0;
+   var prevY = 0;
+   var iSpeedX = 0;
+   var iSpeedY = 0;
+
+   var timer = null;
+
+   oDiv.onmousedown = function(ev){
+     var ev = ev || window.event;
+     disX = ev.clientX - oDiv.offsetLeft;
+     disY = ev.clientY - oDiv.offsetTop;
+
+     prevX = ev.clientX;
+     prevY = ev.clientY;
+
+     document.onmousemove = function(ev){
+          var ev = ev || window.event;
+          oDiv.style.left = ev.clientX - disX + 'px';
+          oDiv.style.top = ev.clientY - disY + 'px';
+
+          iSpeedX = ev.clientX - prevX;
+          iSpeedY = ev.clientY - prevY;
+          prevX = ev.clientX;
+          prevY = ev.clientY;
+
+        };
+        document.onmouseup = function(){
+          document.onmousemove = null;
+          document.onmouseup = null;
+          startMove();
+        };
+        return false;
+     };
+
+     function startMove(){
+        clearInterval(timer);
+        timer = setInterval(function(){
+
+          iSpeedY += 3;
+
+          var L = oDiv.offsetLeft + iSpeedX;
+          var T = oDiv.offsetTop + iSpeedY;
+
+          if(T>document.documentElement.clientHeight - oDiv.offsetHeight){
+             T = document.documentElement.clientHeight - oDiv.offsetHeight;
+             iSpeedY *= -1;
+             iSpeedY *= 0.75;
+             iSpeedX *= 0.75;
+          }
+          else if(T<0){
+             T = 0;
+             iSpeedY *= -1;
+             iSpeedY *= 0.75;
+          }
+
+          if(L>document.documentElement.clientWidth - oDiv.offsetWidth){
+             L = document.documentElement.clientWidth - oDiv.offsetWidth;
+             iSpeedX *= -1;
+             iSpeedX *= 0.75;
+          }
+          else if(L<0){
+             L = 0;
+             iSpeedX *= -1;
+             iSpeedX *= 0.75;
+          }
+
+          oDiv.style.left = L + 'px';
+          oDiv.style.top = T + 'px';
+
+        },30);
+     }
+     
+     
+  // 二 时间版的运动
+  /*
+   Tween  一个来自falash的运算算法
+
+		 t：current timer（当前时间）
+		 b：beginning value（初始值）
+		 c：change in value（变化量）
+		 d:duration（持续时间）
+		 reutrn （目标点）
+   */
+
+  //  Tween 的算法
+  var Tween = {
+    linear: function (t, b, c, d){  //匀速
+        return c*t/d + b;
+    },
+    easeIn: function(t, b, c, d){  //加速曲线
+        return c*(t/=d)*t + b;
+    },
+    easeOut: function(t, b, c, d){  //减速曲线
+        return -c *(t/=d)*(t-2) + b;
+    },
+    easeBoth: function(t, b, c, d){  //加速减速曲线
+        if ((t/=d/2) < 1) {
+            return c/2*t*t + b;
+        }
+        return -c/2 * ((--t)*(t-2) - 1) + b;
+    },
+    easeInStrong: function(t, b, c, d){  //加加速曲线
+        return c*(t/=d)*t*t*t + b;
+    },
+    easeOutStrong: function(t, b, c, d){  //减减速曲线
+        return -c * ((t=t/d-1)*t*t*t - 1) + b;
+    },
+    easeBothStrong: function(t, b, c, d){  //加加速减减速曲线
+        if ((t/=d/2) < 1) {
+            return c/2*t*t*t*t + b;
+        }
+        return -c/2 * ((t-=2)*t*t*t - 2) + b;
+    },
+    elasticIn: function(t, b, c, d, a, p){  //正弦衰减曲线（弹动渐入）
+        if (t === 0) {
+            return b;
+        }
+        if ( (t /= d) == 1 ) {
+            return b+c;
+        }
+        if (!p) {
+            p=d*0.3;
+        }
+        if (!a || a < Math.abs(c)) {
+            a = c;
+            var s = p/4;
+        } else {
+            var s = p/(2*Math.PI) * Math.asin (c/a);
+        }
+        return -(a*Math.pow(2,10*(t-=1)) * Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+    },
+    elasticOut: function(t, b, c, d, a, p){    //正弦增强曲线（弹动渐出）
+        if (t === 0) {
+            return b;
+        }
+        if ( (t /= d) == 1 ) {
+            return b+c;
+        }
+        if (!p) {
+            p=d*0.3;
+        }
+        if (!a || a < Math.abs(c)) {
+            a = c;
+            var s = p / 4;
+        } else {
+            var s = p/(2*Math.PI) * Math.asin (c/a);
+        }
+        return a*Math.pow(2,-10*t) * Math.sin( (t*d-s)*(2*Math.PI)/p ) + c + b;
+    },
+    elasticBoth: function(t, b, c, d, a, p){
+        if (t === 0) {
+            return b;
+        }
+        if ( (t /= d/2) == 2 ) {
+            return b+c;
+        }
+        if (!p) {
+            p = d*(0.3*1.5);
+        }
+        if ( !a || a < Math.abs(c) ) {
+            a = c;
+            var s = p/4;
+        }
+        else {
+            var s = p/(2*Math.PI) * Math.asin (c/a);
+        }
+        if (t < 1) {
+            return - 0.5*(a*Math.pow(2,10*(t-=1)) *
+                Math.sin( (t*d-s)*(2*Math.PI)/p )) + b;
+        }
+        return a*Math.pow(2,-10*(t-=1)) *
+            Math.sin( (t*d-s)*(2*Math.PI)/p )*0.5 + c + b;
+    },
+    backIn: function(t, b, c, d, s){     //回退加速（回退渐入）
+        if (typeof s == 'undefined') {
+            s = 1.70158;
+        }
+        return c*(t/=d)*t*((s+1)*t - s) + b;
+    },
+    backOut: function(t, b, c, d, s){
+        if (typeof s == 'undefined') {
+            s = 3.70158;  //回缩的距离
+        }
+        return c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b;
+    },
+    backBoth: function(t, b, c, d, s){
+        if (typeof s == 'undefined') {
+            s = 1.70158;
+        }
+        if ((t /= d/2 ) < 1) {
+            return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
+        }
+        return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
+    },
+    bounceIn: function(t, b, c, d){    //弹球减振（弹球渐出）
+        return c - Tween['bounceOut'](d-t, 0, c, d) + b;
+    },
+    bounceOut: function(t, b, c, d){
+        if ((t/=d) < (1/2.75)) {
+            return c*(7.5625*t*t) + b;
+        } else if (t < (2/2.75)) {
+            return c*(7.5625*(t-=(1.5/2.75))*t + 0.75) + b;
+        } else if (t < (2.5/2.75)) {
+            return c*(7.5625*(t-=(2.25/2.75))*t + 0.9375) + b;
+        }
+        return c*(7.5625*(t-=(2.625/2.75))*t + 0.984375) + b;
+    },
+    bounceBoth: function(t, b, c, d){
+        if (t < d/2) {
+            return Tween['bounceIn'](t*2, 0, c, d) * 0.5 + b;
+        }
+        return Tween['bounceOut'](t*2-d, 0, c, d) * 0.5 + c*0.5 + b;
+    }
+  }
+
+  //获取当前时间
+   function now(){
+     return (new Date()).getTime();
+   }
+
+   // 封装一个函数
+   function domove(obj,json,times,fx,fn){
+
+     var ic = {};
+     for(var attr in json){
+        ic[attr] = 0;
+
+        if(attr == 'opacity'){
+            ic[attr] =  Math.round(getstyle(obj,attr)*100);
+        }else{
+            ic[attr] = parseInt(getstyle(obj,attr));
+        }
+     };
+
+     var startime = now();
+
+     clearInterval(obj.timer)
+     obj.timer = setInterval(function(){
+
+        var changetime = now();
+        var t = times - Math.max(0,startime - changetime + times);
+
+        for(var attr in json){
+            var value = Tween[fx](t,ic[attr],json[attr]-ic[attr],times);
+
+            if(attr == 'opacity'){
+                obj.style.opacity = value/100;
+                obj.style.filter = 'alpha(opacity:'+value+')';
+            }else{
+                obj.style[attr] = value + 'px';
+            }
+        }
+
+        if(t == times){
+            clearInterval(obj.timer);
+            fn&&fn.call(obj);
+        }
+
+     } ,13);
+   }
