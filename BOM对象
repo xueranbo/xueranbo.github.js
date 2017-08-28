@@ -1,0 +1,116 @@
+/*
+   BOM  Browser Object Model  浏览器对象模型
+ */
+var alnp = document.getElementsByTagName('input');
+var opener = null;
+
+/* window.
+  DOM Window (重点)---它是整个js的顶层对象. window代表一个浏览器窗口或者一个框架 frameset iframe
+  open(页面的地址url，打开的方式)方法 打开一个新的窗口
+  _self 本地打开窗口
+  如果url为空，则默认打开一个空白页面
+  如果第二个参数为空，默认新窗口打开
+   返回值：返回新打开的窗口的window对象
+
+  parent 父窗口
+  top 顶层窗口
+  opener 找开的窗口
+  frames[]
+*/
+
+alnp[0].onclick = function(){
+    //window.open('http://www.baidu.com','_self');
+    opener = window.open();
+
+    opener.document.body.style.background = 'red';
+}
+
+/*
+ close() 方法  关闭窗口
+*/
+alnp[1].onclick = function(){
+    window.close();
+    /*
+      ff 无妨关闭
+      chrome 直接关闭
+      ie  提示关闭
+    */
+}
+
+alnp[2].onclick = function(){
+    opener.close();
+
+    /*
+     可以关闭在本地窗口中打开的新窗口
+    */
+}
+
+/*
+  DOM Navigator -----浏览器信息
+  window.navigator.userAgent  浏览器信息
+
+*/
+var userAgent = window.navigator.userAgent;
+if(userAgent.indexOf('MSIE') !=-1&&userAgent.indexOf("compatible") > -1 ){
+    alert('我是IE')  // 判断是不是IE
+}else{
+    alert('我不是Ie')
+}
+if (userAgent.indexOf('Opera')>-1) {
+    return "Opera"
+}; //判断是否Opera浏览器
+if (userAgent.indexOf("Firefox") > -1) {
+    return "FF";
+} //判断是否Firefox浏览器
+if (userAgent.indexOf("Chrome") > -1){
+    return "Chrome";
+}
+if (userAgent.indexOf("Safari") > -1) {
+    return "Safari";
+} //判断是否Safari浏览器
+
+
+
+/*
+ window.loaction  浏览地址信息
+*/
+
+//alert(window.loaction);
+
+//window.location (重点) ---关于url信息 href 它可以完成超链接任务.
+
+//window.loaction.href:  url
+
+
+//window.loaction.search  : url?后面的内容
+
+//window.loaction.hash  :  url#后面的内容
+
+//DOM History (次重点)---它是记录的浏览记录 go()
+
+//window.Screen ---------关于屏幕像素点操作
+
+/*
+ 可视区的尺寸
+ document.documentElement.clientWidth
+ document.documentElement.clientHeight
+
+ 滚动距离
+ document.documentElement.scrollTop[left]
+
+ 内容高度
+ document.body.scrollHeight
+
+ 文档高度
+ document.documentElement.offsetHeight
+ docuemnt.body.offsetHeight ie下兼容
+
+ onscroll;当滚动条滚动的时候除法
+ onresize;当窗口大小发生改变的时候触发 */
+
+// 定时器
+  setTimeout(函数, 频率（毫秒）)  //一次性定时器 只执行一次
+  setInterval(函数， 频率（毫秒）) // 周期性定时器，按照设置的时间周期性触发
+  clearTimeout  clearInterval()   //清除定时器
+
+  注意： 当定时器停止时，一定要把定时器清除掉。
