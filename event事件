@@ -1,0 +1,87 @@
+/*
+  焦点：能够使浏览器区分用户输入对象，当一个元素有交点的时候，那么他就可以是用户的输入
+  我们可以通过一些方式给元素设置焦点
+  1  点击
+  2  tab
+  3  js
+
+  不是所有的元素都能够接受焦点的，能够响应用户操作的元素
+
+  onfocus:当用户获取到焦点的时候触发
+  onblur:当元素失去焦点时触发
+*/
+
+var otext = document.getElementById('inp1');
+var otext1 = document.getElementById('inp2');
+
+otext.onfocus = function(){
+    if(this.value == '请输入内容'){
+        this.value = '';
+    }
+}
+otext.onblur = function(){
+    if(this.value == ''){
+        this.value = '请输入内容';
+    }
+}
+
+/*
+  obj.focus() 方法  给指定的元素设置焦点
+  obj.blur()  方法  取消指定元素的焦点
+  obj.select()    选择指定的元素的内容
+
+*/
+otext.focus();
+
+otext1.onclick = function(){
+    otext.select();
+}
+
+/*
+ event事件对象，当一个事件发生的时候和当前这个对象发生的这个事件有关的一些详细的信息都会被临时保存到一个指定的地方event对象，供我们在需要的调用。
+ 兼容
+ ie/chrome event是一个内置全局对象；直接调用没有事件发生就是未定义
+事件对象必须在一个事件发生后调用
+
+标准下  事件对象是通过事件函数的第一个参数传入
+如果一个函数是被事件调用的，那么这个函数定义的第一个参数就是事件对象
+*/
+document.onclick = function(){
+    fn1();
+}
+
+function fn1(ev){
+    //alert(ev)
+    var ev = ev||event;
+
+    /*for(var attr in ev){
+      console.log(attr+'='+ev[attr])
+    }*/
+    //alert(ev.clientX +','+ ev.clientY)
+}
+
+//clientX[Y];当一个事件发生时候，鼠标到页面可视区的距离
+
+//onmousemove:当鼠标在一个元素上面移动的时候触发
+//触发的频率是间隔时间，在一个指定时间内（很短），如果鼠标的位置和上一次的位置发生变化，那么就会触发一次
+
+/*
+    键盘事件
+
+	onkeydown：当键盘按键按下的时候触发
+	onkeyup  ：当键盘按键抬起的时候触发
+
+	event.keyCode: 数字类型  键盘按键的值  键值
+	  ctrlKey,shiftKey,altKey 布尔值
+	  如果当一个事件发生的时候，如果ctrl ||shift||alt 是按下的状态，返回true，否则返回false；
+  */
+
+document.onkeydown = function(ev){
+    var ev = en||event;
+    //alert(ev.keyCode);
+}
+
+document.onclick = function(ev){
+    var ev= ev||event;
+    //alert(ev.ctrlkey);
+}
