@@ -1,0 +1,59 @@
+面向对象： 
+   面向对象的语言有一个标志，即拥有类的概念，抽象实例对象的公共属性与方法，基于类可以创建任意多个实例对象，一般具有封装、继承、多态的特性！但JS中对象
+与纯面向对象语言中的对象是不同的，ECMA标准定义JS中对象：无序属性的集合，其属性可以包含基本值、对象或者函数。可以简单理解为JS的对象是一组无序的值，
+其中的属性或方法都有一个名字，根据这个名字可以访问相映射的值（值可以是基本值/对象/方法）。
+
+创建面向对像
+
+构造函数模式
+  function Person(name,age,job){
+    this.name = name;
+    this.age = age;
+    this.job = job;
+    this.getName = function () {
+        return this.name;
+    }
+  }
+  var p = new Person('bob', 22, '前端');
+
+  var p = new Person('myreey', 23, '设计');
+ 
+  
+ 
+
+prototype  原型下属性  使用new操作符来创建原型下的实例
+
+ function fn(name,age,job){
+   this.name = name;
+   this.age = age;
+ }
+ 
+ fn.prototype.sex = 'man';
+ 
+ fn.prototype.getsex = function(){
+   return this.sex;
+ }
+ 
+ var a = new fn();
+ 
+ alert(a.getsex())  // man
+ 
+组合构造函数及原型模式
+function fn(name, age, job) {
+    this.name = name;
+    this.age = age;
+    this.job = job;
+    this.lessons = ['mat', 'phy'];
+}
+fn.prototype = {
+    constructor: fn,//原型字面量方式会将对象的constructor变为Object，此外强制指回Person
+    getname: function () {
+        return this.name;
+    }
+}
+var fn1 = new fn('bob', 22, '前端);
+fn1.lessons.push('byma');
+var person2 = new fn('mahca', 29, 'js');
+alert(fn1.lessons);//mat,phy,byma
+alert(fn2.lessons);//mat,phy
+alert(fn1.getname === fn2.getname); //true,//共享原型中定义方法
