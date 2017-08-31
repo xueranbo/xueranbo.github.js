@@ -1,0 +1,137 @@
+
+// 拖拽组件
+
+window.onload = function(){
+   var d1 = new drag();
+   d1.init({ //配置参数
+     id:'div1'
+   });
+   var d2 = new drag();
+   d2.init({
+     id:'div2',
+	 todown:function(){
+       document.title = 'hello';
+     }
+   });
+   var d3 = new drag();
+   d3.init({
+     id:'div3',
+	 todown:function(){
+       document.title = '秒伟';
+     },
+	 toup:function(){
+       document.title = '课堂';
+   }
+   });
+   var d4 = new drag();
+   d4.init({
+     id:'div4',
+	 toup:function(){
+       document.title = 'byebye';
+     }
+   });
+ }
+function drag(){
+   this.obj = null;
+   this.disx = 0;
+   this.dixy = 0; 
+   this.settings = { //默认参数
+     todown:function(){},
+	 toup:function(){}
+   } 
+ }
+ 
+ drag.prototype.init = function(opt){
+   this.obj = document.getElementById(opt.id);
+   extend(this.settings,opt);
+   var This = this;
+   this.obj.onmousedown = function(ev){
+     var ev = ev||event;
+	 This.fndown(ev);
+	 //todown&&
+	 This.settings.todown();
+	 document.onmousemove = function(ev){
+       var ev = ev||event;
+	   This.fnmove(ev)
+     } 
+     document.onmouseup = function(){
+	   This.fnup();
+	   This.settings.toup();
+	 }
+	 return false;
+   }
+   
+ }
+ 
+ drag.prototype.fndown = function(ev){
+   this.disx = ev.clientX - this.obj.offsetLeft;
+   this.disy = ev.clientY - this.obj.offsetTop;   
+ }
+ 
+ drag.prototype.fnmove = function(ev){
+   this.obj.style.left = ev.clientX - this.disx + 'px';
+   this.obj.style.top = ev.clientY - this.disy + 'px';
+ }
+ 
+ drag.prototype.fnup = function(){
+   document.onmousemove = document.onmouseup = null;
+ }
+ 
+ function extend(obj1,obj2){
+   for(var attr in obj2){
+     obj1[attr] = obj2[attr];
+   };
+ }
+ 
+ // 选项卡组件
+ window.onload = function(){
+    var t1 = new Tab('div1');	
+	t1.init();
+	
+	var t2 = new Tab('div2');	
+	t2.init();
+	t2.autoplay();
+  }
+  
+  function Tab(id){
+    this.opar = document.getElementById(id);
+    this.alnp = this.opar.getElementsByTagName('input');
+    this.adiv = this.opar.getElementsByTagName('div');
+	this.inow = 0;
+  }
+  
+  Tab.prototype.init = function(){
+    var This = this;
+    for(var i=0;i<this.alnp.length;i++){
+      this.alnp[i].index = i;
+      this.alnp[i].onclick = function(){
+	    This.change(this);
+	  }
+    } 
+  }
+  
+  Tab.prototype.change = function(obj){
+    for(var i=0;i<this.alnp.length;i++){
+	  this.alnp[i].className = '';
+	  this.adiv[i].style.display = 'none';
+    } 
+	obj.className = 'active';
+	this.adiv[obj.index].style.display = 'block';
+  }
+  
+ Tab.prototype.autoplay = function(){
+   var This = this;
+   var timer = setInterval(function(){
+     if(This.inow == This.alnp.length-1){
+	   This.inow = 0;
+	 }else{
+       This.inow ++;
+	 }
+	 for(var i=0;i<This.alnp.length;i++){
+	   This.alnp[i].className = '';
+	   This.adiv[i].style.display = 'none';
+     } 
+	 This.alnp[This.inow].className = 'active';
+	 This.adiv[This.inow].style.display = 'block';
+   },1000);
+ }
