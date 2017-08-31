@@ -57,3 +57,461 @@ var person2 = new fn('mahca', 29, 'js');
 alert(fn1.lessons);//mat,phy,byma
 alert(fn2.lessons);//mat,phy
 alert(fn1.getname === fn2.getname); //true,//共享原型中定义方法
+
+
+
+    javascript面向对象
+	 什么是面向对象编程
+	   用对象的思想写代码，就是面向对象编程
+	     -过程式写法
+		 -面向对象写法
+	  我们一直都在使用对象
+	     数组Array  时间 Date
+	 面向对象编程（OOP）的特点
+	   抽象：抓住核心问题
+	   封装：只能通过对象来访问方法
+	   继承：从已有对象上继承出新的对象
+	   多态：多对象的不同的形态
+	 
+	 对象的组成
+	   方法（行为，操作）-函数：过程。动态的
+	   属性-变量：状态，静态的
+	 创建第一个面向对像程序
+	   为对象添加属性和方法
+	     - object 对象
+		 - this 指向
+		 - 创建两个对象：重复代码过多
+  */
+  var arr = [];
+  arr.num = 10;//对象下面的变量：叫做对象的属性
+  //alert(arr.num) 
+  
+  arr.test = function(){ //对象方法线下面的函数：叫做对象的方法
+    //alert(1);
+  }
+  arr.test();
+  
+  var obj = new Object(); //创建一个空的对象
+  obj.name = '小明';
+  obj.showName = function(){
+    //this
+    //alert(this.name);
+  }
+  
+  obj.showName();
+  
+  var obj2 = new Object(); //创建一个空的对象
+  obj2.name = '小强';
+  obj2.showName = function(){
+    //this
+    //alert(this.name);
+  }
+  
+  obj2.showName();
+  
+  /*
+   工厂方式（封装函数）
+     面向对象中的封装函数
+	 改变成系类似写法
+	   首字母大写
+	   New关键字提取
+	   This指向为新创建的对象
+	 构造函数
+	   用来创建对象的函数，叫做构造函数
+	 存在的问题
+	   对象的引用
+	   浪费内存
+  */
+  
+  function  createPerson(name){
+    var obj = new Object();
+	obj.name = name;
+	obj.showName = function(){
+	  //alert(this.name);
+	}
+	return obj;
+  }
+  var p1 = createPerson('小明');
+  var p2 = createPerson('小强');
+  p1.showName();
+  p2.showName();
+  
+  function  createPerson(name){ 
+	this.name = name;
+	this.showName = function(){
+	  //alert(this.name);
+	}
+  }
+  var p1 = new CreatePerson('小明');
+  var p2 = new CreatePerson('小强');
+  p1.showName();
+  p2.showName();
+  
+  //alert(p1.showName == p2.showName); //false;
+  
+  /*
+   当new去调用一个函数：这个时候函数中的this就是创建出来的对象，而且函数的返回值直接就是this（隐式返回）；
+   new后面调用的函数
+  */
+  
+  /*
+    var a = [1,2,3];
+	var b = [1,2,3];
+	
+	alert(a == b);  //false;
+	
+	var a = 5;
+	var b = a;
+	b+=3;
+	alert(a)//5
+	alert(b)//8   基本类型 ：赋值的时候只是值得复制
+	
+	var a = [1,2,3];
+	var b = a;
+	b.push(4);
+	alert(b); //[1,2,3,4]
+	alert(a); //[1,2,3,4] 对象类型：赋值的时候不仅是值得复制，而且也是引用的传递；
+	
+	var a = [1,2,3];
+	var b = a;
+	b = [1,2,3,4];
+	alert(b) //[1,2,3,4]
+	alert(a) //[1,2,3]
+	
+	var a = 5;
+	var b = 5;
+	alert(a==b)//true; 基本类型：值相同就可以；
+	
+	var a = [1,2,3];
+	var b = [1,2,3];
+	
+	var (a==b);// false  对象类型：值和引用都相同才行
+	
+	var a = [1,2,3];
+	var b = a;
+	alert(a == b);//true;
+	
+	
+  */
+  
+  /*
+    原型 ：去改写对象下面的方法或者属性，让公用的方法或属性在内存中存在一份（提高性能）；
+	原型：css中的class
+	普通方法：css中style
+	
+	原型 ：prototype ： 要写在构造函数的下面
+  */
+  
+  var arr  = [1,2,3,4,5];
+  var arr2 = [2,2,2,2,2];
+  arr.sum = function(){
+    var result = 0;
+	for(var i=0;i<this.length;i++){
+	  result += this[i];
+	}
+	return result;
+  }
+  arr2.sum = function(){
+    var result = 0;
+	for(var i=0;i<this.length;i++){
+	  result += this[i];
+	}
+	return result;
+  }
+ // alert(arr.sum()); //15
+ // alert(arr2.sum()); //10
+ 
+ var arr  = [1,2,3,4,5];
+ var arr2 = [2,2,2,2,2];
+ Array.prototype.sum = function(){
+   var result = 0;
+	for(var i=0;i<this.length;i++){
+	  result += this[i];
+	}
+	return result;
+ }
+ //alert(arr.sum);
+ //alert(arr2.sum);
+ 
+ var arr = [];
+ arr.number = 10;
+ Array.prototype.number = 20;
+ alert(arr.number);//10
+ 
+ /*
+   原型下的函数
+    概念
+	  重新对象方法，让相同方法在内存中存在一份（提高性能）
+	学习原型
+	  类比：css中class
+	通过原型改写工厂方式
+	  原则
+	    》》相同的属性和方法可以加载原型上
+		》》混合的编程模式
+	总结面向对象写法
+	  构造函数加属性，原型加方法
+	  
+ */
+ 
+ function  CreatePerson(name){ 
+	this.name = name;
+  }
+  CreatePerson.prototype.showName = function(){
+    //alert(this.name);
+  }
+  var p1 = new CreatePerson('小明');
+  var p2 = new CreatePerson('小强');
+  //alert(p1.showName == p2.showName); //true；
+  p1.showName();
+  p2.showName();
+ 
+ function  fn1/*构造函数*/(){
+   this.pro/*属性*/;
+ }
+ fn1/*构造函数*/.prototype/*原型*/.fn2/*方法*/(){
+   
+ }
+ var obj/*对象*/ = new fn1/*构造函数*/();
+ obj/*对象*/.fn2()/*方法*/；
+ 
+ /*
+ 面向对象的选项卡
+   原则
+     先写出普通的写法，然后改成面向对象写法
+	   》普通方法变形
+	     尽量不要出现函数嵌套函数
+		 可以有全局变量
+		 把onload中不是赋值的语句放到单独函数中
+	   》改写面向对象
+	     全局变量就是属性
+		 函数就是方法
+		 Onload中创建对象
+		 改this指向问题(事件或定时器时需考录，让面向对象的this指向对象)
+ */
+ 
+ /*
+   高级面向对象
+    包装对象 :基本类型都有自己对应的包装对象， String  Number Boolean 
+	  js基于原型的程序
+	  String Number Boolean
+	原型链
+	  实列对象与原型之间的链接，叫做原型链
+	  ——proto——（隐式链接）
+	  Object对象类型是原型的最外层
+ */
+ 
+ var str = new String('hello');
+ 
+ String.prototype.charAt = function(){
+   
+ }
+ 
+ 
+ var str = 'hello';
+ 
+ String.prototype.lastvalue = function(){
+   return this.charAt(this.length-1);
+ }
+ //alert(str.lastvlaue())
+ 
+ var str = 'hello';
+ str.number = 10;
+ //alert(str.number);  //underfind
+ 
+ 
+ 
+ /*
+   面向对象的一些属性和方法
+     hasOwnproperty();看看不是对象下面的属性
+	 constructor：查看对象的构造函数
+	   》每个原型都会自动添加constructor属性
+	   》for in的时候有些属性市找不到的
+	   》避免修改construtor属性
+	 instanceof：运算符
+	   》对象与构造函数在原型链上是否有关系
+	 toString():object上的方法
+	   系统下面都是自带的，自己写的对象都是通过原型链object下面的
+ */
+ var arr = [];
+ arr.num = 10;
+ Array.prototype.num2 = 20;
+// alert(arr.hasOwnproperty('num'));//true;
+ //alert(arr.hasOwnproperty('num2'));//false;
+ 
+ function Aaa(){
+ }
+ var a1 = new Aaa();
+ //alert(a1.constructor);;//function Aaa(){}
+ 
+ var arr = [];
+ //alert(arr.constructor);
+ 
+ function Aaa(){
+ }
+ Aaa.prototype = {
+   constructor:Aaa,  //修正constructor 的指向  Aaa；
+   name:'xiaoming',
+   age:20
+ }
+ var a1 = new Aaa();
+ //alert(a1.constructor);
+ 
+ function Aaa(){
+ }
+ var a1 = new Aaa();
+// alert(a1 instanceof Aaa) //true;
+  //alert(a1 instanceof Array);//false;
+  //alert(a1 instanceof Object);//true;
+  
+  var arr = []; //new Date()    //false;
+  //alert(arr instanceof Array);  //`true
+  
+  var arr = [];
+  //alert(arr.toString == Object.prototype.toString);//false
+  
+  function Aaa(){
+  }
+  var a1 = new Aaa();
+  
+  //alert(a1.toString == Object.prototype.toString);//true
+  
+  var arr = [1,2,3];
+  Array.prototype.toString = function(){
+    return this.join('+');
+  }
+  //alert(arr.toString()); //1+2+3
+  
+  var num = 255;
+  //alert(num.toString(16));
+  
+  //判断
+  var arr = []; //{}  [object object]   newDate()  [object Date] new RegExp  [object RegExp]  null [object null]
+  //alert(Object.prototype.toString.call(arr)); //'[object Array]'
+  //alert(Obj.prototype.toString.call(arr) == '[object Array]');
+ 
+ window.onload = function(){
+   var of = document.crerteElement('iframe');
+   document.body.appendChild(of);
+   
+   var ifArray = window.frames[0].Array;
+   var arr = new ifArray();
+   
+   //alert(arr.constructor == Array);//false
+   //alert(arr instanceof Array);//false
+  // alert(Object.prototype.toString.call(arr) = '[object Array]');//true;
+ }
+ 
+ /*
+   对象的继承
+     什么是继承
+	   在原有对象的基础上，略做修改，得到一个新的对象
+	   不影响原有对象的功能
+	 如何添加继承
+	   属性 ：call
+	   方法 ：for in
+	   
+	   例子：继承的拖拽
+ */
+ /*
+   继承：子类不影响父类，子类可以继承父类的一些功能（代码复用）
+   属性的继承，调用父类构造函数  call
+   方法的继承：
+      > 父类原型直接赋值给子类  （会影响父类）
+	  > for in  拷贝继承
+ */
+ 
+ function Createper(name,sex){
+   this.name = name;
+   this.sex = sex;
+ }
+ Createper.prototype.showname = function(){
+   alert(this.name);
+ }
+ var p1 = new Createper('小明','男');
+ p1.showname();
+ 
+ extend(createstr.prototype,Createper.prototype);
+ function createstr(name,sex,job){
+   Createper.call(this,name,sex);//继承
+   this.job = job;
+ }
+ //createstr.prototype = Createper.prototype;
+ var p2 = new createstr('小红','女','演员');
+ p2.showname();
+ 
+ function extend(obj1,obj2){
+   for(var attr in obj2){
+     obj1[attr] = obj2[attr];
+   }
+ }
+ 
+/*
+  继承的其他形式
+    类式继承
+	  》 利用构造函数（类）继承的方式
+	  类  ： js中没有类的概念，可以把js中构造函数看做的类
+	原型继承
+	  》 借助原型来实现对象继承对象
+*/ 
+function Aaa(){
+  this.name = '小明';
+}
+Aaa.prototype.showname = function(){
+  //alert(this.name);
+}
+
+function Bbb(){
+  Aaa.call(this);
+}
+
+var f = function(){
+}
+f.prototype = Aaa.prototype;
+Bbb.prototype = new f();
+Bbb.prototype.constructor = Bbb;//修正指向问题
+//要做属性和方法的继承时候，要分开继承；
+var b1 = new Bbb();
+b1.showname();
+//alert(b1.name);//小明
+//alert(b1.constructor);//
+
+//原型继承
+var a = {
+  name:'夏明'
+}
+var b = cloneobj(a);
+b.name = '小强';
+function cloneobj(obj){
+  var f = function(){
+    f.prototype = obj;
+	return new f();
+  }
+}
+
+/*
+拷贝继承 ： 通用型的  有new无new时候都可以
+类式继承 ： new构造函数
+原型继承 ： 无new的对象
+*/
+ 
+ /*
+  组件的开发
+    对象的多种表现形式
+	  提高对象的复用性
+	  如何配置参数和默认参数
+	  
+ */
+ /*
+   什么市组件开发
+     对面向对象的深入应用（ui组件，功能组件）
+	 将配置参数，方法，事件，三者进行分离
+   
+   创建自定义事件
+     有利于多人协作开发代码
+	 如何去挂载自定义事件与事件函数
+ */
+ 
+ /*
+   自定义事件：主要跟函数有关，就是让函数能够具备事件的某些特性
+   
+ */
