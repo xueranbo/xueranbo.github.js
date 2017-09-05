@@ -1,0 +1,292 @@
+dom Document Object Model
+    是w3c组织推荐的处理可扩展标记语言的标准编程接口，在网页上，组织页面（或文档）的对象被组织在一个树形结构中，用来表示文档中对象的标准模型就称为DOM。
+	
+	DOM通过document提供一些能够操作页面内容的属性或者方法，赋予开发者操作页面的能力。
+	如：document.getELementById('');
+	
+	三大关系 ：
+	父级关系，只有一层上下级关系(从当前e往上)
+	子级关系，只有一层以下的关系（从当前往下）
+	兄弟关系，同一个父级（同一级的）
+	
+	
+	
+ */
+ var odiv = document.getElementById('div1');
+ 
+ odiv.style.cssText = 'width:100px;height:100px;background:red;';
+ 
+ //按照节点类型划分  nodeType返回一个数字
+	var str = ''；
+	console.log(typeof str)
+	
+	//元素节点  数字 1
+	var odiv1 = document.getElementById('div1');
+    //console.log(odiv1.nodeType)
+	
+	//document  数字9
+	
+	//文字内容 childNodes(类数字): 空白也是 数字3 length = 1
+	  //获取子节点下的所有的节点
+	 // console.log(odiv1.childNodes[0].nodeType)
+	 
+	 //注释节点  数字8
+	 
+	 //属性节点  attributes 数字2
+	 //conson.log(odiv1.attributes[0].nodeType)
+	 //查看属性节点值 用nodeValue
+	 //nodeName  查看节点属性名
+	 
+	 //conson.log(odiv1.childNodes[0].nodeValue) 注释
+	 
+	 
+	  /*
+    childred 不是标准的属性 但是所有浏览器都支持
+	找到某个元素下所有元素子节点
+  */
+  
+  /*document.onclick = function(){
+    for(var i=0;i<lis.length;i++){
+	  lis[i].style.width = '150px';
+	  //if(lis[i].nodeType == 1){
+	    //lis[i].style.width = '150px';
+	 // }
+	  
+	}
+  }*/
+  
+  //console.log(lis[0].innerHTML);
+  
+  /*
+   parentNode  查找某个元素的父节点
+  */
+  //console.log(lis[0].parentNode)  ul
+  
+  /*
+   nextElementSibling 查找某个元素的下一个兄弟节点
+   previousElementSibling 查找某个元素的上一个兄弟节点
+  */
+  
+  /*
+   firstElementChild 找到某个元素下的第一个子节点
+   lastElementChild  找到某个元素下的最后一个子节点
+  */
+	 
+	 /*
+	 offsetParent 如果祖先节点没有定位 默认BODY
+	      如果上级有定位 相对于上级
+	 */
+	 
+	 /*
+	  offsetLeft 左外边框到定位父级的内边框的距离
+	  offsetTop  上外边框到定位父级的内边框的距离
+	 */
+	 /*
+	  while(elem){
+	    left = elem.offsetLeft;
+		elem = elem.offsetparent;
+		alert(left);
+		alert(elem.tagName);//标签名
+		return;
+	  }
+	 */
+	 /*
+	  加边框
+	  while(elem){
+	    left += elem.offsetLeft+parseInte(getComputerStyle(div3).borderLeftWidth);
+		elem = elem.offsetparent;
+		alert(left);
+		alert(elem.tagName);//标签名
+		return;
+	  }
+	  left-=parseInte(getComputerStyle(div3).borderLeftWidth)
+	 */
+	 
+	 /*
+	   绝对位置
+	   getBoundingClientRect().left
+	   获取某个元素的信息
+	   注意获取的值会根据滚动条变化
+	 */
+	 
+	 /*
+	  getAttribute('key')  获取元素行间的属性
+	  如src href等相对路径
+	  
+	  setAttribute('key','') 设置元素行间的属性
+	  
+	  removeAttribute('key'); 删除元素行间的属性
+	 */
+	 
+	 /*
+	  clientWidth/clienHeight 获取元素的宽高
+	  不计算边框 margin值
+	  加padding值
+	   
+	   offsetWidth/offsetHeight  带计算边框的宽高
+	   加padding
+	   不计算margin 
+	   
+	   可视区域的宽高
+	   document.documentElment.clientWidth
+	   document.documentElment.clientHeight
+	 */
+	 
+	 /*
+	  document.createElement('') 创建一个元素
+	  支持自定义标签  有兼容性
+	  
+	  parentNode.appendChild() 插入到某个元素内到最后
+	  
+	  insertBefore(新创建的元素,同级的子元素) 将插入一个元素的子节点之前
+	   特性：如果同级无元素添加到父元素的最后一个
+	 */
+	 
+	 /*
+	  removeChild 删除一个元素的一个子元素
+	  注意：如果指定的元素无子元素 会报错 需要判断
+	 */
+	 
+	 /*
+	 replaceChlid(用来替换的节点，被替换的节点) 替换元素中子节点  剪切效果
+	 */
+	 
+	 /*
+	  cloneNode(默认false) 克隆某个元素 不能克隆该元素所有子元素
+	  false变为true 能克隆该元素所有子元素
+	  事件不会克隆
+	 */
+	 /*
+	 appendChild/insertBefore/replaceChld在操作一个已有的元素，是将已有的元素移动，而不是复制一份进行操作
+	 */
+	 
+	 /*
+	 table
+	 */
+   元素.childNodes  只读属性  子节点列表集合
+  children 只读属性
+  firstChild
+  firstElementChild 
+  lastChild
+  lastElementChild
+  nextSibling
+  nextElementSibling
+  prevSibling
+  prevElemntSibling
+  
+  元素.parentNode 只读属性
+  offsetParent 离当前元素最近的一个有定位属性父级的节点
+  //layout ie7以下 如果当前元素的某个父级触发了layout，那么 offsetParent就会被指向到这个触发了layout特性的父节点上
+  
+  offsetLeft/Top 只读属性 
+  ie7以下如果自己没有定位， 那么offsetLeft【Top】是到body的距里。
+  如果有定位父级 
+  
+  style.width 样式宽度
+  clienWidth  样式宽加padding 可视区域的宽
+  offsetWidth 样式宽 + padding + border
+  
+  
+  var itop = 0;
+  var obj = odiv3
+  
+  while(obj){
+    itop += obj.offsetTop;
+	obj = obj.offsetparent;
+  }
+   
+  
+  function getpos(obj){
+     var pos = {left:0,top:0};
+	 while(obj){
+	   pos.left += obj.offsetLeft;
+	   pos.top += obj.offsetTop;
+	   obj = obj.offsetParent;
+	 }
+	 return pos;
+  }
+  
+  创建元素
+  createElemet（标签名称）
+  
+  添加元素
+  appendChild(要添加的元素) 方法 追加子元素
+  
+  inserBefore（新的元素，被插入的元素） 方法 在指定的元素前面插入一个新元素
+  在ie下如果第二参数的节点不存在，会报错
+  在其他浏览器下如果第二个参数的节点不存在，则会以appendChild的形式进行添加
+  解决兼容性问题
+  if（oul.children[0]）{
+    oul.insertBefore(oli,oul.children[0])
+  }else{
+    oul.appendChild(oli);
+  }
+  
+  删除元素
+  父级.removeChild（要删除的元素）；
+  
+  替换元素
+  父级.replaceChild(新节点，被替换的节点)
+   剪切效果
+   
+   
+  //操作元素属性的方法
+  getElementsByClassName(att);
+  获取class属性
+  
+  function getElementsByClassName(att,ali,clssname){
+    var aels = att.getElementsByClassName('ali');
+	var arr = [];
+	
+	for(var i=0;i<aels.length;i++){
+	
+	  var aclassname = aels[i].className.split(' ');
+	  
+	  for(var j=0;j<aclassname.length;j++){
+	    if(aclassname[j] == className){
+		  arr.push(aels[i]);
+		  break;
+		}
+	  }
+		  //if(ales[i].className == 'classname'){
+			//arr.push(ales[i]);
+		 // }
+	}
+  }
+  
+  
+  添加css样式
+  addClass
+  
+  function addclass(obj,classname){
+    if(obj.className = ''){
+	  obj.className = classname;
+	}else{
+	  var arrclassname = obj.className.split(' ');
+	  var _index = arrindexof(arrclassname,className);
+	  if(_index ==  -1){
+	    obj.className += ' '+classname;
+	  }
+	}
+  }
+  
+  function arrindexof(arr,v){
+    for(var i=0;i<arr.length;i++){
+	  if(arr[i] == v){
+	    return i;
+	  }
+	}
+  }
+  
+  移除css样式
+  
+   function removeclass(obj,classname){
+     if(obj.className != ''){
+	   var arrclassname = obj.className.split(' ');
+	   var _index = arrindexof(arrclassname,className);
+	   if(_index == -1){
+	     arrclassname.splic(_index,1);
+		 obj.clssName = arrclassname.join(' ');
+	   }
+	 }
+   }
