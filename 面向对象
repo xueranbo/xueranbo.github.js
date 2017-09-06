@@ -445,6 +445,14 @@ alert(fn1.getname === fn2.getname); //true,//共享原型中定义方法
    }
  }
  
+ function extend(obj1){
+   var newobj = {};
+   for(var attr in newobj){
+     newobj[attr] = obj1[attr];
+   }
+   return newobj;
+ }
+ 
 /*
   继承的其他形式
     类式继承
