@@ -85,3 +85,22 @@ document.onclick = function(ev){
     var ev= ev||event;
     //alert(ev.ctrlkey);
 }
+
+鼠标滚轮事件
+   鼠标滚轮
+         ie/chrome  :onmousewheel
+	 
+	 ff :  DOMMouseScroll  必须用addEventlistener 绑定
+	 
+	 if(odiv.addEventlistener){
+	   odiv.addEventlistener('DOMMousescroll',fn,false)
+	 }
+	 
+	 鼠标滚动的方向
+	   ie/chrome  event.wheelDelta;  向下-120  向上120
+	   ff  event.detail  上-3  下3
+	   
+	   return false 阻止的是 obj.on事件 = fn所触发的默认行为
+	   addEventListener绑定的事件需要通过event下面的preventDefault（）；
+	   
+	
