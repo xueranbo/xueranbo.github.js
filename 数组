@@ -1,0 +1,194 @@
+var json = { name:'leo',age:32 };
+ //alert(json.name);
+ var arrUrl = ['img/1.png','img/2.png','img/3.png','img/4.png',];
+  var arrText = ['小宠物','图片2','i图片3','面具',];
+  
+  var imgdate = {
+    url:['img/1.png','img/2.png','img/3.png','img/4.png'],
+	text:['小宠物','图片2','i图片3','面具']
+  };
+  //alert(imgdate.url[2]);
+  
+  var json = {name:'mioav'};
+  var json2 = {'name':'miaov'}
+  //alert(json2.name);
+  //alert(json2['name']);
+  
+  json2.name = '妙味';
+  json2['name'] = 'miaov';
+  //alert(json2.name);
+  
+  var json3 = {abc:[]};
+  var arr = [{'name':"tm",'age':23},{'name':'leo','age':32}];
+  //alert(arr[0].name+'今年有'+arr[1]['age']+'岁了')
+  
+  var json4 = {'name':'miaov','age':'3','fun':'前段开发'};
+  for(var attr in json4){
+    //alert(attr); // name  age   fun 
+	//alert(json4[attr]); //miaov  3  前端开发  //注意attr不能加引号
+  }
+  
+  var json5 = {
+    'url':['img/1.png','img/2.png','img/3.png','img/4.png'],
+	'text':['小宠物','图片2','i图片3','面具']
+  }
+  
+  var arr = [{},{},{}];
+  
+  for(var attr in json5){
+    for(var i=0;i<json5[attr].length;i++){
+	  //alert(json5[attr][i]);
+	}
+  }
+
+var str = '';
+var num = 0;
+  /*for(var attr in window){
+    str += num + '.'+ attr + ':' + window[attr] + '<br />';
+	num++;
+  }
+  document.body.innerHTML = str;
+  
+  for(var attr in document){
+    str += num + '.'+ attr + ':' + document[attr] + '<br />';
+	num++;
+  }
+  document.body.innerHTML = str;*/
+  
+  var json6 = {
+    'url':['img/1.png','img/2.png','img/3.png','img/4.png'],
+	'text':['小宠物','图片2','i图片3','面具']
+  };
+  //alert(json6.length)//json 没有长度
+  var arr2 = ['a','b','c'];
+  
+  /*for(var i in arr){
+    //alert(arr[i]);// a b c  
+  }*/
+  
+  var arr3 =[1,2,3];
+  var arr4 = new Array(1,2,3);
+  //alert(arr);
+  
+  var arr5 = new Array(4);
+  //alert(arr5[1] = 123);
+  //alert(arr.length)  //4 length  '3' 内容  长度1
+  
+  var arr6 = ['aaa',2,3]
+  //alert(arr.length); //3
+  arr.length = 1;
+  //alert(arr); // aaa
+  arr.length = 0; //清空数组
+  arr = [];//清空数组 效率比上面高
+  //alert(arr);
+  
+  var str1 = 'aaaaa';
+  str.length = 1;
+  //alert(str1);//aaaaa
+  
+  //添加
+  var arr7 = [1,2,3];
+  arr7.push(4);
+  //alert(arr7);
+  //alert(arr7.push(4));// 返回值数组新的长度 4
+  arr7.unshift(0);
+  //alert(arr7.unshift(0));//返回值数组新的长度 4 ie67不支持
+  
+  //删除
+  var arr8 = ['tm','钟意','张沈','杜鹏','leo',,];
+  //arr8.pop(); //删除最后一个
+  //alert(arr8) //
+  //alert(arr8.pop()) //返回值 leo
+  //arr8.shift();// 删除第一个
+  //alert(arr);
+  //alert(arr8.shift()) ;// 返回值 tm
+  
+  //排队
+  var arr9 = ['tm','钟意','张沈','杜鹏','leo'];
+  //arr.unshift(arr.pop());
+  //alert(arr9);//leo tm  钟意  张沈  杜鹏
+  //arr9.push(arr9.shift());
+  //alert(arr9);//  钟意  张沈  杜鹏 leo tm
+  
+  //splice 删除 替换 添加
+  var arr10 = ['tm','钟意','张沈','杜鹏','leo'];
+  //arr10.splice(0,1);
+  // alert(arr10);//钟意  张沈  杜鹏 leo
+  //arr10.splice(0,1,'莫涛')；
+  //alert(arr10); //莫涛 钟意  张沈  杜鹏 leo
+  //arr10.splice(1,0,'xlm'); 
+  //alert(arr10);//tm xlm 钟意  张沈  杜鹏 leo
+  //alert(arr.splice(0,2));// 只有删除有返回值 tm 钟意
+  
+  //数组去掉重复
+  var arr11 = [1,2,2,4,2];
+  for(var i=0;i<arr11.length;i++){
+    for(var j=i+1;j<arr11.length;j++){
+	  if(arr11[i] == arr11[j]){
+	    arr11.splice(j,1);
+		j--;
+	  }
+	}
+  }
+  //alert(arr11);
+  
+  //排序
+  var arr12 = ['c','d','a','e'];
+  //arr12.sort();//按字符的编码的高低排序；
+ // alert(arr12);
+  
+  var arr13 = [0,23,2,5,86,32,20,9,66,76];
+  //arr13.sort(); //会把数字变成字符串 第一位比较 不支持056
+  //alert(arr13);
+  //比较函数
+  arr13.sort(function(a,b){
+    return a - b;
+  });
+  //alert(arr13)//从小到大排序 b-a 从大到小排序
+  
+  //快速排序法 希尔，谢尔 冒泡 归并 选择 插入 。。。
+  
+  var arrwidth = ['345px','23px','10px','1000px'];
+  arrwidth.sort(function(a,b){
+    return parseInt(a)-parseInt(b);
+  }); 
+  //alert(arrwidth); //10px 23px 345px 1000px
+  
+  //随机排序
+  var arr14 = [1,2,3,4,5,6,7,8];
+  arr14.sort(function(a,b){
+    return Math.random()-0.1;
+  });
+  //alert(arr14);
+  
+  //随机函数
+  //Math.round(Math.random()); 0~1
+  //alert(Math.round(Math.random()))
+  //alert(Math.round(3.5));  //4舍5入
+  //alert(Math.round(Math.random()*10)); //0~10
+  //alert(Math.round(Math.random()*5+5));//5~10;
+ // alert(Math.round(Math.random()*10+10));//10~20;
+  //alert(Math.round(Math.random()*80+20));//20~100
+  //x~y Math.round(Math.random()*(y-x)+x));
+  
+  var x = 42;
+  var y = 49;
+  //alert(Math.round(Math.random()*(y-x)+x)); //42~49的随机数；
+  
+  //0~x
+  var x1 = 3;
+  //alert(Math.round(Math.random()*x1));
+  
+  //1~x
+  var x2 = 3
+  //alert(Math.ceil(Math.random()*x2));//ceil 向上取整
+  
+  //连接数组
+  var arr15 = [1,2,3];
+  var arr16 = [4,5,6];
+  //alert(arr15.concat(arr15,arr16));//123456
+  
+  //alert(arr15.reverse());//321
+  var str3 = 'abcdef';
+  //str3.split('');
+  //alert(str3.split('').reverse().join('')); //fedcba
