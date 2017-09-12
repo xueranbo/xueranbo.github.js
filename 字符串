@@ -1,0 +1,22 @@
+var str = '妙味课堂-WWW.miaov.com';
+
+str.charAt(1);			// '味'
+str.charCodeAt(1);			// 21619
+String.fromCharCode(22937, 21619);	// '妙味'
+
+str.indexOf('m', 4);			// 9
+str.lastIndexOf('o');			// 16
+
+'1000' < '2'			// true
+'1000' > 2			// true
+
+str.substring(0, 4);			// '妙味课堂'
+str.slice(-3);			// 'com'
+
+str.toUpperCase();			// '妙味课堂-WWW.MIAOV.COM'
+str.toLowerCase();			// '妙味课堂-www.miaov.com'
+
+str.split('.', 2);			// [ '妙味课堂-WWW', 'miaov' ]
+
+var arr = [ 'www', 'miaov', 'com' ];
+arr.join('aaa');			// 'www.miaov.com'
