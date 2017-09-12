@@ -20,3 +20,63 @@ str.split('.', 2);			// [ '妙味课堂-WWW', 'miaov' ]
 
 var arr = [ 'www', 'miaov', 'com' ];
 arr.join('aaa');			// 'www.miaov.com'
+
+字符串加密
+   var alnp = document.getElementsByTagName('input');
+   var odiv = document.getElementById('div1');
+   
+   alnp[1].onclick = function(){
+     var str = alnp[0].value;
+	   var str1 = '';
+	   //alert(str.charCodeAt(0));
+	   for(var i=0;i<str.length;i++){
+	     str1 += String.fromCharCode(str.charCodeAt(i)-10000) +',';
+	   }
+	   odiv.innerHTML = str1;
+   }
+   
+   查看是否全是数字
+   var alnp = document.getElementsByTagName('input');
+   
+   alnp[1].onclick = function(){
+     var val = alnp[0].value;
+     if(detectNum(val)){
+	    alert('恭喜，'+val+'全是数字');
+	 }else{
+	    alert('输入有误');
+	 }
+   }
+   
+   function detectNum(str){
+     var n = 0;
+	 for(var i=0;i<str.length;i++){
+	    n = str.charCodeAt(i);
+		if(n<48||n>57) return false;
+	 }
+	 return true;
+   }
+   
+   var str = 'www.MIAOV.com';
+  
+  //alert(str.toUpperCase());//转换车工大写 只有字母
+  //alert(str.toLowerCase());//转换成小写
+  
+  //alert(str.split('.')); //['www','MIAOV','com'] 
+  
+  var arr = str.split('.');
+ // alert(arr[1])
+  
+  var str1 = 'leo';
+  //alert(str1.split());//['leo']  object
+  
+  //alert(str1.split(''));  //['l','e','o']
+  
+  var str2 = '妙味课堂';
+  //alert(str2.split('味')) //['秒','课堂']
+  
+  var str3 = '/www.miaov.com/';
+  alert(str3.split('/').length);//[,'www.miaov.com',]   3
+  
+  var str4 = '2013-11-29-23-02';
+  alert(str4.split('-'));//['2013','11','29','23','02']
+  alert(str4.split('-',3))//['2013','11','29']
