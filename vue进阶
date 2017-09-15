@@ -1,0 +1,304 @@
+/*
+ http://github.com/vuejs
+ 
+ webpack 官网  webpack.js.org
+ 
+ 前段路由
+   在web开发中路由市根据url分配到对应的处理程序
+ 
+ vue-router 
+   作用  通过管理url实现url和组件的对应和通过url进行组件之间的切换
+    官网   router.vuejs.org/zh-cn/
+	
+  单页应用（SPA）
+     加载单个HTML页面，并在用户与应用程序之间交互时动态更新页面
+	 
+  开始使用vue-router
+  使用步骤
+    安装模块
+	  npm install  vue-route  --save
+	引入模块
+	  import VueRouter from 'vue-router'
+	作为Vue的插件
+	  Vue.use(VueRouter)
+	 创建路由实列对象
+	   new  VueRouter({
+	     ...配置参数
+	   })
+	 注入Vue选项参数
+	   new Vue({
+	     router
+	   })
+	 告诉路由渲染的位置
+	   <router-view></router-view>
+	   
+	  
+	  开始一个应用
+	   
+	         APP
+			  |
+	Home    Document             About
+	/home   /document           /about
+	                    study         work        hobby
+						/about/study /about/work  /about/hobby
+						
+  
+   命名试图
+   在同级同时展示多个视图，而不是嵌套展示
+                   App
+				    |
+	Home    slides Document                    About
+	/home          /document                   /about
+	                      study          work       hobby
+						/about/study  /about/work /about/hobby
+  
+   
+  动态路径
+   匹配到的所有的路径，全都映射到同一个组件
+   路径： /user/：userId  userId为动态路径参数
+   获取参数 路径信息对象的params
+                       APP
+					    |
+		...                  user
+		                 /user/:tip/:id
+   
+   对组件的注入
+     通过在Vue根实列的router配置传入router
+	   $router  router实列对象
+	   $route   当前激活的路由信息对象，每个组件实列都会有
+	   beforeRouteEnter() 进入组件前钩子函数
+	   beforeRouteLeave() 离开组件前钩子函数
+	
+  路由信息对象
+  
+   一个路由信息对象表示当前激活的路由的状态信息，每次成功的导航后都会产生一个新的的对象
+   
+   path 字符串   对应当前路由的路径
+   params  对象  包含动态路由参数
+   query  对象   URL查询参数
+   hash  字符串   当前路由的hash值
+   fullPath 字符串  URL包含查询参数和hash的完整路径
+   mathched 数组  包含当前路由的所有嵌套路径片段的 路由记录
+   name 字符串  当前路由的名称
+   
+  过度动效
+    提供了transition的封装组件，添加过度动画
+	添加删除css类名
+  
+   过度的css类名
+     v-enter:   定义进入过度的开始状态
+	 v-enter-active   定义进入活动状态
+	 v-enter-to  定义进入结束状态
+	 v-leave   定义离开过度的开始的状态
+	 v-leave-active  定义离开活动状态
+	 v-leave-to  定义离开的结束状态
+	 
+	 使用name属性改变类名前缀
+	         enter                     leave
+	Opacity:0 ---> Opacity:1     Opacity --->  Opacity:0
+	   |              |             |              |
+	v-enter        v-enter-to    v-leave        v-leave-to
+	|_______________________|    |______________________|
+	            |                            |
+			v-enter-active            v-leave-active
+
+   过度模式
+     in-out:   新元素先进行过渡，完成之后当前元素过度离开
+	 out-in:   当前元素先进行过渡，完成之后新元素过度进入
+   
+   
+   路由元信息
+     在路由配置中meta可以配置一些数据，用在路由信息对象中
+	  访问meta中数据   $route.meta
+   
+   编程式导航
+     借助于router的实列方法  通过编写代码来实现导航的切换
+	 back 回退一步
+	 forward 前进一步
+	 go  指定前进回退步数
+	 push 导航到不同url 向history栈添加一个新的记录
+	 replace  导航到不同url  替换history栈中当前记录
+   
+   导航钩子函数
+     导航发生变化时，导航钩子主要用来拦截导航，让他们完成跳转或取消
+	 执行钩子函数位置
+	   router 全局
+	   单个路由
+	   组件中
+	 钩子函数
+	   router实列上  beforeEach  afterEach
+	   单个路由中  beforeEnter
+	   组件内钩子： beforeRouteEnter   beforeRouteUpdate  beforeRouteLeave
+	 钩子函数接受的参数
+	   to   要进入的目标路有对象  到哪里去
+	   from  正要离开导航的路有对象  从哪里来
+	   next  用来决定跳转或取消导航
+   
+   懒加载
+     把不同路由对应的组件分割成不同的代码模块，然后当路由被访问的时候才加载对应组件
+	
+	Vue异步组件
+	  {
+	     components:{
+		   custom:(resolve,reject) =>{}
+		 }
+	  }
+	  
+   webpack代码块分割功能
+     require.ensure代码分块
+	    require.ensuer(依赖，回调函数，[chunk名字])
+	 import函数
+	 
+  服务器配置
+   Nginx配置
+     location/{
+	   root/home/我的应用根目录
+	   try_files $uri $uri/ /index.html =404;
+	 }
+
+  Appache配置
+    <IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /
+	RewriteRule ^index\.html$[L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule . dist/index.html[L]
+	</IfModule>
+	
+  Vuex是什么
+    专为Vue.js应用程序开发的状态管理模式
+	采用集中式存储管理应用的所有的状态
+	以相应的规则保证状态以一种可预测的方式放生变化
+	
+  状态
+    组件内部状态  仅在一个组件内使用的状态(data字段)
+	应用级别状态  多个组件共用的状态
+	
+  什么情况下使用Vuex
+     多个视图依赖于同一个状态
+	 来自于视图的行为需要变更一个状态
+
+  使用Vuex
+    安装vuex模块
+	  npm install vuex --save
+	作为插件使用
+	  Vue.use(Vuex)
+	定义容器
+	  new Vuex.Store()
+	注入根实列
+	  {
+	    store
+	  }
+	  
+	Vuex核心概念
+	  store  类似容器，包含应用的大部分状态
+	    一个页面只能有一个store
+		状态存储是响应的
+		不能直接改变store中的状态，唯一的途径显示的提交mutations
+	  State 包含所有应用级别状态的对象
+	  Getters 在组件北部获取store中状态的函数
+	  Mutations 唯一修改状态的事件回调函数
+	  Actions 包含异步操作 提交mutation改变状态
+	  Modules  将store分割成不同的模块
+	  
+	Vuex辅助函数
+	  mapState
+	  mapGetters
+	  mapMutations
+	  mapActions
+	  
+	Axios
+	  简介
+	    基于Promise用于浏览器的nodejs的与服务器端通信库
+	  特征
+	    支持PromiseAPI
+		拦截请求和响应
+		转换请求和响应数据
+		取消请求
+		自动转换JSON
+	  使用
+	    CDN地址：http://unpkg.com/axios@0.16.2/dist/axios.min.js
+		node install axios --save
+	
+	Mock
+	  模拟数据
+	    http://easy-mock.com
+		
+    使用axios
+	  需要的模块中引入shiyong
+	    import axios from 'axios'
+      语法
+	    1  axios(config)
+		2  axios[method]()
+		
+		返回值为promise
+	 
+	 支持的请求方式
+	   axios.get(url[,config])
+	   axios.post(url[,data[,config]])
+	   axios.delete(url[,config])
+	   axios.head(url[,config])
+	   axios.options(url[,config])
+	   axios.put(url[,data[,config]])
+	   axios.patch(url[,data[,config]])
+	   
+	 自定义请求实列
+	   创建
+	    axios.create(config)
+	   配置
+	     {
+		    baseURL: '',
+			timeout: 1000,
+			headers: {},
+			responseType: 'json',
+			params: {},
+			transformRequest: [],  只适合PUT  POST和PATCH
+			transformResponse: [],
+			validateStatus: function(){},
+			cancelToken
+		 }
+	  知识点： application/x-www-form-urlencoded
+	  
+	  取消请求
+	  创建取消请求令牌
+	    var CancelToken = axios.CancelToken;
+		var source = CancelToken.source();
+		
+		配置
+		  cancelToken: source.token
+		捕获取消错误
+		  if(axios.isCancel(error)){
+		    console.log(error.message);
+		  }
+		调用取消
+		  source.cancel('操作被用户取消')
+	
+	 并发请求
+	   axios.all(iterable)
+	   axios.spread(callback)
+	   
+	 拦截器
+	   拦截请求
+	     axios.interceptors.request.use(function(config){
+		   //在发送请求之前做某事
+		   return config;
+		 },function(error){
+		   //请求错误时做某些事
+		   return Promise.reject(error)
+		 });
+	   拦截响应
+	     axios.intercetors.response.use()
+	  
+	 取消拦截
+	   axios.intercetors.request.eject(myIntercetor);
+	   
+	 在vue中使用
+	  安装
+	    npm install axios vue-axios --save
+	  作为插件
+	    Vue.use(VueAxios,Axios)
+	  在组件中使用
+	    this.$http[method]()
+
+*/
