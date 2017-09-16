@@ -1,0 +1,110 @@
+ //  按住ctr键  鼠标点击多选  shift范围的多选 
+  
+window.onload = function(){
+  var oul = document.getElementById('ul1');
+  var ali = oul.getElementsByTagName('li');
+  
+  var shiftonoff = false;
+  var ctrlonoff = false;
+  
+  var nowindex = 0;
+  var previndex = 0;
+  var prevelement = null;
+  
+   oul.addEventListener('mousedown',function(ev){
+     ev.preventDefault();
+   }) 
+   
+   document.onkeydown = function(ev){
+     if(ev.keyCode == 16){ //shift
+	   shiftonoff = true;
+	 }else if(ev.keyCode == 17){ //ctrl
+	    ctrlonoff = true
+	 }
+   }
+   document.onkeyup = function(ev){
+     if(ev.keyCode == 16){ //shift
+	   shiftonoff = false;
+	 }else if(ev.keyCode == 17){ //ctrl
+	    ctrlonoff = false
+	 }
+   }
+   
+   for(var i=0;i<ali.length;i++){
+     ali[i].index = i;
+     ali[i].onmousedown = function(){
+	   nowindex = this.index
+	   prevelement = this;
+	   if(ctrlonoff){
+	    // console.log(1)
+		 if(this.className == 'active'){
+		   this.className = '';
+		 }else{
+		   this.className = 'active';
+		 }
+	   }else if(shiftonoff){
+	     //console.log(2)
+		 var arr = shiftfn([],nowindex,previndex);
+		 //console.log(arr)
+		 var btn = true;
+		 for(var i=0;i<arr.length;i++){
+		   if(ali[arr[i]].className != 'active'){
+		     btn = false;
+		   }
+		 }
+		 if(btn){
+		   for(var i=0;i<arr.length;i++){
+		     ali[arr[i]].className = '';
+		   }
+		 }else{
+		   for(var i=0;i<arr.length;i++){
+		     ali[arr[i]].className = 'active'
+		   }
+		 }
+		 this.className = 'active';
+		 
+	   }else{
+	     for(var i=0;i<ali.length;i++){
+	       ali[i].className = '';
+	     }
+	     this.className = 'active'
+	   }
+	   previndex = nowindex;
+	   
+	   document.onmousemove = function(ev){
+	     var element = document.elementFromPoint(ev.pageX,ev.pageY) //返回元素的鼠标的坐标
+		 
+		 
+		 if(element != prevelement){
+		   if(element.className == 'active'){
+		     prevelement.className = '';
+		   }
+		   element.className = 'active';
+		 }
+		 
+		 prevelement = element;
+	   }
+	   document.onmouseup = function(){
+	     document.onmousemove = document.onmouseup = null;	 
+	   }
+	   return false;
+	 }
+   }
+ 
+ function shiftfn(arr,num1,num2){  
+   if(num1>num2){
+     arr.push(num2)
+	 shiftfn(arr,++num2,num1)
+   }else if(num1<num2){
+     arr.push(num1);
+	 shiftfn(arr,++num1,num2)
+   }else{
+     arr.push(num1)
+   }
+   return arr
+ }
+ //console.log(shiftfn([],0,3));
+ 
+   
+}
+  
