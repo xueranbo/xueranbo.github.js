@@ -1,0 +1,700 @@
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<!--<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=0.5,maximum-scale=1">
+<meta name="format-detection" content="telephone=no,email=no" />
+--><!--
+  viewport  视口（可视区窗口）
+  默认不设置viewport 一般可视区宽度在移动端是980px;
+  width   可视区的宽度  （number（安卓下不兼容）  ||  device-width）
+  user-scalable=no  是否允许缩放（yes || no）  ios10无效（我们放在事件章节解决）
+  initial-scale  初始缩放比例
+  minimum-scale
+  maximum-scale
+-->
+
+
+<style>
+/* body{font-family:Helvetica;}
+ body*{-webkit-text-size-adjust:100%;-webkit-user-select:none;
+  在事件章节
+ }
+ #div1{width:100px;height:100px;background:red;margin:0 auto;}
+ a,input,button{-webkit-tap-highlight-color:rgba(255,0,255,0.5);}
+ input,button{-webkit-appearance:none;border-radius:0;}
+ #p1{font-size:18px;line-height:30px;height:30px;}
+ #p2{font-size:18px;line-height:30px;}
+ html{height:100%;overflow:hidden;position:relative;}
+ body{height:100%;overflow:auto;margin:0px;}
+ #header{position:absolute;width:100%;height:40px;background:rgba(0,0,0,0.5);color:#fff;}
+ #section{padding-top:40px;}
+ 
+ div{width:25%;height:100px;float:left;border:1px solid #000;box-sizing:border-box;}
+ .box1{background:red;}
+ .box2{background:blue;}
+ .box3{background:green;}
+ .box4{background:yellow;}
+ */
+ 
+/*#box{width:100px;height:100px;background:red;position:absolute;top:0px;left:0px;opacity:0.5;}*/
+/*body{margin:0;padding:0;}
+#box{width:100px;height:100px;border:1px #000 solid;padding:100px;}
+#div1{width:100px;height:100px;background:red;transition:1s;transform-origin:left;-webkit-transform-origin:left;}*/
+
+/*body{margin:0;padding:0;}
+#box{width:100px;height:100px;border:1px #000 solid;padding:100px;-webkit-perspective:200px;perspective:200px;}
+#div1{width:100px;height:100px;background:red;transition:1s;}*/
+
+/*#box{width:50px;height:50px;background:red;color:#FFFFFF;font-size:20px;position:absolute;left:50%;top:50%;margin:-25px 0 0 -25px;}
+*/
+
+body{margin:0;}
+html,body{width:100%;height:100%;position:relative;overflow:hidden;}
+
+#box{position:absolute;left:0;top:0;width:100%;height:100%;position:relative;}
+#div{width:100%;height:100%;background:red;}
+#opop{display:none;position:absolute;left:0;top:0;width:100%;height:100%;color:#fff;line-height:100px;font-size:30px;text-align:center;}
+</style>
+
+
+<script src="js/m.Tween2.js"></script>
+
+
+ /*(function(){
+   var w = window.screen.width;
+   var targetw = 320;
+   var scale = w/targetw;
+   var meta = document.createElement('meta');
+   meta.name = 'viewport';
+   
+   meta.content = 'user-scalable=no,initial-scale='+scale+',minimum-scale='+scale+',maximum-scale='+scale+'';
+   document.head.appendChild(meta);
+ })()*/
+</script>
+<script>
+ /*
+  测试环境  
+    chrome  模拟器
+	360安全  模拟器
+	本地服务器  xampp
+	   wifi分享
+  
+  viewport视口
+    width(device-width||value)
+	user-scalable(nollyes)是否允许缩放
+	initial-scale 初始比例
+	minimum-scale 最小缩放比例
+	maximum-scale 最大缩放比例
+	devicePixelRatio 像素比
+	dpi
+
+ */
+ 
+ //alert(window.devicePixelRatio)
+ //像素比 把一个像素放大至N个像素去显示  设计图最少750px
+ 
+ /*
+   常用meta设置
+     QQ强制横屏或竖屏显示
+	  <meta name = "x5-orientation" content="portrait|landscape" />
+	 QQ设置全屏
+	 <meta name="x5-fullscreen" content="true" >
+	 
+	 uc强制竖屏或横屏显示
+	 <meta name="screen-orientation" content="portrait|landscape" / >
+	 uc全屏显示
+	  <meta name="full-screen" content="yes" />
+ */
+ 
+ /*
+   禁止识别电话号码和邮箱号码
+   <meta name="format-detection" content="telephone=no,email=no" />
+   拨打电话和发邮件
+     href="tel:"
+	 href="mailto:"
+ */
+ 
+ /*
+  清除点击阴影  -webkit-tap-highlight-color
+  
+  消除按钮圆角 -webkit-appearance
+  
+  选中文字设置 -webkit-user-select
+  
+  禁止文字缩放  -webkit-text-size-adjust
+  
+  默认字体设置
+    Helvetica
+ */
+ 
+ /*
+  移动端其他问题
+    Font Boosting
+	  在一段文字我们没有给他设置高度的时候，在webkit内核下，文字的大小被浏览器放大了
+	  解决办法  
+	    1  设置高度
+		2  设置最大高度  max-height
+		
+	
+	Fixed
+	
+	IOS的body的overflow问题
+ */
+ 
+ /*
+  百分比适配
+  
+  viewport
+  
+  rem适配  // root 根节点的字体大小设置
+  
+  弹性盒模型（box版和flex版）
+ */
+ 
+ /*
+  rem 计算
+  
+  设计图选取
+  
+  利用less来进rem计算
+  
+  Koala
+ */
+ 
+ /*
+  怪异盒模型
+  
+  font-face
+  
+  bootstarp字体组件
+    glyphicon-repeat
+	glyphicon-tasks
+	glyphicon-lock
+	glyphicon-chevron-up
+	glyphicon-chevron-down
+ */
+ 
+ /*
+   注意在使用弹性盒模型的时候  父元素必须要加display:box或display:inline-box;
+   
+   新版的弹性盒模型  display ：flex
+   
+     flex:  display:flex
+	 box:   display:-webkit-box
+   
+   box-orient定义盒模型的主轴方向
+    flex:  flex-direction:row || column
+	box:   -webkit-box-orient
+     Horizontal  水平方向
+	 vertical  垂直方向
+	 
+   box-direction  元素排列顺序
+    flex:  flex-direction:row-reverse / column-revese
+	box:   -webkit-bix-direction
+      normal  正序
+	  reverse 反序
+	  
+  box-pack 主轴方向富裕的空间管理
+   flex:  justify-content:flex-start / flex-end / center / space-between / space-around
+   box:  -webkit-box-pack
+    start 所有子元素在盒子左侧显示，富裕空间在右侧
+	End  所有子元素在右侧显示，富裕空间在左侧
+	Center  所有子元素剧中
+	justify  富裕空间在子元素之间平均分布
+	
+  box-align 侧轴方向富裕的空间管理
+   flex:  align-items:flex-start / flex-end / center / baseline 
+    Star 所有子元素在据顶
+	End 所有子元素在据底
+	Center 所有子元素居中
+ */
+ 
+ /*
+   Box-flex 定义盒子的弹性空间
+     flex:  flex-grow
+	 box:  -webkit-box-flex
+     子元素分尺寸 = 盒子的尺寸*子元素的box-flex属性值/所有子元素的box-flex属性值的和
+	 
+  box-ordinal-group 设置元素的具体位置
+    flex:  order
+	box:  -webkit-box-ordinal-group
+ */
+ 
+ /*
+   响应式  ：一个网站能够兼容多个终端，并且在各个终端都可以很好展示体现
+   
+   
+   
+   
+ */
+ 
+ /*
+  Touch  移动端事件
+    touchstart  手指触摸 
+	touchmove   手指移动
+	touchend    手指离开
+	
+	注意：
+	  在移动端开发的时候，浏览器的模拟器时好时坏，一般不用on的方式绑定事件函数，要用事件绑定的方式
+	  
+	  PC上的事件比移动端的事件略慢，大概是在300ms左右
+	
+	移动端的点透：
+	  当上层元素发生点击的时候，下层元素也有点击（焦点）特性，
+	  在300ms之后，如果上层元素消失或者隐藏，目标点就会“飘移”到下层元素身上，就会触发点击行为
+	  
+	  解决： 
+	    1  下层不要使用有点击（焦点）特性的元素
+		2  阻止PC事件
+	  
+	  阻止PC端的优点
+		1 ios10的缩放的问题（使用阻止pc事件）
+		2 ios10的overflow：hidden的问题
+		3 禁止系统默认的滚动条，阻止橡皮筋效果
+		4 禁止长按选中文字，选中图片，系统默认的菜单
+		5 点透问题
+		6 组织了焦点元素的焦点行为 (要在正常使用 用ev.stopPropagation())
+		
+		
+		
+	$('#guideShowCtn1').touchmove(function (e) {
+        console.log(e.changedTouches[0]);
+        console.log(e.targetTouches[0]);
+        console.log(e.touches[0]);
+    });
+	
+	
+	事件对象
+	  当给某个元素加上的事件绑定函数之后，事件函数默认的第一个参数就是事件对象
+	  
+	  当用户在浏览器下触发了某个行为，事件函数对象会记录用户操作时一些细节信息
+	  
+	  ev.touches  当前位于屏幕上的所有手指的一个列表
+	  ev.targetTouches  位于当前DOM元素的手指的一个列表
+	  ev.changedTouches 涉及当前事件的一个列表
+	  
+ */
+ 
+ //window.onload = function(){
+	 //var odiv = document.getElementById('box');
+	 //var op = document.getElementById('p1');
+	 //var oa = document.getElementById('a1');
+	 
+	// var ot = document.getElementById('btn');
+	 
+	 /*odiv.ontouchstart = function(){
+	   console.log(1);
+	 }*/
+	 
+	 
+	 
+	 /*document.addEventListener('touchstart',function(e){
+	   var ev = ev||event;
+	   //console.log(1)
+	   e.preventDefault();
+	 },false);*/
+	 
+	 document.addEventListener('touchstart',function(ev){
+	     var ev = ev||event;
+         ev.preventDefault();
+     })
+	 
+	 //odiv.addEventListener('touchend',function(ev){
+	   //this.style.display = 'none';
+	   
+	   //this.innerHTML = ev.touches.length;
+	   //this.innerHTML = ev.targetTouches.length;
+	   //this.innerHTML = ev.changedTouches.length;
+	   
+	// });
+	 
+	/* op.addEventListener('touchstart',function(){
+	   alert(1)
+	 },false);*/
+	 
+	// oa.addEventListener('touchstart',function(){
+	   //console.log(1);
+	  // window.location.href = 'http://www.miaov.com';
+	 //},false);
+	 
+	 //ot.addEventListener('touchstart',function(ev){
+	 //  ev.stopPropagation();
+	 //});
+	 
+	 
+	 
+	 
+// }
+ 
+ 
+ /*
+   transform 2d样式  变换  移动端要加上-webkit-
+   
+     rotate(20deg)  skew(20deg) 斜切 shewX skewY  scale(1.2) 缩放 scaleX scaleY  translate(20px) 位移 translaeX translateY
+	 
+	 transform-origin   变化基点  center left right  数值
+	 
+	 transform的执行顺序 先写后执行
+	 
+	matrix(1,0,0,1,0,0)
+	matrix(a,b,c,d,e,f);
+	
+	位移  
+	  x轴 e = e+x
+	  y轴 f = f+y
+	  
+	缩放
+	  x轴 a = a*x  c = c*x  e = e*x
+	  y轴 b = b*x  d = d*x  f = f*x
+	  
+	斜切
+	  x轴  c = Math.tan(xdeg/180*Math.PI)
+	  y轴  b = Math.tan(ydeg/180*Math.PI)
+	  
+	 旋转
+	    a = Math.cos(xdeg/180*Mat.PI);
+		b = Math.sin(xdeg/180*Math.PI);
+		c = -Math.sin(xdeg/180*Math.PI);
+		d = Math.cos(xdeg/180*Math.PI);
+		
+	 
+	3d 相关样式
+	  rotateX  rotateY  rotateZ  rotate3D
+	  
+	  translateX  translateY  translateZ  translate3d
+	  
+	  transform-style   元素在做3d变换时，是否保留子元素的3d变换
+	    flat  不保留
+		preserve-3d  保留子元素3d变换
+		
+      perspective-origin ：center center; 变换基点
+	  
+	  backface-visibility:hidden    隐藏背面
+	  
+ */
+ //window.onload = function(){
+   //var odiv = document.querySelector('#div1');
+   
+   //odiv.addEventListener('touchstart',function(){
+     //odiv.style.WebkitTransform = odiv.style.transform = 'rotate(90deg)';
+	 
+	 //odiv.style.WebkitTransform = odiv.style.transform = 'skew(20deg)';
+	 
+	 //odiv.style.WebkitTransform = odiv.style.transform = 'scale(2)';
+	 
+	 //odiv.style.WebkitTransform = odiv.style.transform = 'translate(20px)';
+	 
+	// cssTransform(this,'rotate',30);
+	 
+  // });
+   
+// }
+ 
+ /*function cssTransform(element,attr,val){
+ 
+   if(!element.transform){
+     element.transform = {};
+   }
+   
+   if(typeof val == 'undefined'){
+     var val = element.transform[attr];
+     if(!element.transform[attr]){//没有设置 返回默认值
+	   switch(attr){
+	     case "scale":
+		 case "scaleX":
+		 case "scaleY":
+		 case "scaleZ":
+		   element.transform[attr] = 100;
+		   break;
+		 default:
+		   element.transform = 0;
+	   }
+	 }
+     return element.transform[attr];
+   }else{
+     element.transform[attr] = val;
+	 var transformval = '';
+	 for(var s in element.transform){
+		 switch(s){
+		   case "scale":
+		   case "scaleX":
+		   case "scaleY":
+		   case "scaleZ":
+			 transformval += " "+s + "("+val/100+")";
+			 break;
+		   case "rotate":
+		   case "rotateX":
+		   case "rotateY":
+		   case "rotateZ":
+		   case "skewX":
+		   case "skewY":
+			 transformval += " "+s + "("+val+"deg)";
+			 break;
+		   default:
+			 transformval += " "+s + "("+val+"px)";
+			 break;
+		 }
+		 element.style.WebkitTransform = element.style.transform = transformval;
+	 }
+	 
+   }
+ }*/
+ 
+ /*
+   陀螺仪相关事件
+     devicemotion（检测手机晃动）
+	   -accelerationIncludingGravity  加速度对象
+	   x x方向加速度
+	   y y方向加速度
+	   z z方向加速度
+	   
+	   ios和安卓的差异
+	   
+	   var u = navigator.userAgent;
+	   var isAndroid = u.indexOf('Android')>-1||u.indexOf('Adr')>-1;
+	   var isiOS = !!u.match(/\(i[^;]+;(u;)?cpu.+Mac OS X/))
+ */
+window.onload = function(){
+ 
+    var box = document.querySelector('#box');
+	css(box,'translateX',0);
+	window.addEventListener('devicemotion',function(ev){
+	  var motion = ev.accelerationIncludingGravity;
+	  var x = Math.round(motion.x);
+	  var y = Math.round(motion.y);
+	  var z = Math.round(motion.z);
+	  
+	  var tx = css(box,'translateX')
+	  
+	  if(getAdr){
+	    x = -x;
+		y = -y;
+		z = -z; 
+	  }
+	  css(box,'translateX',tx+x);
+	  //box.innerHTML = 'x:'+x + ' y:' + y + ' z:' + z;
+	  
+	})
+ 
+}
+
+function getAdr(){
+  var u = navigator.userAgent;
+  var isAndroid = u.indexOf('Android')>-1||u.indexOf('Adr')>-1;
+  //var idiOS = !!u.match(/\(i[^;]+;( u;)?CPU.+Mac OS X/);
+  return isAndroid;
+}
+
+/*
+  摇一摇
+  
+ */
+ var box = document.querySelector('box');
+ (function(){
+   var lastx ;
+   var lasty ;
+   var lastz ;
+   //var maxnum = 0;
+   var rodeg = 80;
+   var maxrodeg = 80;
+   var minrodeg = 10
+   var isbtn = false;
+   
+    //摇一摇记录上一次的加速度，和当前加速度的相减差值大于一定幅度的时候，就可以认定用户在进行摇一摇
+   
+   window.addEventListener('devicemotion',function(ev){
+	  var motion = ev.accelerationIncludingGravity;
+	  var x = Math.round(motion.x);
+	  var y = Math.round(motion.y);
+	  var z = Math.round(motion.z);
+	  
+	  if(typeof lastx == 'undefined'){
+	    lastx = x;
+		lasty = y;
+		lastz = z;
+		return;
+	  }
+	  var dis = Math.abs(x-lastx)+Math.abs(y-lasty)+Math.abs(z-lastz);
+	  if(dis>maxrodeg){
+	    isbtn = true;
+	  }
+	  if(dis<minrodeg&&isbtn){
+	    isbtn = false;
+		alert(2)
+	  }
+	  lastx = x;
+   	  lasty = y;
+      lastz = z;
+	  
+	})
+ })()
+    
+/*
+ 横竖屏切换
+   orientationchange
+     window.orientation
+*/
+/*setchange();
+window.addEventListener('orientationchange',function(ev){
+  //window.orientation  
+  //横屏 90 -90
+  //竖屏 0  180
+  //alert(2)
+  
+  setchange()
+  
+});
+
+function setchange(){
+  var opop = document.querySelector('#opop');
+  
+  if(window.orienttation == 90||window.orientation == -90){
+    pop.style.display = 'block';
+  }else{
+    pop.style.display = 'none';
+  }
+  
+}*/
+
+function setchange(){
+  var opop = document.querySelector('#opop');
+  var box = document.querySelector('box');
+  if(window.orienttation == 90||window.orientation == -90){
+    css(box,'rotate',90)
+  }else{
+    css(box,'rotate',0)
+  }
+  
+}
+
+function setstyle(){
+  var box = document.querySelector('box');
+  var w = window.screen.width;
+  var h = window.screen.height;
+  box.style.left = '50%';
+  box.style.width = w + 'px'
+  box.style.height = h + 'px'
+  box.style.margin = -h/2 + 'px 0 0 '+(-w/2)+'px';
+}
+
+  /*
+  检测手机倾斜角度
+    deviceorientation 
+	  ev.alpha(rotateZ)
+	  ev.beta(rotateX)
+	  ev.gamma(rotateY)
+ */
+ window.addEventListener('deviceorinetatoin',function(ev){
+   var x = Math.round(ev.beta);
+   var y = Math.round(ev.gamma);
+   var z = Math.round(ev.alpha);
+   box.innerHTML = 'x:'+x + ' y:' + y + ' z:' + z;
+ });
+ 
+ /*
+   多指操作
+     gesture  只有ios有  安卓没有这个事件
+ */
+ window.onload = function(){
+ 
+   document.addEventListener('touchstart',function(ev){
+     ev.preventDefault();
+   });
+ 
+   //当手指触摸元素，当前屏幕上有两根或两根以上的手指执行
+   box.addEventListener('gesturestart',function(ev){
+     this.style.backgrond = 'blue';
+   });
+    
+    //当我们触发了gesturestart时，然后抬起手指，这时屏幕上的手指个数少于两个或者当前元素没有手指，就会触发gestureend
+   box.addEventListener('gestureend',function(ev){
+     this.style.backgrond = 'red';
+   });
+   
+   //当我们触发了gesturestart时，手指位置发生改变时触发
+   box.addEventListener('gesturechange',function(ev){
+      //ev.scale  change时，两根手指之间距离 和start时两根手指之间的距离比值
+	  //ev.rotation  旋转角度差  change时两根手指形成的直线和start时形成的直线中间形成夹角，
+	  
+   });
+   
+   setgesture({
+     el:box,
+	 start:function(e){
+	   this.style.background = 'blue';
+	 },
+	 change:function(ev){
+	   //ev.scale
+	   //ev.rotation
+	 },
+	 end:functin(){
+	   this.style.background = 'red';
+	 }
+   })
+   
+ }
+ 
+ /*
+   init:{
+     el：  元素
+	 start ： fn//gesturestart 要做的操作
+	 change：fn//gesturechange 要做的操作
+	 end:  fn//gestureend  要做的操作
+   };
+ */
+ function setgesture(init){
+   var el = init.el;
+   var isbtn = false;
+   var startpoint = [];
+   if(!el){
+     return;
+   }
+   
+   el.addEventListener('touchstart',function(ev){
+     if(ev.touches.length>=2){
+	    isbtn = true; //记录当前用户触发了gestur
+		init.start&&init.start.call(el,ev);
+		startpoint[0] = {x:ev.touches[0].pageX,y:ev.touches[0].pageY}
+		startpoint[1] = {x:ev.touches[1].pageX,y:ev.touches[1].pageY}
+	 }
+   });
+   
+   el.addEventListener('touchmove',function(ev){
+     if(isbtn&&ev.touches.length>=2){
+	    var nowpoint = [];
+	    nowpoint[0] = {x:ev.touches[0].pageX,y:ev.touches[0].pageY};
+		nowpoint[1] = {x:ev.touches[1].pageX,y:ev.touches[1].pageY};
+	    var startdis = getdis(startpoint[0],startpoint[1]);
+		var nowdis = getdis(nowpoint[0],nowpoint[1]);
+		var startdeg = getdeg(startpoint[0],startpoint[1]);
+		var nowdeg = getdeg(nowpoint[0],nowpoint[1]);
+		ev.scale = noedis/startdis;
+		ev.rotation = nowdeg - startdeg;
+		init.change&&init.change.call(el,ev)
+	 }
+   });
+   
+   el.addEventListener('touchend',function(ev){
+     if(isbtn){
+	    if(ev.touches.length<2||ev.targetTouches.length<1){
+		  isbtn = false;
+		  init.end&&init.end.call(el,ev);
+		}
+	 }
+   });
+   
+ }
+ 
+ //角度转弧度 deg*Math.PI/180
+ //弧度转角度 rad*180/Math.PI
+ 
+ function getdis(point1,point2){
+   var x = point2.x - point1.x;
+   var y = point2.y - point1.y;
+   return Math.sqrt(x*x+y*y);
+ }
+ function getdeg(point1,point2){
+   var x = point2.x - point1.x;
+   var y = point2.y - point1.y;
+   
+   return Math.atan2(y,x)*180/Math.PI;
+   
+ }
