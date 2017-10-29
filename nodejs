@@ -1,0 +1,658 @@
+/*
+*
+	NodeJs和javascript的异同
+	  ECMAScript
+	  语法
+	  内置对象 方法
+	顶层对象
+	  javascript：  window
+	  nidejs  global
+
+	  在ecmascript中nodejs和js其实是一样的
+
+	  js顶层对象是window
+	  node中没有window 顶层对象是global
+* */
+
+// var a = 100;
+// console.log(a)
+
+// var d = new Date();
+// console.log(d.getFullYear())
+//
+// var arr = [1,2,3];
+// arr.push(4)
+// console.log(arr);
+
+// function per(name){
+//     this.name= name;
+// }
+//
+// per.prototype.run = function(){
+//     console.log(this.name + ' runing')
+// }
+//
+// var p1 = new per('leo')
+//
+// p1.run();
+
+// var a = 100;
+// console.log(global.a)  // undefined
+
+/*
+* 一个文件就是一个模块
+* 每个模块都有自己的作用域
+* 我们使用var来申明一个变量 ，他并不是全局的而是属于当前模块下的
+* */
+
+// var a = 100;
+//
+// global.a = 200;
+// console.log(a)
+// console.log(global.a)
+
+//__filename  当前文件被解析的绝对路径
+
+
+// console.log(__filename)
+
+/*
+* 模块的加载和使用
+*  require（‘模块’）
+*    模块路径可以是一个以/开头的 表示一个绝对路径
+*    模块路径以./开头表示当前目录
+*    模块路径如果没有以/或者./开头，那么这个模块要么是核心模块 要么是
+*   node_modules文件夹下的
+*    所以，需要注意的是./和没有./或/开头的路径市和我们常理上的使用结果是不一样的
+* */
+
+//require('./2.js');
+
+/*
+* 模块加载机制
+*   路径
+*     相对路径
+*       require('./2.js')
+*     绝对路径
+*       require （‘G:/node练习/ecma/2.js’）
+* */
+
+//require('2.js'); //加载node中的核心模块或者是node_modules
+
+/*
+* 1 首先按照加载的模块的文件名进行查找
+* 2 如果没有找到，则会在该模块文件名称后面加上.js的后缀，进行查找
+* 3 如果还没找到，则会在文件名称后面加上.json后缀
+* 4  加上.node的后缀，进行查找
+* */
+//require('./2');
+
+/*
+* 在一个模块中通过var定义的变量，其作用域是当前模块，外部不能直接的访问
+* 如果我们想一个模块能访问外部另一个模块定义的变量， 可以
+*  1 把变量作为global对象的一个属性  不推荐  var global.a = 100
+*  2 使用模块对象，module  保存和提供当前模块有关的一些信息
+*     在这个module对象， exports对象
+*     我们可以通过这个对象把一个模块中的局部变量进行提供访问
+*     这个方法的返回值，其实就是被加载模块中的module.exports
+*
+*   在模块作用域，还有一个内置的额模块对象，exports 他其实就是module.exports
+*
+*
+*
+* */
+
+//var m5 = require('./5');
+
+//console.log(module)
+
+//module.exports.a = 100;
+
+//console.log(m5)
+
+//console.log(module.exports == exports)
+
+// // exports.a = a
+// module.exports = [1,2,3,2];  //exports和module.exports的引用关系已经断开了
+// exports.a  = 100;
+
+
+/*
+* __filename  返回当前模块文件的解析后绝对路径该属性其实并非全局对象，而是模块作用域下的
+*
+* __dirname返回当前模块解析后的绝对路径，该属性也不是全局的，而是该模块作用域下的
+* */
+//console.log(global.__filename)
+//console.log(__filename)
+//console.log(__dirname)
+
+// var d = new Date();
+// var ar = new Array(1,2,3)
+
+
+// setInterval(function(){
+//     var d = new Date();
+//     console.log('现在是：'+d.getFullYear()+ ' 年'+(d.getMonth()+1)+ '月'+ d.getDate()+'日')
+// },1000)
+
+/*
+global
+  process对象
+    process对象是一个全局对象，可以在任何地方都能访问到他，通过这个对象
+    提供的属性和方法，使我们可以对当前运行的程序的进行访问和控制
+
+  argv
+    Array 一组包含命令行的数组
+  execPath
+    开启当前进程的绝对路径
+  env
+    返回用户环境信息
+  version
+    返回node以及node依赖包版本的信息
+  pid
+    当前进程的pid
+  title
+    当前进程的显示名称（Getter/Setter）
+  arch
+    返回当前CPU处理器架构arm/ia32/x64
+  platform
+    返回当前操作系统平台
+  cwd()
+    返回当前进程的工作目录
+  chdir(directory)
+    改变当前进程的工作目录
+  memoryUsage()
+    返回node进程的内存使用情况，单位是byte
+  exit(code)
+    退出
+  kill(pid)
+    想进程发送消息
+
+*/
+
+// console.log(process)
+// console.log(global.process)
+
+// console.log(process.argv)
+
+// console.log(process.execPath)
+// console.log(process.env)
+// console.log(process.pid);
+//console.log(process.title);
+//console.log(process.arch)
+
+// setTimeout(function(){
+//     process.exit();
+// }, 5000)
+
+
+/*
+* process对象
+*   stdin  stdout   标准输入输出流 （IO）
+*     标准输入设备： http://baike.baidu.com/view/632680.htm
+*     标准输出设备： http://baike.baidu.com/view/632676.htm
+*     stdin和stdout提供了操作输入数据和输出数据的方法，我们也通常称为IO操作
+*    stdin
+*      标准输入流
+*    stdout
+*      标准输出流
+* */
+// function log(data){
+//     process.stdout.write(data)
+// }
+//
+// log('你好')
+
+
+//默认情况下输入流是关闭状态，要监听处理输入流数据，首先要开启输入流
+ //process.stdin.resume();
+//用于监听用户的输入数据
+// process.stdin.on('data', function(chunk){
+//   console.log('输入'+chunk)
+// })
+
+// var a;
+// var b;
+// process.stdout.write('请输入a的值')
+// process.stdin.on('data', function(chunk){
+//     if(!a){
+//         a = Number(chunk)
+//         process.stdout.write('请输入b的值')
+//     }else{
+//         b = Number(chunk)
+//         process.stdout.write('结果是： ' + (a+b))
+//     }
+// })
+
+/*
+Buffer 类
+  一个用于更好的操作二进制数据的类
+    我们在操作文件或者网络数据的时候，其实操作的就是二进制数据流，Node为我们
+    提供了一个更加方便的去操作这种数据的类Buffer，他就是一个全局的类
+
+  new Buffer(size)
+  new Buffer(array)
+  new Buffer(string, [encoding])
+*/
+
+
+// new Buffer(size)  size[Number] 创建一个Buffer对象，并未这个对象分配一个大小
+//当我们为一个Buffer对象分配一个大小以后其长度是固定的，不能更改
+// var bf = new Buffer(5);
+// console.log(bf)
+// bf[6] = 10;
+
+// new Buffer(array)
+// var bf = new Buffer([1,2,3])
+// console.log(bf)
+// bf[10] = 10;
+// console.log(bf)
+
+//new Buffer(string, [encoding])
+// var bf = new Buffer('miaov', 'utf-8')
+// console.log(bf)
+//
+// for(var i=0;i<bf.length;i++){
+//     // console.log(bf[i].toString(16));
+//     console.log(String.fromCharcode(bf[i]));
+// }
+
+// var str1 = 'miaov';
+// var bf1  = new Buffer(str1);
+//
+// console.log(str1.length);
+// console.log(bf1.length);
+//
+// var str2 = '妙味';
+// var bf2  = new Buffer(str2);
+//
+// console.log(str2.length);
+// console.log(bf2.length);
+
+/*
+Buffer类
+  buf.length  buffer的bytes的大小
+  buffer[index]: 获取或设置在制定指定index索引位置的8位字节内容
+  buf.wirte(string, [offser], [length], [encoding]);根据参数offset
+  偏移量和指定的encoding编码方式，将参数string数据写入buffer
+  buf.toString([encoding], [start], [end]); 根据encoding参数（默认是‘utf-8’）
+  返回一个解码的sting类型
+  buf.toJSON()  返回一个JSON表示的Buffer实列
+  JSON.stringify将会默认调用来字符串序列化这个Buffer实列
+  buf.slice([start], [end]); 返回一个新的buffer，这个buffer将会和老的
+  buffer引用相同的内存地址，注意： 修改这个新的buffer实列slice切片，也会改变
+  原来的bufffer
+  buf.copy(targetBuffer, [targetStart], [sourceStart],[sourceEnd])
+  进行buffer的拷贝
+*/
+
+// var str = 'miaov';
+// console.log(new Buffer(str))
+// var bf = new Buffer(5);
+
+// bf.write(str)
+// console.log(bf)
+
+// bf.write(str, 1)
+// console.log(bf);
+
+// bf.write(str, 1, 3)
+// console.log(bf);
+
+// bf.write(str, 1, 3)
+// console.log(bf);
+
+ // var bf = Buffer('miaov');
+// console.log(bf.toString());
+// console.log(bf.toString('utf-8', 1));
+// console.log(bf.toString('utf-8', 1, 3));
+//
+// var bf2 = new Buffer('妙味')
+// console.log(bf2);
+// console.log(bf2.toString('utf-8', 1))
+
+// console.log(bf.toJSON())
+
+//var bf = new Buffer('miaov');
+
+// var bf2 = bf.slice();
+// console.log(bf2)
+
+// var bf2 = bf.slice(2);
+// console.log(bf2)
+
+// var bf2 = bf.slice(2, 4);
+// console.log(bf2)
+
+// var bf3 = new Buffer(10);
+// bf.copy(bf3);
+// console.log(bf3)
+//
+// bf3[0] = 2;
+// console.log(bf);
+//
+// bf.copy(bf3, 1)
+// console.log(bf3)
+// bf.copy(bf3, 1, 2, 4)
+// console.log(bf3)
+
+/*
+  buf.write();
+*/
+
+// var str = 'miaov';
+// var bf = new Buffer(5);
+// bf.write(str)
+// console.log(bf)
+
+
+/*
+  buffer  的类方法  也叫静态方法
+  Buffer.isEncoding(encoding)  如果给定的编码encoding是有效的，返回值true
+  否则返回false。
+  Buffer.isBuffer(obj),测试这个obj是否是一个Buffer
+  Buffer.byteLength(string,[encoding]); 将会返回这个字符串真实byte长度
+  encoding编码默认是；‘utf-8’
+  Buffer.concat(list,[totalLength]); 返回一个保存着将传入buffer数组中
+  所有buffer对象拼接在一起的buffer对象
+*/
+
+// console.log(Buffer.isEncoding('utf-8'))
+// console.log(Buffer.isEncoding('jbk'))
+// console.log(Buffer.isEncoding('hex'))
+
+// var arr = [1,2,3]
+// var bf = new Buffer(10)
+//
+// console.log(Buffer.isBuffer(arr));
+// console.log(Buffer.isBuffer(bf))
+
+// var str1 = 'miaov';
+// console.log(str1.length);
+// console.log(Buffer.byteLength(str1));
+//
+// var str2 = '妙味';
+// console.log(str2.length);
+// console.log(Buffer.byteLength(str2,'ascii'));
+// console.log(Buffer.byteLength(str2,'utf-8'));
+
+// var str1 = 'miaov';
+// var str2 = '妙味';
+//
+// var list = [new Buffer(str1), new Buffer(str2)];
+// console.log(list);
+//
+// var bf = Buffer.concat(list, 11);
+// console.log(bf)
+
+// process.stdout.write('请输入内容');
+//
+// process.stdin.resume();
+// process.stdin.on('data', function(chunk){
+//     //console.log(chunk.toString())
+//     console.log('请输入内容是：'+chunk)
+// })
+
+
+
+/*
+* fs 模块
+*
+*   File Ststem  文件系统模块  resquire('fs')
+*     该模块是核心模块，需要使用require导入后使用
+*     该模块提供了操作文件的一些API
+*
+*     fs.open(path, flags, [mode], callback)
+*        path:  要打开文件的路径
+*        flags:  打开文件的方式  读/写
+*        mode: 设置文件的模式  读/写/执行  4/2/1  0777
+*        callback: 回掉
+*           err:  文件打卡的错误保存在err里面  如果成功err为null
+*           fd:  被打开文件的标识， 和定时器相似
+*       异步版的打开一个文件
+*     fs.openSync(path, flags, [mode])
+*       fs.open()同步版
+*     fs.read(fd, buffer, offset, length, position, callback)
+*       从指定的文档标识符fd读取文件数据
+*     fs.readSync(fd, buffer, offset, length, position)
+*       fs.read 函数的同步版本， 返回bytesRead的个数
+* */
+
+var fs = require('fs');
+// fs.open('1.txt', 'r', function(err, fd){
+//     // console.log(err)
+//     // console.log(fd)
+//     if(err){
+//         console.log('文件打开失败')
+//     }else{
+//         console.log('文件打开成功')
+//         console.log(fd)
+//     }
+// })
+//
+// fs.open('1.txt', 'r', function(err, fd){
+//     console.log(fd)
+// })
+
+
+// fs.openSync('1.txt', 'r', function(err, fd){
+//     console.log(fd)
+// })
+//  console.log('ok')
+
+// var  fs = require('fs');
+//
+// fs.open('1.txt', 'r', function(err, fd){
+//     if(err){
+//         console.log('打不开')
+//     }else{
+//         // 读取文件  fs.read(fd, buffer, offset, length, position, callback)
+//         // fd:  通过open方法成功打开一个文件返回的编号
+//         // buffer
+//         // offset：新的内容添加到buffer中起始位置
+//         // length：添加到buffer中内容的长度
+//         // position：读取的文件中的起始位置
+//         //callback： 回掉
+//           //  err
+//           //  buffer的长度
+//           //  buffer的新对象
+//
+//         var bf1 = new Buffer('1234556');
+//
+//         console.log(bf1)
+//
+//         fs.read(fd, bf1, 0, 4, null, function(err, len ,newbuffer ){
+//             console.log(bf1)
+//             console.log(len);
+//             console.log(newbuffer)
+//         })
+//     }
+// });
+
+/*
+* File System  文件系统模块  reqiure('fs')
+*  fs.write(fd, buffer, offset, length[.position], callback)
+*    通过文件标识fd，向指定的文件写入buffer
+*  fs.write(fd, data[, position[, encoding]], callback)
+*    把data写入到文档中通过指定的fd，如果data不是buffer对象的实列
+*    则会把值强制转化成一个字符串。
+*  fs.writeSync(fd, buffer, offset, length[, position])
+*    fs.write()的同步版本
+*  fs.close(fd, callback)
+*    关闭一个打开的文件
+*  fs.closeSync(fd)
+*    fs.close()的同步版本
+* */
+
+// var fs = require('fs');
+//
+// fs.open('1.txt', 'r+', function(err,fd){
+//     // 当我们要对打开的文件进行读写操作时， 打开文件的模式应该是r+
+//     //fs.write(fd, buffer, offset, length[.position], callback)
+//      // fd
+//      // buffer: 要写入的数据
+//      // offfset:  buffer对象中要写入的数据的起始位置
+//      // length:  要写入buffer的长度
+//      // callback:  回掉
+//     if(err){
+//         console.log('错误')
+//     }else{
+//         // var bf = new Buffer('123');
+//         // fs.write(fd, bf, 0, 3, 0, function(){
+//         //     console.log(arguments)
+//         // })
+//
+//         fs.write(fd, '1234', 0, 'utf-8', function(){})
+//         fs.close('fd', function(){});
+//
+//     }
+// })
+
+/*
+* File Sytem  文件系统模块  -require('fs')
+*  fs.writeFile(filename, data, [options], callback)
+*    异步的将数据写入一个文件，如果文件不存在则新建， 如果文件原先
+*    存在， 则会被替换， data可以是一个sring，也可以是一个原生buffer
+*  fs.writeFileSync(filename, data, [options])
+*    fs.writeFile的同步版本，注意，没有callback， 也不需要
+*
+*  fs.appendFile(filename, data, [options], callback)
+*    异步的将数据添加到一个文件的尾部，如果文件不存在，会创建一个新的文件，
+*    data可以是一个string， 也可以是原生buffer
+*  fs.appendFileSync(filename, data, [options])
+*    fs.appendFile的同步版本
+* */
+
+// var fs = require('fs');
+//
+// var filename = '2.txt';
+
+/*
+* 向一个指定文件中写入数据，如果文件不存在，则新建，如果存在则会覆盖原有
+* 的内容
+* */
+
+// fs.writeFile(filename, 'hello', function(){
+//     console.log(arguments)
+// })
+
+// fs.appendFile(filename, 'leo', function(){
+//     console.log(arguments)
+// })
+
+/*
+* File System
+*   fs.readFile(filename, [options], callback)
+*     异步读取一个文件的全部内容
+*   fs.readFileSync(filename, [options])
+*     fs.readFile的同步版本
+*
+*   fs.exists(path, callback)
+*     检查指定路径的文件或者目录是否存在
+*   fs.existsSync(path)
+*     fs.exists的同步版本
+*
+*   fs.unlink(path, callback)
+*     删除一个文件
+*   fs.unlinkSync(path)
+*     fs.unlink()的同步版本
+* */
+
+
+// fs.exists(filename, function(isExists){
+//     //console.log(isExists);
+//     if(!isExists){
+//         fs.writeFile(filename, 'miaov', function(err){
+//             if(err){
+//                 console.log('出错了')
+//             }else{
+//                 console.log('创建新文件成功')
+//             }
+//         })
+//     }else{
+//         fs.appendFile(filename, '-leo', function(err){
+//             if(err){
+//                 console.log('新的内容追加失败')
+//             }else{
+//                 console.log('新的内容追加成功')
+//             }
+//         })
+//     }
+// })
+
+// if(!fs.existsSync(filename)){
+//     fs.writeFileSync(filename, 'miaov')  // 无返回值
+//     console.log('新文件创建成功')
+//     // if(fs.writeFileSync(filename, 'miaov')){
+//     //     console.log('新文件创建成功')
+//     // }else{
+//     //     console.log('新文件创建失败')
+//     // }
+// }else{
+//     fs.appendFileSync(filename, '-leo')
+//     console.log('新内容追加成功')
+//     // if(fs.appendFileSync(filename, '-leo')){
+//     //     console.log('新内容追加成功')
+//     // }else{
+//     //     console.log('新内容追加失败')
+//     // }
+// }
+
+// var fs = require('fs');
+//
+// fs.readFile('2.txt', function(err, data){
+//     //console.log(arguments);
+//     if(err){
+//         console.log('文件读取失败')
+//     }else{
+//         console.log(data.toString())
+//     }
+// })
+
+// fs.unlink('2.txt', function(err){
+//     if(err){
+//         console.log('删除失败')
+//     }else{
+//         console.log('删除成功')
+//     }
+// })
+
+/*
+* File System  文件系统模块
+*   fs.rename(oldPath, newPath, callback)
+*     重命名
+*   fs.renameSync(oldPath, newPath)
+*     fs.rename()的同步版本
+*
+*  fs.stat(path, callback)
+*    读取文件信息
+*  fs.statSync(path, callback)
+*    fs.stat()的同步版本
+*
+*  fs.watch(filename, [options], [lisener])
+*    观察指定路径额改变， filename路径可以市文件或目录
+*    不稳定
+* */
+
+// fs.rename('2.txt', '2.newtxt', function(){
+//     console.log(arguments)
+// })
+
+// fs.stat('2.newtxt', function(){
+//     console.log(arguments)
+// })
+
+// var fs = require('fs')
+//
+// var filename= '2.newtxt'
+//
+// fs.watch(filename, function(ev, fn){
+//     console.log(ev);
+//     if(fn){
+//         console.log(fn+'发生了改变')
+//     }else{
+//         console.log('....')
+//     }
+// })
+
+
