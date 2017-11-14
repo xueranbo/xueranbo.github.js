@@ -656,3 +656,368 @@ var fs = require('fs');
 // })
 
 
+/*
+File System 文件系统模块
+  fs.mkdir(path, [mode], callback)
+    创建文件夹
+  fs.mkdirSync(path, [mode])
+    fs.mkdir的同步版本
+
+  fs.readdir(path, callback)
+    读取文件夹
+  fs.readdirSync(path)
+    fs.readdir同步版本
+
+  fs.rmdir(path, callback)
+    删除文件夹
+  fs.rmdirSync(path)
+    fs.rmdir的同步版本
+*/
+
+// var fs = require('fs');
+
+// fs.mkdir('./1', function(){
+//     console.log(arguments)
+// })
+
+// fs.rmdir('./1', function(){
+//     console.log(arguments)
+// })
+
+// fs.readdir('./', function(err, fileList){
+//      // console.log(fileList)
+//     fileList.forEach(function(f){
+//         // console.log(f)
+//         fs.stat(f, function(err, info){
+//             // console.log(arguments)
+//             switch(info.mode){
+//                 case 16822:
+//                     console.log('[文件夹]'+f);
+//                     break;
+//                 case 33206:
+//                     console.log('[文件]'+f)
+//                     break;
+//                 default:
+//                     console.log('[其他类型]'+f)
+//                     break;
+//             }
+//         })
+//     })
+// })
+
+// fs.readdir('../FileSystem', function(err, fileList){
+//     console.log(fileList)  // undefined
+// })
+
+
+// var projectData = {
+//     'name': 'miaov',
+//     'fileData':[
+//         {
+//             'name': 'css',
+//             'type': 'dir'
+//         },
+//         {
+//             'name': 'js',
+//             'type': 'dir'
+//         },
+//         {
+//             'name': 'img',
+//             'type': 'dir'
+//         },
+//         {
+//             'name': 'index.html',
+//             'type': 'file',
+//             'content': '<html>\n\t<head>\n\t\t<title>title</title>\n\t</head>\n\t<body>\n\t\t<h1>Hello</h1>\n\t</body>\n</html>'
+//         }
+//     ]
+// }
+//
+//
+// var fs = require('fs');
+//
+// if(projectData.name){
+//     fs.mkdirSync(projectData.name);
+//     var fileData = projectData.fileData;
+//     if(fileData && fileData.forEach){
+//         fileData.forEach(function(f){
+//             f.path = projectData.name + '/' + f.name;
+//             f.content = f.content || '';
+//             switch(f.type){
+//                 case 'dir':
+//                     fs.mkdirSync(f.path)
+//                     break;
+//                 case 'file':
+//                     fs.writeFileSync(f.path, f.content)
+//                     break;
+//                 default:
+//                     break;
+//             }
+//         })
+//     }
+// }
+
+// var fs = require('fs');
+//
+// var filedir = './miaov/source';
+
+// fs.watch(filedir, function(ev, file){
+//     //console.log(ev + '/'+ file);// 这里不需要判断file是否有内容
+//     // 只要有一个文件发生变化，我们就需要对这个文件夹下的所有的进行读取操作，然后合并
+//
+//     fs.readdir(filedir, function(err, dataList){
+//         var arr = [];
+//         dataList.forEach(function(f){
+//             if(f){
+//                 var info = fs.statSync(filedir + '/' + f)
+//                 // console.log(info)
+//                 if(info.mode == 33206){
+//                     arr.push(filedir+'/'+f);
+//                 }
+//             }
+//         })
+//         //console.log(arr);
+//         //读取数组中的文件内容，并合并
+//
+//         var content = '';
+//         arr.forEach(function(f){
+//             var c = fs.readFileSync(f);
+//             //console.log(c)
+//             content += c.toString()+'\n'
+//         })
+//         console.log(content)
+//         fs.writeFile('./miaov/js/index.js', content, function(){});
+//     })
+// })
+
+
+/*
+* http://www.baidu.com
+*
+* http请求baidu.com =>
+*   1 用户通过浏览器发送一个http请求到指定的主机
+*   2 服务器接收到该请求，对该请求进行分析和处理
+*   3 服务器处理完成以后，返回对应的数据到用户机器
+*   4 浏览器接受服务器返回的数据，并根据接收到的数据进行分析和处理
+*
+*
+*   客户端    服务端
+*   由客户端发送一个http请求到指定的服务器 -》 服务器接受并处理 -》 返回数据到客户端
+*
+*
+* */
+
+/*
+* http模块  require('http')
+*   var http = require('http')
+*   var server = http.createServer([requestListener])
+*     创建并返回一个HTTP服务器对象
+*     requestListener： 监听到客户端连接的回调函数
+*   server.listen(port, [hostname], [backlog], [callback])
+*     监听客户端连接请求， 只有当前调用了listen方法以后，服务器才开始工作
+*     port： 监听的端口
+*     hostname： 主机名（ip/域名）
+*     backlog： 连接等待队列的最大长度
+*     callback： 调用listen方法并成功开启监听以后，会触发一个listening，cllback将作为该事件的执行函数
+*
+*
+* */
+
+/*
+* 搭建一个http的服务器，用于处理用户发送的http请求
+* 需要使用node提供一个模块 http
+* */
+
+// 加载一个http模块
+// var http = require('http')
+// //通过http模块下的createServer创建并返回一个web服务器对象
+// var server = http.createServer();
+//
+// server.on('error', function(err){
+//     console.log(err);
+// })
+//
+// server.on('listening', function(){
+//     console.log('listening....')
+// })
+//
+//  //http.STATUS_CODES
+//
+// server.on('request', function(req, res){
+//     console.log('有人进来了')
+//     // console.log(req)
+//     //res.write('hello')
+//
+//     //res.setHeader('miaov', 'leo');
+//
+//     res.writeHead(200, 'miaov', {
+//         //'content-type':'text/html' //plain 纯文本
+//         'content-type':'text/html;charset=utf-8'
+//     });
+//     res.write('<h1>hello<h1>')
+//     res.end();
+// })
+//
+// server.listen(8080, 'localhost');
+
+
+//console.log(server.address())
+
+/*
+* http 模块
+*   listening事件， 当server调用listen方法并成功开始监听以后触发的事件
+*   error事件： 当服务开启失败的时候触发的事件
+*     参数err：具体的错误对象
+*   request事件： 当有客户端发送请求到该主机和端口的请求的时候触发
+*     参数request：http.lncomingMessage的一个实列，通过他我们可以获取到这次请求的一些信息，比如头信息，数据等
+*     参数response： http.ServerResponse的一个实列，通过他我们可以想该请求的客户端输出返回响应
+* */
+
+/*
+* http模块
+*   参数request对象 -http.lncomingMessage
+*     httpVersion: 使用的http协议的版本
+*     headers： 请求偷信息中的数据
+*     url： 请求的地址
+*     method： 请求方式
+*   参数reponse对象 -http.ServerResponse
+*     write(chunk,[encoding]): 发送一个数据到响应正文中
+*     end([chunk], [encoding]): 当所有的正文和头信息发送完成以后调用该方法告诉服务器数据已经全部发送完成了，这个方法在每次完成信息发送以后调用，并且是最后调用。
+*     statusCode： 该属性用来设置返回的状态码
+*     setHeader(name, value); 设置返回头信息
+*     writeHead(statusCode, [reasonPhrase], [headers])
+*       这个方法只能在当前请求中使用一次，并且必须在response.end()之前调用
+* */
+
+/*
+* url  模块
+*   require('url')
+*     parse(require.url)  对url格式的字符串进行解析，返回一个对象
+*   根据不同的url进行处理，发牛不一样的数据
+*
+*   使用fs模块实现nodejs代码的html的分离
+*
+*   get请求的数据处理
+*   post请求的数据处理
+*     post发送的数据会被写入缓冲区中，需要通过resquest的data事件和end事件来进行数据拼接处理
+*   querystring模块
+*     parse()  将一个querystring反序列化为一个对象
+* */
+
+
+// var http = require('http');
+// var url = require('url');
+//
+// var server = http.createServer();
+//
+// //var urlstr1 = url.parse('http://www.baidu.com:8080/a/index.html?b=2#p=1')
+// //console.log(urlstr1)
+//
+// server.on('request', function(req, res){
+//     // console.log(req)
+//     // req.url 访问路径
+//     // ？后面的部分  query string
+//     //console.log(req.url)
+//
+//     var urlstr = url.parse(req.url);
+//     //console.log(urlstr)
+//
+//     switch(urlstr.pathname){
+//         case '/':
+//             //首页
+//             res.writeHead(200, {
+//                 'content-type':'text/html;charset=utf-8'
+//             });
+//             res.end('<h1>这是首页</h1>')
+//             break;
+//         case '/user':
+//             //用户首页
+//             res.writeHead(200, {
+//                 'content-type':'text/html;charset=utf-8'
+//             });
+//             res.end('<h1>个人中心</h1>')
+//             break;
+//         default :
+//             //处理其他情况
+//             res.writeHead(404, {
+//                 'content-type':'text/html;charset=utf-8'
+//             });
+//             res.end('<h1>页面出错</h1>')
+//             break;
+//     }
+//
+// })
+//
+// server.listen(8080, 'localhost')
+
+/*
+// var http = require('http');
+// var url = require('url');
+// var fs = require('fs');
+// var querystring = require('querystring')
+//
+// var server = http.createServer();
+//
+// var HtmlDir = __dirname + '/html/'
+//
+// server.on('request', function(req, res){
+//     var urlstr = url.parse(req.url)
+//
+//     switch(urlstr.pathname){
+//         case '/':
+//             //首页
+//             sendData(HtmlDir + 'index.html', req, res)
+//             break;
+//         case '/user':
+//             //用户首页
+//             sendData(HtmlDir + 'user.html', req, res)
+//             break;
+//
+//         case '/login':
+//             //用户登陆
+//             sendData(HtmlDir + 'login.html', req, res)
+//             break;
+//
+//         case '/login/check':
+//             //console.log(req.method);
+//             //console.log(urlstr);
+//             //console.log(querystring.parse(urlstr.query))
+//             if(req.method.toUpperCase() == 'POST'){
+//                 var str = '';
+//                 req.on('data', function(chunk){
+//                     str += chunk
+//                 })
+//                 req.on('end',function(){
+//                     console.log(str)
+//                     console.log(querystring.parse(str))
+//                 })
+//             }
+//             break;
+//
+//         default :
+//             //处理其他情况
+//             sendData(HtmlDir + 'err.html', req, res)
+//             break;
+//     }
+//
+// });
+//
+// function sendData(file, req, res){
+//     fs.readFile(file, function(err, data){
+//         if(err){
+//             res.writeHead(404, {
+//                 'content-type':'text/html;charset=utf-8'
+//             })
+//             res.end('<h1>页面出错</h1>');
+//         }else{
+//             res.writeHead(200, {
+//                 'content-type':'text/html;charset=utf-8'
+//             })
+//             res.end(data);
+//         }
+//     })
+// }
+//
+// server.listen(8080, 'localhost')
+
+*/
