@@ -285,25 +285,7 @@ echo 1.5;*/
 //	echo $value['time'].'<a href="#">'.$value['title'].'</a>'.$value['link'].'<br>';
 //};
 	
-//三位数组
-$newsList = array(
-   array(
-    'time' => '05-17',
-    'title' => 'news1',
-    'link' => 'miaov.com',
-    'isNew' => 'yes'
-   ),
-   array(
-    'time' => '05-17',
-    'title' => 'news1',
-    'link' => 'miaov.com',
-   ),
-   array(
-    'time' => '05-17',
-    'title' => 'news1',
-    'link' => 'miaov.com',
-   )
-);
+
 	
 	
 
