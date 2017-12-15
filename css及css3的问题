@@ -296,6 +296,8 @@ taansition 过度
          d=Math.cos(deg/180*Math.PI);
          
            ie下有旋转基点的问题
+            obj.style.left = (obj.parentNode.offsetWidth-obj.offsetWidth)/2+'px'
+            obj.style.top = (obj.parentNode.offsetHeight-obj.offsetHeight)/2+'px';
            
         通过矩阵实现缩放
           x轴缩放  a=x*a c=x*c e=x*e
@@ -311,7 +313,68 @@ taansition 过度
          filter：
            progid:DXImageTransform.Microsoft.Matrix(M11=1,M12=0,M21=0,M22=0,SizingMethod='auto expand')
              M11 == a M12 == c M21 == b M22 == d
+             
+     3d  变换  需加前缀
+       tranform-style(preserve-3d)  建立3d空间  父级加3d空间
+       perspective: 800px  景深  父级加景深
+       perspective-origin  景深基点  站在哪个位置看此元素
+       backface-visibility 隐藏背面
+       transform  新增函数
+         rotateX()  水平旋转
+         rotateY()  垂直旋转
+         rotateZ()   z轴旋转
+         translateZ()  前后位移
+         scaleZ()  厚度
          
+      animation  动画  内核前缀
+        关键帧 keyFrames
+         类似于flash
+           只需指明两个状态，之间的过程由计算机自动计算
+         关键帧的事件单位
+           数字  0% 25% 100%等
+           字符  form(0%) to(100%)
+         格式
+           @keyframes 动画名称
+           {
+             动画的状态
+           }
+           
+         调用的标签
+           写法 animation：时间 延时时间 动画名称 运动形式 运动次数
+            animation-name  动画名称（关键帧名称）
+            animation-duration  动画持续时间
+            
+           animation-play-state 播放状态(running 播放和paused 暂停)
+           
+         可选属性
+           animation-timing-function  动画运动形式
+            linear 匀速
+            ease   缓冲
+            ease-in  有快到慢
+            ease-out  由慢到快
+            ease-in-out  由慢到快在到慢
+            cubic-bezier(number,number,number,number.number)
+               特定的贝塞尔曲线类型  四个数值须在[0,1]区间内
+           
+            animation-delay  动画延时
+              只是第一次
+            animation-iteration-count  重复次数
+              infinite为无限次
+            animation-direction  播放前重置
+               动画是否重置后在开始播放
+               alternate  动画直接重上一次停止的位置的倒序开始执行
+               normal  动画第二次直接跳动0%的状态开始执行
+               
+             无法在目标点停下来
+                解决  设置一个.move{-webkit-animation:2s move; width:500px}
+                      用js添加此属性
+                      
+                无法动态改变目标点位置
+                
+              chorme下  obj.addEventListener('webkitAnimationEnd',function(){},false)
+              火狐下   obj.addeventListener('animationend',function(){}.false)
+              
+     
                   
                                   
                   
