@@ -92,6 +92,49 @@ css
      horizontal  只有水平方向可以缩放
      vertical  垂直可以拖着缩放
      注意一定要 配合overflow：auto;一块使用才有效果
+     
+  边框背景
+    border-img:url();
+    border-image-sourceg 引入图片
+    border-imgage-slice  切割图片  不加px
+    border-image-width 边框宽度
+    border-imgage-repeat 图片的排列方式
+        round 平铺  repeat重复  strrtch 拉伸
+        
+    border-colors  边框的颜色  只有火狐下实现
+    
+ 背景
+   多背景  逗号隔开
+       background:url(a.jpg) 0 0,url(b.jpg) 0 100%;
+       
+   背景尺寸
+      background-size:x y;
+        background-size: 100% 100%;
+           cover 放大  覆盖
+           contain 缩小  包含
+           
+   背景的原点设置
+     background-origin：border|padding|content
+     border-box：从border区域开始显示背景
+     padding-box  从padding区域开始显示背景
+     content-box  从content区域开始显示背景
+     
+     background-clip:padidng-box;
+     -webkit-background-clip:text  chorme下文本内容显示背景
+   
+   背景裁切
+     background-clip:
+     border: 从border区域向外裁剪背景
+     padding  从padding区域向外裁剪背景
+     content  从content区域向外裁剪背景
+     no-clip 从border区域向外裁剪背景
+     
+  遮罩  -webkit-前缀
+    mask-image
+    mask-position
+    mask-repeat
+    
+  -webkit-mask:url(mask.png) no-repeat;
  
 自定义字体
   格式  @font-face{
@@ -135,16 +178,103 @@ css
     box-sizing：content-box  标准盒模型
        width/height = border + padding + content
              border-box  怪异盒模型  width/height = content
+             
+  css3分栏布局  要加-webkit-浏览器前缀
+    column-width  栏目宽度
+    column-count  栏目列数
+    column-gap   栏目距离
+    column-rule: 1px solid #000  栏目间隔线
+    
+  响应式布局
+     <link rel="stylesheet" type="text/css" href="indexa.css" media="screen and (min-width:800px) and (max-width:1100px)">
+     不兼容ie6，7，8
+     
+     横竖屏切换
+       <link rel="stylesheet" media="all and (orientation:portrait)" href="portrait.css">
+       <link rel="stylesheet" media="all and (orientation:landscape)" href="landscape.css">
+      
+      @media screen and (min-width:400px) and (max-width:500px){.box{margin: 0 auto;}}
+      
+      @import url("index.css") screen and (min-width:400px) and (max-width:800px);
 
 
+ui样式
+  圆角
+   border-radius：
+     一个值时候  四个角变化
+     两个值的时候 第一个值对应左上和右下  第二个值对应 右上和左下
+     三个值的时候 第一个值对应左上 第二个值对应右上和左下 第三个值对应右下
+     四个值的时候  左上  右上  右下  左下 对应
+  
+    x/y 半径 椭圆的圆角  如 20px 30px 40px 60px/10px 20px 30px 40px  斜杠前面对应的x半径
+            斜杠后面对应的有轴半径  分别对应每个角
+            
+    也可以是百分比的值
 
+    
+  线性渐变 要加浏览器的内核前缀
+    -webkit-linear-gradint([起点|角度]？点，点...)
+    只能用在背景上
+      IE  filter：progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#ff0000',GradientType='1'); 
+    参数
+      起点：从什么方向开始渐变  默认top
+               left ， top ， left top
+      角度：从什么角度开始渐变
+        xxx deg的形式
+      点 渐变点的颜色和位置
+        black  50%  ,位置可选
+        
+     repeating-linear-gradient  自己设置的颜色渐变平铺
+      
+  径向渐变  
+    radial-gradient([起点]？[形状||大小,]?点,点...)
+    起点  可以是关键字（left top right bottom） 具体数值或百分比
+    形状  ellipse椭圆  circle圆
+    大小  具体数值或百分比，也可以是关键字（最近端，最近角，最远端，最远角，包含或覆盖（closest-side，closest-corner，farthest-side，
+    farthest-corner,contain or cover））;
+      注意firefox目前只支持关键字
+            
+taansition 过度
+    transition-property 要运动的样式  all  attr  none
+    transition-duration  运动的时间
+    transition-delay  延时时间
+    transition-timing-function 运动的形式
+      ease  逐渐变慢 默认值
+      linear 匀速
+      ease-in 加速
+      ease-out减速
+      ease-in-out 先加速后减速
+      cubic-bezier 贝塞尔曲线 （x1,y1,x2,y2） http://matthewlein.com/ceaser
 
+过度完成事件
+ webkit内核
+ obj.addEventListener('webkitTransitionEnd',function(){}.false)
+ firefox
+ obj.addEventListener('transitionend',function(){},false);
 
-
-
+2d变换
+  transform
+    rotate()  旋转函数  取整数值
+        deg  度数
+        transform-origin 旋转的基点
+    skew()  倾斜函数 取整数值
+        skewX()
+        skewy()
+    scale()  缩放函数  取值 整数 小数
+        scaleX()
+        scaleY()
+    translate()  位移函数
+      translateX();
+      translateY()
 
                   
                                   
                   
-                  
+    
+  
+  
+  
+  
+    
+    
                   
