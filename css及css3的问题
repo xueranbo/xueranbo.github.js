@@ -266,7 +266,52 @@ taansition 过度
     translate()  位移函数
       translateX();
       translateY()
+        
+        transform: translateX(100px) scale(0.5); 
+        transform: scale(0.5) translateX(100px);  这两个代码会有执行顺序 后写的先执行  所以第二个100px 会被缩短0.5倍
+        
+        隐患
+        
+        top/left是布局类的样式，这个样式的变化会导致重排（reflow/relayout），所谓重排即指对这些节点以及受这些节点影响的
+        其它节点，进行CSS计算->布局->重绘过程，这个过程的前2步是消耗大量资源的
+        left/top/margin 之类的属性会影响到元素在文档中的布局，当对布局（layout）进行动画时，该元素的布局改变可能会影响到
+        其他元素在文档中的位置，就导致了所有被影响到的元素都要进行重新布局[1]，浏览器需要为整个层进行重绘并重新上传到 GPU，
+        造成了极大的性能开销。
+        
+        translate是一个绘制样式（这名词我瞎编的），这个样式的变化会导致重绘（repaint），即在屏幕上重新画一下，不会进行CSS
+        计算和布局这2个性能大户，所以我们认为translate性能上要明显好于top/left
+        transform 属于合成属性（composite property），对合成属性进行 transition/animation 动画将会创建一个合成层
+        （composite layer），这使得被动画元素在一个独立的层中进行动画。通常情况下，浏览器会将一个层的内容先绘制进一个
+        位图中，然后再作为纹理（texture）上传到 GPU，只要该层的内容不发生改变，就没必要进行重绘（repaint），浏览器会通
+        过重新复合（recomposite）来形成一个新的帧[2]。
 
+        translate3D传说因为走的是3D，所以能得到更完整的GPU加速的支持，在GPU中还有贴图缓存等手段帮你优化性能，所以更快
+
+     matrix(a,b,c,d,e,f)矩阵函数  matrix(1,0,0,1,0,0)
+       
+       通过矩阵实现旋转
+         a=Math.cos(deg/180*Math.PI);
+         b=Math.sin(deg/180*Math.PI);
+         c=-Math.sin(deg/180*Math.PI);
+         d=Math.cos(deg/180*Math.PI);
+         
+           ie下有旋转基点的问题
+           
+        通过矩阵实现缩放
+          x轴缩放  a=x*a c=x*c e=x*e
+          y轴缩放  b=y*b d=y*d f=y*f
+        通过矩阵实现位移
+          x轴位移  e=e+x
+          y轴位移  f=f+y
+        通过矩阵实现倾斜
+          x轴倾斜  c=Math.tan(xdeg/180*Math.PI)
+          y轴倾斜  c=Math.tan(xdeg/180*Math.PI)
+       
+       ie下兼容 
+         filter：
+           progid:DXImageTransform.Microsoft.Matrix(M11=1,M12=0,M21=0,M22=0,SizingMethod='auto expand')
+             M11 == a M12 == c M21 == b M22 == d
+         
                   
                                   
                   
