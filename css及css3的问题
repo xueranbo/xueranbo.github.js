@@ -41,6 +41,10 @@ css
                     only-of-type  表示p的父元素中只有一个子节点，且这个唯一的子节点的类型必须是p
                                   注意  子节点不包含文本节点
                                   
+                  如果需要选择紧接在另一个元素后的元素，而且二者有相同的父元素  li + li {}
+                  这两组列表项不属于同一父元素（最多只能算堂兄弟)，用一个结合符只能选择两个相邻兄弟中的第二个元素 li + li{}
+                  
+                                  
                                   
     css选择器  伪类
       
@@ -54,13 +58,91 @@ css
      p~h1 p标签后面的h1标签
      
      p:first-line  表示p元素 第一行
-     p:first-letter 表示p元素的第一个字符
-     p:selection  表示p元素在用户选中文字时
+     p:first-letter 表示p元素的第一个字符  此字符无法被选中 
+     p::selection  表示p元素在用户选中文字时的背景
      p:before  生成内容在p元素之前
      p:after  生成内容在p元素之后
-     p:not(h2)  排除p标签下的h2的属性名的标签
-                   
-                                  
+     
+       content:"miao"  此属性添加内容
+      
+     p:not(.h2)  排除p标签下的h2的属性名的标签
+      
+颜色模式  rgba  红绿蓝  透明
+   背景透明  文字不透明 
+   问题  边框颜色透明有问题  可以看到背景
+   
+   透明度  opacity   file=alpha
+   
+   文字阴影  text-shadow: x y 模糊距离 颜色; 可叠加
+   文字描边 -webkit-text-stroke: 宽度 颜色
+   文字排版 direction  rtl 右对齐  需配合unicode-bidi：bidi-override 从左向右排 全兼容
+   文字超出 white-space:nowrap   文字超出不换行
+        overflow:hidden  超出隐藏
+        text-overflow:  clip 无省略号  ellpsis 省略号  三个同时使用
+        
+   盒模型阴影
+     box-shadow: [inset(内投影)] x y 模糊距离[扩展阴影半径]  颜色；可叠加  
+     box-reflect  倒影  需加前缀
+       direction  方向  above below  left  right  
+       距离
+       渐变(可选)  -wbkit-linear-gradient(right ,rgba(0,0,0,1) 0,rgba(0,0,0,0) 100%)
+     
+   缩放 resize
+     both 水平垂直都可以缩放
+     horizontal  只有水平方向可以缩放
+     vertical  垂直可以拖着缩放
+     注意一定要 配合overflow：auto;一块使用才有效果
+ 
+自定义字体
+  格式  @font-face{
+           font-family:"miaov";
+           src:url('111-webfont.eot');
+           src:url('111-wenfont.eot?#iefix')format('embedded-opentype'),
+               url('111-webfont.woff')format('woff'),
+               url('111-webfont.ttf')format('truetype'),
+               url('111-webfont.svg#untitledregular')format('svg');
+           font-weight: normal;
+           font-style: normal;
+         }
+         
+    转换字体格式生成兼容性代码
+      http://www.fontsquirrel.com/fontface/generator
+   
+ 弹性盒模型
+   注意在使用弹性和模型的时候 父元素必须要加display:box 或display:inline-box;要加浏览器内核前缀
+   box-orient 定义盒模型的布局方向
+     horizontal  水平显示
+     vertical  垂直方向
+   box-direction  元素排列顺序
+     normal 正序
+     Reverse 反序
+   box-ordinal-group:2  设置元素的具体位置
+     
+   box-flex 定义盒子的弹性空间  要加浏览器的内核前缀
+     子元素的尺寸 = 盒子的尺寸*子元素的box-flex属性值/所有子元素的box-flex属性值的和
+     
+   box-pack 对盒子富裕空间进行管理  水平方向
+    star 所有子元素在盒子左侧显示，富裕空间在右侧
+    end  所有的子元素在盒子的右侧显示，富裕空间在左侧
+    center  所欲的子元素剧中
+    justify  富裕空间在子元素之间平均分布 
+   box-align   垂直方向 富裕空间管理
+     star  所有的元素居上显示
+     center  所有的子元素垂直居中
+     end  所有的元素局下显示
+     
+  盒模型的怪异解析
+    box-sizing：content-box  标准盒模型
+       width/height = border + padding + content
+             border-box  怪异盒模型  width/height = content
+
+
+
+
+
+
+
+
                   
                                   
                   
