@@ -5,3 +5,31 @@ css
                id选择     比如   #div1
                标签选择    比如  div
                组合选择
+               
+               选择属性名 p[]{}
+                 属性值 p[miaov = leo]{}
+                词列表 p[miao ~= leo]{}  包含value的  大多以空格隔开
+                指定的属性名，并且有属性值，属性值是以value开头的 p[miao ^= leo]{}
+                以value结束的  p[miao $= leo]{}
+                包含value的   p[miao *= leo]{}
+                带有包含指定值的 lang 属性的所有元素设置样式。适用于由连字符分隔的属性值 p[miao |= b-leo] 或 p[miao |= b] 	用于选取带有以指定值开
+                头的属性值的元素，该值必须是整个单词。 指定了属性名是以value开头的或以value-开头的
+                
+                结构性伪类
+                 p:nth-child(1){}   p标签中的第一个p标签元素
+                       odd   奇数行
+                       even  偶数行
+                      可计算  2n  n为0~无穷大的自然数
+                  p:nth-child(2) 并且这儿元素必须是p标签
+                  body *:nth-child(2){}  body 下的第二个元素
+                  body *:nth-last-child(2){}  body下的倒数第二个元素
+                  
+                  p:nth-of-type(2){} 第一个p标签下第二个元素
+                  //body *: nth-of-type(2){} 找到body下的所有的标签的第二个元素
+                  
+                  //body*:nth-last-type(2){} 找到body下的倒数第二个元素
+                  
+                  P:first-child{}  第一个p标签
+                    last-child{}  最后一个 标签
+                    //first-of-child{}  
+                  
