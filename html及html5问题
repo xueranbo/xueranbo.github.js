@@ -1,0 +1,75 @@
+
+
+<!doctype html>
+   //  h4 前声明的一大串东西 就是给w3c验证器看的 触发浏览器的标准模式下的兼容问题 大小写不敏感  有三种模式  严格模式 过度模式 框架模式  但是
+   在浏览器解析时即使使用了框架模式  页面结构按照w3c写  浏览器的容错性还可以正常解析  所以到h5后直接省掉一大串的东西
+<html>
+  <head>
+    <meta charset="UTF-8" />  保存时需要和保存时的编码一致
+     
+      /*
+      meta标签
+        name属性主要用于网页的描述  对应的属性值是content  content里面的内容是对name属性的具体描述
+         宽度设置  name="viewport"  content="width=device, initial-scale=1"
+         关键字    name="keywords" content="关键字“
+         网站内容的描述  name="description" content="描述的文字”
+         搜索引擎的爬虫方式 name="robots"  content="none"
+                 1.none : 搜索引擎将忽略此网页，等价于noindex，nofollow。
+                 2.noindex : 搜索引擎不索引此网页。
+                 3.nofollow: 搜索引擎不继续通过此网页的链接索引搜索其它的网页。
+                 4.all : 搜索引擎将索引此网页与继续通过此网页的链接索引，等价于index，follow。
+                 5.index : 搜索引擎索引此网页。
+                 6.follow : 搜索引擎继续通过此网页的链接索引搜索其它的网页.
+         用于标注作者 name=”author" content="作者的名字"
+         网页制作的软件  name="generator" content="软件名字“
+         标注版权的信息  name="copyright" content="版权名”   代表这个网页归个人版权所有
+         搜索引擎爬虫的重防时间  name="revisit-after" content="7 days"  
+         双核浏览器的渲染模式  name="renderer" content="webkit"  默认webkit内核浏览器
+                             name="renderer" content="ie-comp"  默认ie兼容模式
+                             name="renderer" content="ie-stand" 默认ie标准模式
+     		http-equiv属性  相当于http文件头的作用  content进一步的描述
+          设定网页的字符集  http-equiv="content-type" content="text/html; charset=utf-8"  旧版的html设置
+                          charset="utf-8"  h5模式下
+          浏览器采用何种版本渲染当前页面  
+            http-equiv="X-UA-Compatible"  content="IE=edge, chrome=1"  指定使用ie和chrome的最新版本渲染当前页面
+          指定请求和响应的缓存机制
+              http-equiv="cache-control" content="no-cache"
+                 no-cache: 先发送请求，与服务器确认该资源是否被更改，如果未被更改，则使用缓存。
+                 no-store: 不允许缓存，每次都要去服务器上，下载完整的响应。（安全措施）
+                 public : 缓存所有响应，但并非必须。因为max-age也可以做到相同效果
+                 private : 只为单个用户缓存，因此不允许任何中继进行缓存。（比如说CDN就不允许缓存private的响应）
+                 maxage : 表示当前请求开始，该响应在多久内能被缓存和重用，而不去服务器重新请求。例如：max-age=60表示响应可
+                 以再缓存和重用 60 秒。
+                 禁止百度自动转码  http-equiv="Cache-Control" content="no-siteapp"
+          设定网页的到期时间  http-equiv="expires" content="Sunday 26 October 2016 01:00 GMT"
+          网页将在设定的时间内，自动刷新并调向设定的网址 
+               http-equiv="refresh" content="2; URL="网址"
+          如果网页过期,那么这个网页存在本地的cookies也会被自动删除
+               http-equiv="Set-Cookie" content="name, date"
+               http-equiv="Set-Cookie" content="User=name;path=/;expires=内容"
+
+  
+  */
+    
+    <title>标题 - title</title>
+    
+    <style></style>
+    <script>
+      window.onload = function(){
+         // 文档加载完在加载js
+      }
+    </script>
+  </head>
+  
+  <body>
+    内容 -content
+    
+    标记，标签 <html>
+    标签对  <html></html>
+    单标签  <meta />
+    
+    <script>
+      //代码
+    </script>
+  </body>
+</html>
