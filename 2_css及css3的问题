@@ -5,6 +5,30 @@ css
   
   style
   
+  标签样式的初始化  css reset 原则  因为每个浏览器下标签的默认样式可能不一样，
+    但凡浏览器的默认样式，都不要使用
+    书写原则 用到什么标签就清除所用的标签的默认样式。 
+            建议不要直接将所有的标签全部加上
+            不要将所有标签全部统一设置一致的reset，需根据标签默认样式特征分类设置
+    内容
+    body,dl,dd,p,h1,h2,h3,h4,h5,h6,{margin:0;;font-size:12px;}
+    ol,ul{margin:0;padding:0;list-style:none;}
+    a{text-decoration:none;}
+    img{
+        border:none; 在ir6下使用a标签包含住的img标签有蓝边
+        vertical-align: top;  img的缝隙
+     }
+    
+    与盒模型稀散馆的样式
+      border
+      margin
+      padding
+    标签的特有样式
+      ul li
+      ol li
+      p
+    
+  
   行间样式  写在行间的样式
   
   内部样式表  <style></style>
@@ -202,15 +226,106 @@ css
       
       2  父子级包含的时候子级的margin-top会传递给父级
          解决  1  父级加border: 1px #000 solid;
-      
+  
+ 块元素和内嵌元素
+  
+    块的特征
+       1 默认独占一行
+       2 没有宽度时，默认撑满一行
+       3 支持所有的css命令  
+       
+    内嵌（内联，行内）的特征
+       1 同排可以继续跟同类的标签
+       2 内容撑开高度
+       3 不支持宽高
+       4 不支持上下的margin
+       5 代码换行被解析  有一个空格
    
+   display: block 显示为块
+     使内联元素具备块属性标签的特征
+   display: inline;  显示为内嵌
+     是行快属性标签具备内联元素的特许
+   display是将标签转换为页面中显示的类型
+   display不会改变标签的本质
+     
+   display: inline-block;  内联块元素
+     特征  1 块在一行上显示
+           2 行内标签支持宽高
+           3 没有宽度的时候内容撑开宽度
+           4 标签换行被解析
+           5 ie6 ie7不支持块属性标签inline-block（问题）
+           
+    1 标签的语义化，使用合适的标签
+    2 标签特征的转换，样式的配合
+    3 小竖线使用哪种方式进行编码(图片，边框， 背景颜色， 字符)
+    4 文字行高的设置
+    5 标签默认样式的处理（reset css）
+    
+ 浮动  float
+   文档流是文档中可显示对象在排列时所占用的位置。
+   定义：使元素脱离文档流，按照指定方向发生移动，遇到父级边界或者相邻的浮动元素停了下来
+  
+   float: left[right，none，inherit]  左，右，没有，继承浮动
+   
+   
+   clear: left|right|both|none|inherit;  元素的某个方向上不能有浮动元素
+   clear:both;在左右两则均不允许浮动元素
+   
+   float的特征  1 块在一排上显示
+                2 内联元素支持宽高
+                3 默认内容撑开宽度4
+                4 脱离文档流
+                5 提升层级半层
+                
+   清除浮动  
+     1 加高度  扩展性不好
+     2 父级浮动  问题：页面中所有的元素都加浮动， margin左右自动失效（floats bad）
+     3 inline-block  问题margin左右失效
+     4 空标签清除浮动  <div class-clearfix></div>  .clearfix{clear:both;} ie6下最小高度19px  解决后还有2px偏差
+     5 br清除浮动  问题不符合工作中 结构 样式 行为 三者分离的要求
+     6 alter伪类 清除浮动方法 主流方法
+        .clear:after{content:""; display:block;clear:both;}
+        ie6下 .clear{*zoom:1};
+        alter伪类：元素内部末尾添加内容
+          :after{content:"添加内容";} ie6 7 不兼容
+        zoom缩放
+          a  触发ie下haslayout，使元素根据自身内容计算宽高
+          b  ff不支持
+     7 overflow:hidden; 清除浮动  父级加此属性
+       问题 需要配合宽度或者zoom 兼容ie6 ie7
+       overflow: scroll | auto | hidden;
+       overflow:hidden; 溢出隐藏（裁刀！）
+          
+   BFC (block formatting context) 标准浏览器  块级元素格式化上下文
+     a float的值不为none
+     b overflow的值不为visible
+     c display的值不为table-cell，table-caption，inline-block中的任何一个。
+     d position的值不为relative和static；
+     e width height min-width min-height: (!auto)
+   
+   hashlayout   ie浏览器
+     a writing-mode: tb-rl
+     b -ms-writing-mode: tb-rl
+     c zoom: (!normal);
+     
+   触发这两个东西 会使此元素独立显示区域 不受外界因素影响
+     
  
   
-  属性选择器：  class选择  比如  .div1 
-               id选择     比如   #div1
+  属性选择器：  class选择 类属性选择  比如  .div1 
+               id选择     比如   #div1  当前名字唯一性
                标签选择    比如  div
-               组合选择
-               通配符  *
+               群组选择器  如  div,p,span{}
+               包含选择器  如  .box div{}
+               通配符  *  找到页面上的所有的元素   body *{}  body下的所有子元素
+               
+               选择器的优先级
+                 基础选择器优先级
+                   style>id>clss>类型选择>标签选择器*
+                   
+                 包含选择器的优先级
+                    
+                 群组选择器的优先级
                
                选择属性名 p[]{}
                  属性值 p[miaov = leo]{}
@@ -257,9 +372,9 @@ css
     
      p:target 表示当前的URL片段的元素类型  这个元素必须是p
      disabled  不可编辑的属性
-     p:disabled  表示不可点击的表单控件
-     p:enabled   表示可点击的表单控件
-     p:checked  表示已选中的checkbox或radio
+     E:disabled  表示不可点击的表单控件
+     E:enabled   表示可点击的表单控件
+     E:checked  表示已选中的checkbox或radio
      p~h1 p标签后面的h1标签
      
      p:first-line  表示p元素 第一行
