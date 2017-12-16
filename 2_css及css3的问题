@@ -36,6 +36,10 @@ css
   
   border： 边框    border: 1px(边框的宽度)  solid边框的样式  #000（边框的颜色）
       也可写成  border-right:1px solid #000;  右边框  border-right：none；  无右边框
+      边框的形状是非矩形
+      solid  实线
+      dashed  虚线
+      dotted  点线  ie6不兼容
   
   background  背景 
      background:url();  引入图片地址
@@ -54,7 +58,23 @@ css
     font-family: "宋体"；  字体样式
     font-weight:bold;  字体加粗  normal  正常
     font-style:italic; 字体倾斜；  normal  正常
-    复合样式 这个有顺序 font: 加粗或倾斜  字体大小（必写）/行高
+    复合样式 这个有顺序 font: 倾斜  加粗 字体大小（必写）/行高  字体格式（必写）
+   
+  line-height 行高  数值  px  %  当行高为奇数时 文字的上方比下方少1px
+  text-align: center; 文字居中  文本对齐方式 left right
+  text-indent: 1em;  首行缩进 1个字体的大小  1em 为一个字体的大小
+  text-decoration：none； 文本修饰  下划线  underline  加下划线
+  line-thorght：none； 删除线  overderline 上划线
+  letter-spacing:2px;  字母间距
+  
+  word-spacing：10px；  单词间距（以空格为解析单位） 需人为把单词用空格隔开
+  
+  white-space: nowarp;  强制不换行 normal
+  
+  字体不一样 空格的大小不一样
+  
+  空格的大小为宋字体大小一半
+  
     
       em是相对于父级的字体大小设置的  计算公式  1 ÷ 父元素的font-size × 需要转换的像素值 = em值 em的值并不是固定的
       概念介绍：
@@ -151,8 +171,40 @@ css
   举例：
 
      p {font-size:14px; font-size:.875rem;}
-  
-  
+     
+     
+  盒子模型
+    width  height  border  margin  padding
+    
+    盒子大小 = border + padding + width/height
+    盒子宽度 = 左右border + 左右padding + width
+    盒子高度 = 上下border + 上下padding + height
+    
+    padding  内边距
+    padding: top  right bottom left
+    padding-top[right|bottom|left]  上[右|下}左]内边距
+    
+    内边距相当于给一个盒子加了填充厚度会影响盒子的大小
+    
+    只设置一个值的时候  四个方向
+    两个值的时候   第一个对应上下  第二个对应左右
+    三个值时候    第一个是上 第二个是左右 第三个为下
+    四个值的时候  上右下左
+    
+    margin  外边距 标签与标签之间的距离
+    margin: top right bottom left;
+    
+    外边距的问题
+      1  上下外边距会叠压
+         解决  1  上面的div底部加一个双倍的margin值  margin会取最大的margin值
+               2 如果元素没有特殊特征  可以用padding代替
+               3 两耳元素都添加float：left； 第二个元素  clear：both；
+      
+      2  父子级包含的时候子级的margin-top会传递给父级
+         解决  1  父级加border: 1px #000 solid;
+      
+   
+ 
   
   属性选择器：  class选择  比如  .div1 
                id选择     比如   #div1
