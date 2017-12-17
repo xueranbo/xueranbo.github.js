@@ -1,8 +1,22 @@
 
 
 <!doctype html>
-   //  h4 前声明的一大串东西 就是给w3c验证器看的 触发浏览器的标准模式下的兼容问题 大小写不敏感  有三种模式  严格模式 过度模式 框架模式  但是
-   在浏览器解析时即使使用了框架模式  页面结构按照w3c写  浏览器的容错性还可以正常解析  所以到h5后直接省掉一大串的东西
+   //  html4 前声明的一大串东西 就是给w3c验证器看的 触发浏览器的标准模式下的兼容问题 大小写不敏感  有三种模式  
+   严格模式 过度模式 框架模式  但是 在浏览器解析时即使使用了框架模式  页面结构按照w3c写  浏览器的容错性还可以
+   正常解析  所以到h5后直接省掉一大串的东西
+   
+   /*
+     http协议或者是TCP协议
+        HTTP - 超文本传输协议
+          HTTP 负责 web 服务器与 web 浏览器之间的通信。
+          HTTP 用于从 web 客户端（浏览器）向 web 服务器发送请求，并从 web 服务器向 web 客户端返回内容（网页）。
+     
+        HTTPS - 安全的 HTTP
+          HTTPS 负责在 web 服务器和 web 浏览器之间的安全通信。
+          作为有代表性的应用，HTTPS 会用于处理信用卡交易和其他的敏感数据。
+  
+   */
+   
 <html>
   <head>
     <meta charset="UTF-8" />  保存时需要和保存时的编码一致
@@ -66,8 +80,69 @@
     
     标记，标签 <html>
     标签对  <html></html>
-    单标签  <meta />
-    
+    单标签  <meta /> <link /> <img />  <br />换行
+       
+       标签对
+         div  
+         <div style="width:200px; height:200px">aaa</div> 行间样式
+         <a href="#"></a> 超链接
+           a标签四个伪类
+             a:hove{ color:red; } 鼠标移入（悬停）
+             a:link{color:block}  未访问过的a链接的初始颜色
+             a:visited{color: green} 访问过后的a链接的颜色
+             a:active{color: pink} 鼠标按下不动的时候的颜色
+             link  visited  active
+             顺序 L V H A 
+             
+             包含选择器
+         
+         <span></span>
+            区分样式
+            
+          <header>页面头部  也用于板块的头部</header> 
+          
+          <nav></nav>  导航 包含链接的一个列表
+             <nav><a href="#">链接</a></nav>
+          
+          <section>页面的版块</section>
+          
+          <article>用来在页面中表示一套结构完整且独立的内容部分</article>
+          
+          <aside>元素标签可以包含当前页面或主要内容相关的引用，侧边栏，广告 nav元素组，以及其他类似的有别与主要内
+          容的部分</aside>
+          
+          <time>用来表现时间或日期</time>
+             <p>我们在每天早上<time>9：00</time>营业</p>
+             <p><time datetime="2020-02-14">情人节</time>有个约会</p>
+          h1 ~ h6 标题标签  h1 32px, h2 24px, h3 18.72px, h4 16px, h5 13.28px, h6 12px;
+          <p>一段文字</p>
+          <stroung>强调（粗体）</strong>
+          <em>强调(斜体)</em>
+          <ul>无序列表</ul>
+          <ol>有序列表</ol>
+          <li>列表项<li>
+          <dl>定义列表</dl>
+          <dt>定义列表的标题</dt>
+          <dd>定义列表项</dd>
+          <mark>标记</mark>
+          
+          特殊的img
+           img单标签
+             src（绝对路径/相对路径）
+             
+             相对地址 ： 是相对于当前文件的地址 如  src="img/2.png"
+             绝对地址 ： 图片的路径
+             
+           img特征
+             支持宽高
+             只设置宽度或高度等比缩放
+             img空隙问题
+           <img src="图片地址" alt="图片未加载进来的显示的文字" title="鼠标移入时提示的文字" />
+          
+          
+          
+          <footer>页脚 页面底部或者板块的底部</footer>
+       
     <script>
       //代码
     </script>
