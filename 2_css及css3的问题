@@ -281,7 +281,8 @@ css
      1 加高度  扩展性不好
      2 父级浮动  问题：页面中所有的元素都加浮动， margin左右自动失效（floats bad）
      3 inline-block  问题margin左右失效
-     4 空标签清除浮动  <div class-clearfix></div>  .clearfix{clear:both;} ie6下最小高度19px  解决后还有2px偏差
+     4 空标签清除浮动  子元素最后面加<div class-clearfix></div>  .clearfix{clear:both;} ie6下最小高度19px  
+       解决后还有2px偏差
      5 br清除浮动  问题不符合工作中 结构 样式 行为 三者分离的要求
      6 alter伪类 清除浮动方法 主流方法
         .clear:after{content:""; display:block;clear:both;}
@@ -342,14 +343,33 @@ css
       ie不兼容
     
     标准下 opacity ： 0 ~ 1
-    ie滤镜  filte：alpha(opacity=0~100)
+    ie滤镜  filte：alpha(opacity=0~100) ie6 7
     
     z-index:[number];  定位层级
         a 定位元素默认后者层级高于前者；
         b 建议在兄弟标签之间比较层级
      
-     
-     
+ 问题
+   <div class="div1">
+     <div class="div2"></div>
+   </div>
+   <style>
+     .div1{}
+     .div2{width: 100px; height: 100px; position: absolute; top: 100px; left: 100px;}
+   <style>
+   
+   问题一  子级脱离文档流
+   问题二  子级无法撑起父级的高度
+   
+   解决  父级加上 position: relative;
+         子级改为position: relative;
+         
+         <style>
+            .div1{position: relative;}
+            .div2{width: 100px; height: 100px; position: relative; top: 100px; left: 100px;}
+         </style>
+      这样可以解决子级有时候浮动的问题;  如果需要清除浮动 需用 .clearfix:after{content:'',display:block;clear:both;}
+       
  
   
   属性选择器：  class选择 类属性选择  比如  .div1 
