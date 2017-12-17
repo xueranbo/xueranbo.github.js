@@ -309,6 +309,46 @@ css
      c zoom: (!normal);
      
    触发这两个东西 会使此元素独立显示区域 不受外界因素影响
+   
+ 定位  position
+   相对定位 position： relative
+     特征 a 不脱离文档流（元素移动后原始位置被保留）
+          b 不影响元素本身的特征
+          c 如果没有定位偏移量，对元素本身没有任何影响
+          d 提升层级
+          
+     top right left  bottom  定位的偏移量
+     
+   绝对定位 position ：absolute
+     特征  a  使元素脱离文档流
+           b  使内嵌元素支持宽高
+           c  块元素标签内容撑开高度
+           d  如果有定位父级相对于定位父级发生偏移，没有定位父级则相对于document发生偏移
+           e  相对定位一般都是配合绝对定位一块使用
+           f 提升层级
+           
+    固定定位  position：fixed  
+        与绝对定位的特征基本一致，的差别是始终相对整个文档进行定位
+        问题  ie6不支持固定定位
+        
+    定位其他值
+      position ：static； 默认值
+      position ：inherit；从父元素继承定位元素的值（不兼容）
+      
+      position： relative  absolute  fixed  static inherit
+      
+    position：absolute； 绝对定位元素子级的浮动可以不用清除浮动方法
+    position：fixed  固定定位元素子级的浮动可以不用写清除浮动方法
+      ie不兼容
+    
+    标准下 opacity ： 0 ~ 1
+    ie滤镜  filte：alpha(opacity=0~100)
+    
+    z-index:[number];  定位层级
+        a 定位元素默认后者层级高于前者；
+        b 建议在兄弟标签之间比较层级
+     
+     
      
  
   
