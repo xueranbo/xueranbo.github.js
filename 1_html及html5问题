@@ -139,6 +139,99 @@
              img空隙问题
            <img src="图片地址" alt="图片未加载进来的显示的文字" title="鼠标移入时提示的文字" />
           
+          表格元素 默认样式重置
+            表格标签
+              table 表格
+              thead  表格头
+              tbody  表格主体
+              tr  表格行
+              th  元素定义表头
+              td  元素定义表格单元
+              
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>星期一</th>
+                    <th>星期二</th>
+                    <th>星期三</th>
+                    <th>星期四</th>
+                    <th>星期五</th>                  
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>html<td>
+                    <td>css<td>
+                    <td>js<td>
+                    <td>php<td>
+                    <td>jq<td>
+                  </tr>
+                  <tr>
+                    <td>html<td>
+                    <td>css<td>
+                    <td>js<td>
+                    <td>php<td>
+                    <td>jq<td>
+                  </tr>
+                  <tr>
+                    <td>html<td>
+                    <td>css<td>
+                    <td>js<td>
+                    <td>php<td>
+                    <td>jq<td>
+                  </tr>
+                </tbody>
+              </table>
+              
+          表格样式重置
+            table{border-collapse: collapse;}单元格间隙合并
+            th,td{padding: 0;} 重置单元格默认格式填充
+            
+         单元格合并
+           colspan  属性规定单元格可横跨的列数
+           <td colspan="2"></td>
+           
+           rowspan  属性规定单元格可横跨的行数
+           <td rowspan="2"></td>
+             
+          
+          表单元素
+            form  表单
+            <input type="" name="" vlaue="" />
+              text  文本框
+              password 密码
+              radio 单选  需要name属性相同的一组
+              checkbox 复选   值 checked
+              submit 提交
+              reset 重置
+              button 按钮
+              image 图片
+              file 上传
+              hidden 隐藏
+              
+              <form action="提交地址">
+                <input type="类型" name="属性" value="值" />
+              </form>
+          
+          lable 标签为input元素定义标注
+            <input type="checkbox" name="" id="a" />
+            <lable for="a"></lable>
+            
+            <lable for="password">密码：</lable>
+            <input type="text" name="" vlaue="" id="password" />
+            
+          checked 在页面加载时默认选定的input元素
+            <input type="checkbox" name="" checked />
+            
+          disabled 属性规定应该禁用input元素
+            <input type="checkbox" name="" disabled="disabled" />
+          
+          select / option  下拉选项
+            对高度的支持不兼容;
+          
+          textarea  文本域
+            各个浏览器的默认滚动条显示不兼容
+            css3新增 resize 调整尺寸属性
           
           
           <footer>页脚 页面底部或者板块的底部</footer>
