@@ -371,6 +371,88 @@ css
       这样可以解决子级有时候浮动的问题;  如果需要清除浮动 需用 .clearfix:after{content:'',display:block;clear:both;}
        
  
+  兼容性问题
+    1 html5标签的兼容
+      解决  使用js  document.createElement("自定义标签名")  需加一个display：block
+           引入js文件 <script src="js/html5shiv.js"></script>
+    
+    2 元素浮动之后，能设置宽度的话就给元素加宽度，如果需要宽度是内容撑开，就给它里面的块元素加上浮动
+       解决 给子元素里面的块元素加上 float：left
+       
+    3 第一块元素浮动，第二块元素加margin值等于第一块，在ie6下会有间隙问题 
+       解决 不这么写
+            第二块元素去掉margin 加上float： left；
+    
+    4 ie6下子元素超出父级宽高，会把父级的宽度撑开
+        不让子级宽度超出父级
+    
+    5 p包含块元素嵌套规则  td h 
+       解决 不这么写
+       
+    6 margin兼容性问题
+       1 margin-top传递
+          解决 父级加上边框  ie6有问题
+               触发bfc haslagout overflow：hidden  ie6有问题 ie下加zoom：1
+               
+       2 上下margin叠压
+          尽量使用同一方向的margin 比如都设置top或者bottom
+          
+    7 diaplay inline-block
+        问题 ie不支持
+                解决   *display： inline ；*zoom： 1；
+             换行被解析
+    
+    8 ie6最小高度  最下高度为19像素
+        *overflow：hidden；
+    
+    9 ie6 7双边距
+        margin-left：20px；float：left；  ie为双倍边距
+        解决：*display： inline；
+        
+    10 li里面子元素都浮动li在ie6 7 下会从产生4px间隙问题
+         解决  *vertical-align：top ； 上对齐
+    
+    11 浮动元素之间注释， 导致多复制一个文字问题
+        两个浮动元素中间有注释或者内联元素并且和父级宽度相差不超过3px ie下文字溢出bug
+        解决 1 两个浮动元素中间避免出现内联元素或者注释
+             2 与父级宽度相差3px
+        
+    12 ie6 7父级元素的overflow：hidden 是包不住子级的relative
+        解决 父级加上*position：relative；
+    
+    13 ie6 下绝对定位元素父级宽度是奇数，绝对定位元素的right和bottom值会有1px的偏差
+        解决 避免父级宽高出现奇数
+        
+    14 ie6下绝对定位元素和浮动并列绝对定位元素消失
+        不让他们在同一级下 后面并列的元素使用一个标签包住
+    
+    15 ie6下input的空隙
+       input元素加上 *float：left；
+   
+    16 ie输入类型表单控件背景问题
+        给input元素加上fixed  background：url('img/mail.jpg') no-repeat fixed;
+        设置  background-attachment: fixed;
+        
+     css hack
+      hack 修改的意思
+        针对不同的浏览器写不同的css样式的过程  就叫css hack！
+        \9 所有的ie10及以前
+        + * ie7及以前的ie浏览器认识
+        _ IE6及ie6的浏览器认识
+    
+    png24 图片格式 ie6不支持
+      解决  js插件（问题，不能处理body之上png24）
+            DD_belatedPNG.fix('xxx');
+            
+            原生滤镜
+              _background-image:none;
+              _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="xxx.png",sizeingMethod="crop");
+    
+    样式的优先级，提升样式优先级
+     默认 < 类型 < class < id < style（行间） < !important
+     
+     !important 提升样式优先级权重
+     
   
   属性选择器：  class选择 类属性选择  比如  .div1 
                id选择     比如   #div1  当前名字唯一性
