@@ -235,6 +235,362 @@
           
           
           <footer>页脚 页面底部或者板块的底部</footer>
+                 
+语义化标签的由来
+http://devfiles.myopera.com/articles/572/idlist-url.htm
+
+<nav><a href="#"></a></nav> 用于导航的标签 包含链接的一部分
+
+<section></section>页面上的板块
+
+<article></article> 用来在页面中表示一套结构完整且独立的内容部分
+
+<aside></aside> 元素标签可以包含与当前页面或主要内容相关的引用，侧边栏，广告，nav元素组，以及其他类似色有别于主要内容的部分
+  aside的内容应该与article的内容相关。
+  被包含的内容以是与当前文章有关的引用，词汇列表等
+  在article之外使用，作为页面或站点全局的附属信息部分，最典型的形式是侧边栏sidebar，其中的内容可以是友情链接，附属导航或广告单元等。
+
+<figure></firure> 用于对元素进行组合。一般用于图片或视频
+
+<figcaption></figcaption>figure的子元素 用于对figure的内容 进行说明
+
+<figure>
+  <img src="地址" />  注意没有alt
+  <figcaption>妙味课堂</figcaption>
+</firure>
+
+<datalist></datalist>选项列表。 与input元素配合使用，用来定义input可能的值
+ <input type="text" list="valList" />
+ <datalist id="valList">
+   <option value="javascript">javascript</option>
+   <option value="html">html</option>
+   <option value="css">css</option>
+ <datalist>
+ 
+ <details></datails>用于描述文档或文档某个部分的细节
+   该元素用于摘录引用等 应该与页面的主要内容区分开其他内容
+   open  属性默认展开
+ 
+ <summary></summary> details 元素的标题
+ <details>
+   <summary>妙味课堂</summary>
+   <p>国内的</p>
+ </details>
+ 
+ <dialog></dialog>  定义一段对话
+ 
+ <dialog>
+   <dt>老师</dt>
+   <dd>2+2等于？</dd>
+   <dt>学生</dt>
+   <dd>4</dd>
+   <dt>老师</dt>
+   <dd>答对了！</dd>
+ </dialog>
+ 
+ <address></address> 定义文章 或页面的详细联系信息
+ <mark></mark> 需要标记的字或段子
+ <keygen> 给表单添加一个公钥
+   <form action="提交地址"> 
+     用户： <input type="text" name="user_name" />
+     公钥：<keygen name="security" />
+          <input type="submit" />
+   <form>
+ 
+ <progress></progress>  定义进度条
+   <progress max="100" value="76">
+     <span>76</span>%
+   </progress>
+ 
+ 新增标签的兼容  
+   1 引入js插件
+   2 doucment.createElement('标签名')
+   
+  
+ forms
+   新的输入型控件
+    email  电子邮箱文本框 跟普通的没有什么区别
+       当输入的不是邮箱的时候，验证通不过
+       移动端的键盘有变化
+    
+    tel 电话号码
+    url 网页的url
+    search 搜索引擎
+       chrome下输入文字后或多出一个关闭的X
+    range 特定范围内的数值选择器
+      min  max  step(步数) 
+    number  只能包含数字的输入框
+    color  颜色选择器
+    datetime 显示完整的日期
+    datetime-local  显示完整日期，不含时区
+    time  显示日期  不含时区
+    date  显示日期
+    week  显示周
+    month  显示月
+    
+    html5语义化标签在ie6-8下，我们用js创建出来之后，他们不会有任何默认的样式的甚至是display，所以早样式表里 要对这些标签定义一下
+    它默认的display
+ 
+ 新的表单特性和函数
+   placeholder  输入框提示信息
+   autocomplate 是否保存用户输入值
+     默认 on  关闭提示选择off
+   autofocus  指定表单获取输入焦点
+   list和datalist  为输入框构造一个选择列表
+     list值为datalist 标签的id
+   required 此项必填 不能为空
+   pattern  正则验证 pattern=”\d{1,5}“
+   formaction  在submit里定义提交地址 保存至草稿箱  chrome不兼容
+    
+ 表单验证
+   validity对象，通过下面的valid 可以查看验证是否通过，如果八种验证都通过返回true一种验证失败返回false
+      oText.addEventListener('invalid',fn1,false);
+      ev.preventDefault() 
+      valueMissing  输入值为空时
+      typeMismatch  控件值与预期类型不匹配
+      patternMismatch  输入值不满足pattern正则
+      tooLong  超过maxLength最大限制
+      rangeUnderflow 验证range最小值
+      rangeOverflow  验证range最大值
+      stepMismatch  验证range的当前值是否符合min ， max以及step的规则
+      customError 不符合自定义验证
+        setCustomValidity(); 自定义验证
+ 
+ 表单验证
+   Invalid 事件 验证反馈
+   input.addEventListener('invalid', fn, false)
+       阻止默认验证  ev.preventDefault()
+   formnovaliddate属性  关闭验证
+ 
+ html5新特性的浏览器支持情况
+   http://www.caniuse.com/#index
+ 
+ 新的选择器
+   querySelector()  只能选择一个元素
+   querySelectorall()  选择一组元素
+   getElementsByClassName();
+   
+ 获取class列表属性
+   classList
+     length   class的长度
+     add()  添加class方法
+     remove()  删除class方法
+     toggle()  切换class方法
+
+ json的新方法
+   parse() 把字符串转成json
+      字符串中的属性要严格加上引号
+   stringify()  把json转成字符串
+      会自动的把双引号加上
+   新方法与eval的区别
+     
+     eval可以解析任何字符串
+     JSON.parse  只能解析JSON形式的字符串  安全性高
+     
+   新方法的应用
+     深度克隆对象
+     
+     var a = {name: "hello"}
+     var b = a;
+     b.name = 'hi';
+     alert(a.name)  // hi
+     
+     var a = {name: "hello"}  
+     for(var attr in a){  //浅拷贝
+       b[attr] = a[atr];
+     }
+     b.name = 'hi';
+     alert(a.name); //hello
+     
+     var a = {name: "hello"}
+     var str = JSON.stringify(a);
+     var b = JSON.parse(str);
+     b.name = 'hi';
+     alert(a.name); //hello
+     
+   
+   如何与其他浏览器的兼容
+      http://www.json.org/去下载json2.js 
+ 
+ data自定义数据
+   dataset  
+      data-name： dataset.name
+      data-name-first: dataset.nameFirst
+      
+   data数据早jqery mobile中有着重要的作用
+ 
+ 延迟加载js
+   js的加载会影响后面的内容加载
+      很多浏览器都采用了并行加载js 但还是会影响其他内容
+   html5的defer和async
+     defer  延时加载，会按顺序执行，在onload执行前被触发 外链的script标签才会有用
+        <script src="a.js" defer="defer"></script>
+        <script src="b.js"></script>
+        <script src="c.js"></script>
+            先加载b c 两个js 在加载a
+           
+     async  异步加载，加载完就触发，有顺序问题
+        <script src="a.js" async="async"></script>
+        <script src="a.js" async="async"></script>
+        <script src="a.js" async="async"></script>
+        <img src="">
+          四个文件同时加载
+同步加载、异步加载、延迟加载 的区别
+1 同步加载
+　　平常默认用的都是同步加载。如：<script src="http://yourdomain.com/script.js"></script> 
+　　同步模式又称阻塞模式，会阻止浏览器的后续处理，停止了后续的文件的解析，执行，如图像的渲染。流览器之所以会采用同步模式，是因为
+  加载的js文件中有对dom的操作，重定向，输出document等默认行为，所以同步才是最安全的。通常会把要加载的js放到body结束标签之前，
+  使得js可在页面最后加载，尽量减少阻塞页面的渲染。这样可以先让页面显示出来
+
+2 异步加载
+
+(function() { 
+var s = document.createElement('script'); 
+s.type = 'text/javascript'; 
+s.async = true; 
+s.src = 'http://yourdomain.com/script.js'; 
+var x = document.getElementsByTagName('script')[0]; 
+ x.parentNode.insertBefore(s, x); 
+})();
+
+异步加载也叫非阻塞模式加载，浏览器在下载js的同时，同时还会执行后续的页面处理。
+在script标签内，用js创建一个script元素并插入到document中，这种就是异步加载js文件了。
+
+也可以通过onreadystatechange   和 onload 来监听js什么时候加载完
+
+同步加载流程是瀑布模型，异步加载流程是并发模型。
+
+3 延迟加载（lazy loading）
+前面解决了异步加载（async loading）问题，再谈谈什么是延迟加载。
+延迟加载：有些 js 代码并不是页面初始化的时候就立刻需要的，而稍后的某些情况才需要的。延迟加载就是一开始并不加载这些暂时不用的js，
+而是在需要的时候或稍后再通过js 的控制来异步加载。
+也就是将 js 切分成许多模块，页面初始化时只加载需要立即执行的 js ，然后其它 js 的加载延迟到第一次需要用到的时候再加载。
+特别是页面有大量不同的模块组成，很多可能暂时不用或根本就没用到。
+就像图片的延迟加载，在图片出现在可视区域内时（在滚动条下拉）才加载显示图片
+
+4 预加载
+
+预加载是一种浏览器机制，使用浏览器空闲时间来预先下载/加载用户接下来很可能会浏览的页面/资源，当用户访问某个预加载的链接时，如果从缓存
+命中,页面就得以快速呈现   
+ 
+DOM文档加载的步骤为
+
+解析HTML结构。
+加载外部脚本和样式表文件。
+解析并执行脚本代码。
+DOM树构建完成。//DOMContentLoaded
+加载图片等外部文件。
+页面加载完毕。//load
+
+在第4步，会触发DOMContentLoaded事件。在第6步，触发load事件。
+
+        
+   Labjs库   
+ 
+历史管理
+   触发历史管理
+      1 通过跳转页面
+      2 hash
+      3 pushState
+      
+    onhashchange  改变hash值管理页面
+    
+    window.location.hash = 一个随机数
+    
+    window.onhashchange = function(){
+      odiv.innerHTML = json[window.location.hash.substring(1)];
+    }
+    
+    window.location  浏览器地址信息
+    widow.location.href  浏览地址
+    window.location.search  url ?号后面的内容
+    window.location.hash  url #号后面的内容
+    
+    history
+       服务器下运行
+       pushState 三个参数  数据 标题(没实现) 地址(可选)
+       onpopstate事件  读取数据  event.state
+       注意网址是虚假的，需在服务器指定对应页面，不然刷新找不到页面
+       
+       history.pushState(arr,'',arr) 存数据
+       
+       window.onpopstate = function(ev){
+          odiv.innerHTML = ev.state
+       }
+ 
+ html5新特性的浏览器支持情况
+   http://www.caniuse.com/#index
+ 
+ 拖放
+   ondraggble
+     设置为true，元素就可以拖拽了
+ 
+ 拖放事件
+   拖拽元素事件  事件对象为被拖拽元素
+     ondragstart  拖拽前触发
+     ondrag  拖拽前，拖拽结束之间，连续触发
+     ondragend 拖拽结束触发
+     
+   目标元素事件  事件对象为目标元素
+     ondragenter  进入目标元素触发  相当于mouseover
+     ondragover  进入目标离开目标之间，连续触发
+     ondragleave 离开元素触发，相当于mouseout
+     ondrop  在，目标元素上释放鼠标触发
+     
+      要想触发drop事件，就必须在dragover当中阻止默认事件
+        ev.preventDefault();
+ 
+   拖放事件
+     事件的执行顺序： drop不触发的时候
+       dragstart -> drag -> dragenter -> dragover -> dragleave -> dragend
+     事件的执行顺序 drop触发的时候（drop的时候阻止默认时间）
+        dragstart -> drag -> dragenter -> dragover -> drop -> dragend
+     
+     不能释放的光标和释放的光标不一样
+ 
+    拖放事件
+     解决火狐下的问题
+       必须设置dataTransfer 对象的setDate方法才可以拖拽除图片外的其他标签
+       
+     dataTransfer对象
+       setData()  设置数据key和value  必须是字符串
+       getData()  获取数据，根据key值，获取对应的value
+
+      ev.dataTransfer.setData('name', 'hello')
+      ev.dataTransfer.getData('name')
+     
+     dataTransfer 对象
+       effectAllowed
+         effectAllowed  设置光标样式(none, copy,copyLink,copyMove, link, linkMove, move, all 和 uninitialized)
+         
+       setDragImage  拖拽的阴影
+           三个参数  指定的元素  坐标x  坐标y
+           
+       files
+          获取外部拖拽的文件，返回一个filesList列表
+          filesList下有个type属性，返回文件类型
+          
+          fs = ev.dataTransfer.files
+          fs[0].type
+         
+      FileReader  读取文件信息
+         readAsDataURL
+            参数为要读取的文件对象，将文件读取为DataUrl
+         onload
+            当读取文件成功完成的时候触发此事件
+            this.result  来获取读取的文件数据， 如果是图片，将返回base64格式的图片数据
+            
+         var fd = new FileReader();
+         fd.readAsDataURL(fs[0])
+         fd.onload = function(){
+           console.log(this.result)
+         } 
+
+
+
+
+         
+         
        
     <script>
       //代码
