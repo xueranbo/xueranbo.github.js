@@ -516,7 +516,54 @@ DOM树构建完成。//DOMContentLoaded
        
        window.onpopstate = function(ev){
           odiv.innerHTML = ev.state
-       }
+       }    
+ 
+loction和history的区别
+     最外层top跳转页面，适合用于iframe框架集top.window.location.href("${pageContext.request.contextPath}/Login_goBack");
+     window.location.href=“url”：改变url地址； 
+
+     window.location.replace(“url”)：将地址替换成新url，该方法通过指定URL替换当前缓存在历史里（客户端）的项目，
+     因此当使用replace方法之后，你不能通过“前进”和“后 退”来访问已经被替换的URL，这个特点对于做一些过渡页面非常有用！
+     window.location.reload()：强制刷新页面，从服务器重新请求！
+     
+     window.location 对象在编写时可不使用 window 这个前缀。 一些例子：
+     host 设置或返回url中的主机名和端  "www.google.com:8080"
+     location.hostname  设置返回 web 主机的域名 "www.google.com"
+     location.pathname  设置返回当前页面的路径和文件名 "/loanOrder/detail"
+     location.port 设置或返回 web 主机的端口 （80 或 443）没有则为空"" "8080"
+     location.protocol 设置返回所使用的 web 协议（http:// 或 https://）
+     口
+     
+     hash	"#type"	设置或返回URL中的#后面的hash值，如果没有则为""
+     search  "?orderId=1236"	返回URL的查询字符串。这个字符串以"?"开头
+     
+     
+     Window Location Assign 
+     location.assign() 方法加载新的文档。
+     
+     Window History
+       window.history对象在编写时可不使用 window 这个前缀。
+       为了保护用户隐私，对 JavaScript 访问该对象的方法做出了限制。
+     
+     history.back() - 与在浏览器点击后退按钮相同  方法加载历史列表中的前一个 URL。
+     history.forward() - 与在浏览器中点击按钮向前相同 方法加载历史列表中的下一个 URL。
+     history.go()  参数负数是后退  整数向前 
+     
+     window.history.pushStaet(stateObject,title,url)
+       将当前的url和history.state加入到history中，并用新的state和url替换当前的，不会造成页面刷新
+       stateObject    //与要跳转到的URL对应的状态信息，没有特殊的情况下可以直接传{}
+       title       //现在大多数浏览器不支持或者忽略这个参数，我们在用的时候建议传一个空字符串
+       url            //这个参数提供了新历史纪录的地址,它不一定要是绝对地址，也可以是相对的，不可跨域
+
+    window.history.replaceState(stateObject,title,url)
+    用新的state和url替换当前，不会造成页面呢属性
+    stateObject    //与要跳转到的URL对应的状态信息，没有特殊的情况下可以直接传{}
+    title       //现在大多数浏览器不支持或者忽略这个参数，我们在用的时候建议传一个空字符串
+    url            //这个参数提供了新历史纪录的地址,它不一定要是绝对地址，也可以是相对的，不可跨域
+    
+    popstate每次活动历史记录条目在同一文档的两个历史记录条目之间改变时，将事件分派到窗口。  
+    window.onpopstate
+    获取  ev.state;
  
  html5新特性的浏览器支持情况
    http://www.caniuse.com/#index
@@ -556,8 +603,8 @@ DOM树构建完成。//DOMContentLoaded
        setData()  设置数据key和value  必须是字符串
        getData()  获取数据，根据key值，获取对应的value
 
-      ev.dataTransfer.setData('name', 'hello')
-      ev.dataTransfer.getData('name')
+      ev.dataTransfer.setData('name', 'hello') 在拖放开始设置 ondragstrat
+      ev.dataTransfer.getData('name')   在释放的时候设置
      
      dataTransfer 对象
        effectAllowed
@@ -585,9 +632,180 @@ DOM树构建完成。//DOMContentLoaded
          fd.onload = function(){
            console.log(this.result)
          } 
+         
+         
+跨文档通信
+  postMessage对象
+    接受消息的窗口对象.postMessage()
+    一参 发送的数据  二参 接受的域
+    交互方式
+      iframe   父页面 ： contentWindow 、子页面：window.top
+      窗口页：  父页面：  window.open、 子页面  window.opener
+      
+    接受事件
+      message
+      ev.origin  发送数据来源的域
+      ev.data  发送的数据
+      
+      如果我们要操作一个iframe里面的元素，首先要获取到iframe引入的页面的window
+         iframeId.contentWindow
+
+  XMLHttpRequest Level 2
+    XMLHttpRequest  改进版
+      请求页面与数据页面必须属性不同的域
+      服务器要设置响应头信息
+      Origin值展现
+      IE  XDomainRequest
+      新的事件  onload等
+      http://w3.org/TR/XMLHttpRequset2
+      http://msdn.microsoft.com/en-us/library/cc288060(VS.85).aspx
+    
+    进度事件
+      upload.onprogress  上传
+      FormData对象
+      ev.tota(已发送的量)、ev.loaded（待发送的量）
+      onprogress  下载
+
+
+window he document 的区别
+Window 对象
+所有浏览器都支持 window 对象。它表示浏览器窗口。
+所有 JavaScript 全局对象、函数以及变量均自动成为 window 对象的成员。
+全局变量是 window 对象的属性。
+全局函数是 window 对象的方法。
+甚至 HTML DOM 的 document 也是 window 对象的属性之一：
+
+对于Internet Explorer、Chrome、Firefox、Opera 以及 Safari：
+window.innerHeight - 浏览器窗口的内部高度
+window.innerWidth - 浏览器窗口的内部宽度
+
+对于 Internet Explorer 8、7、6、5：
+document.documentElement.clientHeight
+document.documentElement.clientWidth
+或者
+document.body.clientHeight
+document.body.clientWidth
+
+一些其他方法：
+window.open() - 打开新窗口
+window.close() - 关闭当前窗口
+window.moveTo() - 移动当前窗口
+window.resizeTo() - 调整当前窗口的尺寸
+
+Document 对象
+每个载入浏览器的 HTML 文档都会成为 Document 对象。
+Document 对象使我们可以从脚本中对 HTML 页面中的所有元素进行访问。
+提示：Document 对象是 Window 对象的一部分，可通过 window.document 属性对其进行访问。
+
+Document 对象集合
+集合	描述
+all[]	提供对文档中所有 HTML 元素的访问。
+anchors[]	返回对文档中所有 Anchor 对象的引用。
+applets	返回对文档中所有 Applet 对象的引用。
+forms[]	返回对文档中所有 Form 对象引用。
+images[]	返回对文档中所有 Image 对象引用。
+links[]	返回对文档中所有 Area 和 Link 对象引用。
+
+Document 对象属性
+属性	描述
+body	
+提供对 <body> 元素的直接访问。
+对于定义了框架集的文档，该属性引用最外层的 <frameset>。
+cookie	设置或返回与当前文档有关的所有 cookie。
+domain	返回当前文档的域名。
+lastModified	返回文档被最后修改的日期和时间。
+referrer	返回载入当前文档的文档的 URL。
+title	返回当前文档的标题。
+URL	返回当前文档的 URL。
+
+Document 对象方法
+方法	描述
+close()	关闭用 document.open() 方法打开的输出流，并显示选定的数据。
+getElementById()	返回对拥有指定 id 的第一个对象的引用。
+getElementsByName()	返回带有指定名称的对象集合。
+getElementsByTagName()	返回带有指定标签名的对象集合。
+open()	打开一个流，以收集来自任何 document.write() 或 document.writeln() 方法的输出。
+write()	向文档写 HTML 表达式 或 JavaScript 代码。
+writeln()	等同于 write() 方法，不同的是在每个表达式之后写一个换行符。
+
+Document 对象描述
+HTMLDocument 接口对 DOM Document 接口进行了扩展，定义 HTML 专用的属性和方法。
+很多属性和方法都是 HTMLCollection 对象（实际上是可以用数组或名称索引的只读数组），其中保存了对锚、表单、链接以及其他可脚本元素的引用。
+这些集合属性都源自于 0 级 DOM。它们已经被 Document.getElementsByTagName() 所取代，但是仍然常常使用，因为他们很方便。
+write() 方法值得注意，在文档载入和解析的时候，它允许一个脚本向文档中插入动态生成的内容。
+注意，在 1 级 DOM 中，HTMLDocument 定义了一个名为 getElementById() 的非常有用的方法。在 2 级 DOM 中，该方法已经被转移到了 Document 接口，它现在由 HTMLDocument 继承而不是由它定义了。
 
 
 
+
+decodeURI()	解码某个编码的 URI。
+decodeURIComponent()	解码一个编码的 URI 组件。
+encodeURI()	把字符串编码为 URI。
+encodeURIComponent()	把字符串编码为 URI 组件。
+escape()	对字符串进行编码。
+eval()	计算 JavaScript 字符串，并把它作为脚本代码来执行。
+getClass()	返回一个 JavaObject 的 JavaClass。
+isFinite()	检查某个值是否为有穷大的数。
+isNaN()	检查某个值是否是数字。
+Number()	把对象的值转换为数字。
+parseFloat()	解析一个字符串并返回一个浮点数。
+parseInt()	解析一个字符串并返回一个整数。
+String()	把对象的值转换为字符串。
+unescape()	对由 escape() 编码的字符串进行解码。
+
+Infinity	代表正的无穷大的数值。
+java	代表 java.* 包层级的一个 JavaPackage。
+NaN	指示某个值是不是数字值。
+Packages	根 JavaPackage 对象。
+undefined	指示未定义的值。
+
+全局对象描述
+全局对象是预定义的对象，作为 JavaScript 的全局函数和全局属性的占位符。通过使用全局对象，可以访问所有其他所有预定义的对象、函数和属性。全局对象不是任何对象的属性，所以它没有名称。
+在顶层 JavaScript 代码中，可以用关键字 this 引用全局对象。但通常不必用这种方式引用全局对象，因为全局对象是作用域链的头，这意味着所有非限定性的变量和函数名都会作为该对象的属性来查询。例如，当JavaScript 代码引用 parseInt() 函数时，它引用的是全局对象的 parseInt 属性。全局对象是作用域链的头，还意味着在顶层 JavaScript 代码中声明的所有变量都将成为全局对象的属性。
+全局对象只是一个对象，而不是类。既没有构造函数，也无法实例化一个新的全局对象。
+在 JavaScript 代码嵌入一个特殊环境中时，全局对象通常具有环境特定的属性。实际上，ECMAScript 标准没有规定全局对象的类型，JavaScript 的实现或嵌入的 JavaScript 都可以把任意类型的对象作为全局对象，只要该对象定义了这里列出的基本属性和函数。例如，在允许通过 LiveConnect 或相关的技术来脚本化 Java 的 JavaScript 实现中，全局对象被赋予了这里列出的 java 和 Package 属性以及 getClass() 方法。而在客户端 JavaScript 中，全局对象就是 Window 对象，表示允许 JavaScript 代码的 Web 浏览器窗口。
+在 JavaScript 核心语言中，全局对象的预定义属性都是不可枚举的，所有可以用 for/in 循环列出所有隐式或显式声明的全局变量
+
+var variables = "";
+
+for (var name in this) 
+{
+variables += name + "<br />";
+}
+
+document.write(variables);
+
+
+var variables = "";
+
+for (var name in doucment) 
+{
+variables += name + "<br />";
+}
+
+document.write(variables);
+
+
+decodeURIComponent() 函数可对 encodeURIComponent() 函数编码的 URI 进行解码。
+语法
+decodeURIComponent(URIstring)
+参数	描述
+URIstring	必需。一个字符串，含有编码 URI 组件或其他要解码的文本。
+返回值
+URIstring 的副本，其中的十六进制转义序列将被它们表示的字符替换。
+实例
+在本例中，我们将使用 decodeURIComponent() 对编码后的 URI 进行解码：
+<script type="text/javascript">
+
+var test1="http://www.w3school.com.cn/My first/"
+
+document.write(encodeURIComponent(test1)+ "<br />")
+document.write(decodeURIComponent(test1))
+
+</script>
+输出：
+http%3A%2F%2Fwww.w3school.com.cn%2FMy%20first%2F
+http://www.w3school.com.cn/My first/
 
          
          
