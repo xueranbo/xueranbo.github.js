@@ -698,8 +698,8 @@ loction和history的区别
       FormData对象
       ev.tota(已发送的量)、ev.loaded（待发送的量）
       onprogress  下载
-      
-      var xhr = new XMLHttpRequest();
+ 
+       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function(){
         if(xhr.readyState == 4){
           if(xhr.status == 200){
@@ -716,6 +716,349 @@ loction和history的区别
            
       在ie下
         XDomainRequeset iE如果想实现跨域请求，则需要使用另外一个对象去实现
+        
+        var oXDomainRequest = new XDomainRequest()
+		oXDomainRequet.onload = function(){
+		  aelrt(this.responesText)
+		}
+		oXDomainRequest.open('get','http://www.b.com/ajax.php', true)
+		oXDomainRequest.send();
+		
+    ajax上传  ie不支持
+	  alert(myfile.value)  获取到是file空间的value值，这个内容是心事给加看的，不是我们选择的内容
+	  
+	  alert(myfile.files) 返回文件列表
+
+    使用post提交时
+	  需用xhr.setRequestheader('X-Request-With','XMLHHttpRequest')
+        // xhr.send('file=leo');
+		
+		var oFprmData = new FormData();  //通过FormData来构建提交数据
+		oFormData.append('file', mafilename.files[0])
+		xhr.send(oFormDate);
+		
+		var oUpload = xhr.upload;
+		oUpload.onprogress = function(ev){
+		   console.log(ev.tatal + : ev.loaded)
+		}
+
+
+
+websocket
+
+互联网协议
+  http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suiite_part_i.html
+  TCP/IP协议
+    定义了电子设备如何炼乳英特网，以及数据在他们之间传输的标准（如何传输）
+	传输数据（协议）类型 Email  www FTP等
+  hTTP协议
+    浏览器和万维网服务器之间相互通信的规则
+	
+	HTTP协议的特点
+	  功能很强大
+	  采用请求 响应模式  单项通信
+	  短链接 响应完成链接就断开
+	  
+  websocket  什么是websocket
+    基于TCP的双向的  全双工的数据链接
+	  双向的  客户端  服务端
+	  全双工  数据的发送与接受  两者同步进行
+	建立socket应用
+	  服务器必须支持web socket
+	  
+	  nodejsde 简介
+	    Ryan Dahl  基于FGoogleV8引擎创建的一套用来编写高兴能网络服务器的javascript工具包
+        nodejs  用js写服务器应用
+		
+		var http = require('http');
+		var fs = require('fs');
+		var documentRoot = 'E:/html/websocket/www';
+		
+		var serv = http.createServer(function(req, res){
+		  
+		  var url = req.url;
+		  //console.log(url);
+		  
+		  var file = doucmentRoot + url;
+		  console.log(file)
+		  
+		  fs.readFile(file, function(err, data){
+		    if(err){
+			  res.writeHeader(404, {
+			    'content-type':'text/html;charset="utf-8"'
+			  );
+			  res.write('<h1>404</h1><p>页面未找到</p>');
+			  res.end();
+			}else{
+			  res.writeHeader(200, {
+			    'content-type': 'text/html;chaeset="utf-8"'
+			  });
+			  res.write(data)
+			  res.end();
+			}
+		  });
+		  
+		}).listen(8888);
+		
+	  
+ 	node.js
+	  安装node.js
+	  转到项目目录
+	  运行node scriptname.js
+	  http服务器的创建
+	  安装websocket模块npm install socket.io
+	  websocket服务的创建
+
+
+
+        var http = require('http');
+		var fs = require('fs');
+		var io = require（socket.io）
+		
+		var documentRoot = 'E:/html/websocket/www';
+		
+		var serv = http.createServer(function(req, res){
+		  
+		  var url = req.url;
+		  //console.log(url);
+		  
+		  var file = doucmentRoot + url;
+		  console.log(file)
+		  
+		  fs.readFile(file, function(err, data){
+		    if(err){
+			  res.writeHeader(404, {
+			    'content-type':'text/html;charset="utf-8"'
+			  );
+			  res.write('<h1>404</h1><p>页面未找到</p>');
+			  res.end();
+			}else{
+			  res.writeHeader(200, {
+			    'content-type': 'text/html;chaeset="utf-8"'
+			  });
+			  res.write(data)
+			  res.end();
+			}
+		  });
+		  
+		}).listen(8888);
+		
+		var socket = io.listen(serv);
+		
+		socket.sockets.on('connection', function(){  //回掉函数
+		  
+		  //socket
+		  //console.log('有人通过socket进来了')
+		  socket.emit('hello', '欢迎');  //向客户端发送数据
+		  socket.on('hellotoo', function(data){ //接受客户端的数据
+		    console.log(data)
+		  });
+		  
+		  //socket.broadcast.emit()  广播事件
+		  socket.broadcast.emit('a', '有新人进来了');
+		
+		});
+		
+		
+		必须引入client.socket.js 文件
+		var socket = null;
+		
+		socket = io.connect('http://localhost:8888')
+		socket.on('hello', function(data){ //监听服务端的数据
+		  console.log(data)
+		  
+		  this.emit('hellotoo', '欢迎欢迎') //想服务端发送信息
+		  
+		  socket.on('a',function(data){
+		    conle.log(data)
+		  })
+
+		})
+
+
+离线存储
+  离线应用是什么？
+    乘坐飞机，手机信号弱 去演讲的时候 可能没有网络 这个时候就采用离线应用
+	离线存储如何工作 ？
+  离线存储的好处
+    没网的时候，可以正常访问
+	快速响应页面，不必用多个HTTP占用资源宽带
+	缓存的可以是任何文件
+
+  搭建离线应用程序
+    1 服务器设置头信息
+	   AddType.text/cache-mamifest .manifest
+	   
+	2 html标签加
+	  manifest = "xxx.manifest";
+	
+	3 写manifest文件， 离线的清单列表
+	  先写 CACHE MANIFEST
+	  FALLBACK  第一个网络地址没获取到，就走第二个缓存
+	  NETWORK  无论缓存中存在与否，均从网络获取
+	  
+	  
+web Workers
+  什么是worker？
+  js的单线程（放入ui队列的个数，利用定时器解决）
+  可以让web应用程序具备后台处理能力，对对对县城的支持非常好
+  
+  Worker  API
+    new  Worker('后台处理的js地址')
+	利用postMessage传输数据
+	importScript('导入其他文件')
+	
+   worker 运行环境
+     navgator appname  appVersion  userAgent  platform onLine
+	 location  所有的属性都是只读的
+	 self  指向全局的worker对象
+	 所欲的ECMA对象 Object Array  Date等
+	 addEventListener  和 removeEventListener()
+	 XMLHttpRequest构造器
+	 setTimeout 和setInterval方法
+	 onerror属性  
+	 close() 方法  立刻停止worker 运行
+	 importScripts  方法
+	
+	var w1 = new worket('test.js');
+	
+	test.js文件中
+	  
+	  importScripts(); 在这个文件中引入其他文件  同步模式
+	  
+	  self.onmessage = funciton(ev){
+	    // alert(ev.data) 无法识别alter
+		self.postMessage(ev.data + '秒味')
+	  }
+	
+	worker页面中
+	w1.postMessage('hi');
+	w1.onmessage = function(ev){
+	  alert(ev.data)
+	}
+	
+	w1.close();
+	
+	
+	内容编辑
+	  contenteditable = "true";
+	
+	语音输入
+	  <input type="text" x-webkit-speech />  chrome实现了
+ 
+  桌面提醒
+    window.webkitNotification.requestPermission();
+	statue = window.webkitNotifications.checkPermission();
+	var notification = window.webkitNotifications.createNotification("[imgurl]","Title","Body");
+	notification.show();
+
+
+地理位置  Geolocation
+  经度  南北极的连接线
+  维度  东西链接的线
+
+位置信息从何而来
+  IP地址
+  GPS全球定位系统
+  WI-FI无线网络
+  基站
+  
+  LBS : 基于地理位置信息的应用
+  
+  地理位置的对象
+    navigator.geolocation
+	   单次定位请求  getCurrentPosition(请求成功，请求失败，数据收集方式)
+	   请求成功的函数
+	     经度  coords.longitude
+		 纬度  coords.latitude
+		 准确度  coods.accuracy
+		 海拔  coords.altitude
+		 海拔准确度  coords.altitudeAcuracy
+		 行进方向  coords.heading
+		 地面速度  coords.speed
+		 时间戳 new Date(position.timestamp)
+		 
+   navigator.geolocation
+     请求失败函数
+	   失败编号  code
+	   0 不包括其他编号的错误
+	   1 用户拒绝浏览器获取位置信息
+	   2 尝试获取用户信息，但失败了
+	   3 设置了timeout值，获取位置超时了
+	   
+	  数据收集  json形式
+	    enableHighAcuracy  更精确的查找 默认false
+		timeout  获取位置允许最长时间， 默认infinity
+		maximumAge  位置可以缓存的最大时间 默认0
+		
+	  多次定位请求  watchPosition(像setInterval)
+	    移动设备有用  位置改变才会触发
+		配置参数  frequency更新的频率 在数据收集的里面写
+	  
+	  关闭更新请求  clearWatch(像clearInterval)
+
+    百度地图的API
+	 <script src="http://api.map.baidu/api?v=1.3"></script>
+
+  navigator.geolocation.getCurrentPosition(function(position){
+    var x = position.coords.longitude;
+    var y = position.coords.latitude;
+    
+    var map = new BMap('div1');
+    var pt = new BMap.Point(y,x);
+    
+    map.centerAndZoom(pt, 14);
+    map.enableScrollWheelZoom();  支持滚轮事件
+    //var marker1 = new BMap.MArker(pt); //创建标注
+   // map.addOverlay(marker1);
+    
+    var myIcon = new BMap.Icon('miaov.png', new BMap.Size(30,30))
+    var marker2 = new BMap.Marker(pt, {icon: myIcon});
+    map.addOverlay(marker2)
+    
+    var opts = {
+      width : 200,  信息窗口的宽度
+      height： 60，  信息窗口的高度
+      title:'海底捞'  信息窗口标题
+      enableMessage: true,  设置允许信息窗口发送短息
+      message:"晚上吃饭"
+    }
+    var infoWindow = new BMap.InfoWindow('地址： 北京市东城区xxxxx', opts)  //创建信息窗口对象
+    
+    map.openInfoWindow(infoWindow, pt)  //开启信息窗口
+    
+  })
+  
+本地存储
+  cookie
+    数据存储到计算机中，通过浏览器控制添加与删除数据
+   cookie的特点
+     存储限制
+       域名100个cookie  魅族值大小4kb
+     客户端 服务器端  都会请求服务器（头信息）
+     页面间的cookie是共享   
+  
+  storage
+    sessionStorage
+      session临时回话  从页面打开到页面关闭的时间段
+      窗口的临时存储 页面关闭 本地存储消失
+    localStorage
+      永久存储（可以手动删除数据）
+   storage的特点
+     存储限制
+     客户端完成  不会请求服务器处理
+     sessionStorage数据是不共享的  localStorage共享
+    
+    storage API
+      setItem()
+        设置数据 key/value类型 类型都是字符串
+        可以用获取属性的形式操作
+      getItem()
+        获取数据 通过key来获取到相应的的value
+      removeItem();
+        删除数据  通过key来删除相应的数据
+      clear()
+        删除全部存储信息
         
 
 window he document 的区别
