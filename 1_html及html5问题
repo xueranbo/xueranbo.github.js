@@ -1117,6 +1117,37 @@ web Workers
         play()  媒体播放
         pause()  媒体暂停
         load()  媒体加载好后执行 预加载时候用
+     
+     媒体元素
+          loadstart
+          progress
+          suspend
+          emptied
+          stall
+          play
+          stalled
+          play
+          pause
+          loadedmetadata
+          loadedata
+          waiting
+          playing
+          canplay
+          canplaythrough
+          seeking
+          seeked
+          timeupdate
+          ended
+          ratechange
+          durationchange
+          volumechange
+       
+     video额外属性
+       poster  视频播放前的预览图片
+       width  height  设置视频的尺寸
+       videoWidth  videoHeight  视频的实际尺寸  只读
+       
+       媒体元素的方法 火狐下  mozRequestFullScreen()
 
 
 window he document 的区别
