@@ -1059,6 +1059,24 @@ web Workers
         删除数据  通过key来删除相应的数据
       clear()
         删除全部存储信息
+	
+    window.sessionStorage.setItem('name', value[0].value);
+ 
+ onunload  关闭浏览器事件
+ 
+   存储事件
+      当数据有改变或修改的情况下，就会触发storage事件
+      在对数据进行改变的窗口上是不会触发的
+      key  修改或删除的key值 ，如果调用clear(), key为null
+      newValue  新设置的值，如果调用removeStorage()  key为null
+      oldValue  调用当前的value值
+      storageArea  当前的storage对象
+      url  触发该脚本变化的文档url
+      注  session同窗口才可以，  例子 iframe操作
+ 
+   window.addEventListener('storage', function(){//当前页面不会触发 和这个共享的页面才会触发
+     alert(123)
+   }, false)
         
 
 window he document 的区别
