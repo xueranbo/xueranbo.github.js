@@ -1077,7 +1077,47 @@ web Workers
    window.addEventListener('storage', function(){//当前页面不会触发 和这个共享的页面才会触发
      alert(123)
    }, false)
+
+
+音频和视频
+  标签
+    audio  video
+    source
+    
+  视频容器
+    视频文件 类似于压缩了一组文件
+      音频轨道
+      视频轨道
+      元数据  封面  标题  字幕等
+      格式  avi  flv  mp4 mkv  ogv 等
+    
+   编解码器
+      原始的视频容器非常大  添加需编码  播放需解码
+      音频编解码器
+        AAC  MPEG-3  Ogg Vorbis
+      视频编解码器
+        H.264  VP8  Ogg Theora
         
+      媒体元素
+        controls  显示或隐藏用户控制页面
+        autoplay  媒体是否自动播放
+        loop  媒体是否循环播放
+        currentTime  开始到播放现在所用的时间
+        duration  媒体总时间（只读）
+        volume  0.0 ~ 1.0 的 音量相对值
+        muted  是否静音
+        autobuffer  开始的时候是否缓冲加载  autoplay 的时候，忽略此属性
+      
+      媒体元素_2
+        paused  媒体是否暂停（只读）
+        ended  媒体是否播放完毕  只读
+        error  媒体发生错误的时候，返回错误代码 只读
+        currentSrc  以字符串的形式返回媒体地址
+        
+        play()  媒体播放
+        pause()  媒体暂停
+        load()  媒体加载好后执行 预加载时候用
+
 
 window he document 的区别
 Window 对象
