@@ -1305,3 +1305,99 @@ http://www.w3school.com.cn/My first/
     </script>
   </body>
 </html>
+
+
+布局
+  上中下一栏式
+    <header id="header" class="warp"></header>
+    <section id="section" class="warp"></section>
+    <footer id="footer" class="warp"></footer>
+    
+    .warp{width: 900px; margin: 0 auto;}
+    #header{height: 100px;}
+    #section{height: 500px;}
+    #footer{height: 80px;}
+    
+  左右两栏式
+    <div class="warp">
+      <aside id="left"></aside>
+      <section id="right"></section>
+    </div>
+    
+    第一种  混合浮动加普通流
+      .warp{width: 900px;margin: 0 auto;}
+      #left{width: 200px; height: 500px;float: left}
+      #right{height: 500px; margin-left: 200px;}
+    第二种  纯浮动
+      .warp{width: 900px;margin: 0 auto; overflow: hidden;}
+      #left{width: 200px;height: 500px;float: left;}
+      #right{width: 700px;height: 500px; float: left;}
+    第三种  定位
+    .warp{width: 900px;mawrgin: 0 auto; position: relative;}
+    #left{width: 200px; height: 500px;position: absolute; left: 0;top: 0;}
+    #right{width: 200px; height: 500px;position: absolute; right: 0;top: 0;}
+    
+   左右两栏加页眉页脚
+     <div class="warp">
+       <header id="header"></header>
+       <section id="section">
+         <aside id="left"></aside>
+         <section id="right"><section>
+       </section>
+       <footer id="footer"><footer>
+     </div>
+     
+     .warp{width: 900px; margin: 0 auto;}
+     .#header{width: 100%; height: 100px;}
+     #section{width: 100%;height: 500px;}
+     #footer{width: 100%; height: 80px;}
+     #left{width: 200px; height: 100%;float: left;}
+     #right{width: 700px; height: 100%; float: left;}
+     
+   左右中三栏
+     <div id="warp">
+       <aside id="left"></aside>
+       <aside id="right"></aside>
+       <section id="center"></section>
+     </div>
+     
+     .warp{width: 80%;margin: 0 auto;}
+     #left{width: 200px;height: 500px; float: left;}
+     #right{width: 200px; height: 500px; float: right;}
+     #center{height: 500px;margin:0 200px;}
+     
+    左中右三栏之双飞翼
+      <div class="warp">
+        <section id="main">
+          <div class="contet"></div>
+        </section>
+        <aside id="left"></aside>
+        <aside id="right"></aside>
+      </div>
+      
+      .warp{margin: 0 auto; width: 80%;}
+      #main{width: 100%; float: lelft}
+      #left{width: 200px; float: left;height: 500px;margin-left: -100%;}
+      #right{width: 200px; float: left; height: 500px;margin-left: -200px;}
+      content{height: 500px;margin: 0 200px;}
+      
+    左中右加页眉页脚
+      <header id="header" class="warp"></header>
+      <section id="section" class="warp">
+        <section id=middle>
+          <div class="content"></div>
+        </section>
+        <aside id="left"></aside>
+        <aside id="right"></aside>
+      </section>
+      <footer id="footer" class="warp"></footer>
+      
+      .warp{width: 900px; margin: 0 auto;}
+      #header{height: 100px;}
+      #section{height: 500px;}
+      #footer{height: 100px;}
+      
+      #middle{width:100%;float: left;}
+      #left{width: 200px;flaot: left; margin-left: -100%;}
+      #right{width: 200px float: left; margin-left: -200px;}
+      .content{height: 500px;margin: 0 200px;}
