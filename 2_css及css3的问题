@@ -54,6 +54,317 @@ css
   
   css的模块化
   
+  css模块化
+  原则 1 命名的规范
+       2 不影响布局 一般情况下，尽量不要使用一个脱离文档流的布局（既使用了float:left/right，position:absolute/fixed的布局），
+       尽量不要使用外边距（margin）。这是为了使得模块更加稳定、具备更高的可塑性；
+       3 模块尽量设计方便复用的量级，避免大而全，求精巧
+
+ 继承
+
+css的继承也是很简单的，一般来说是有这么几种方式：
+
+在css中并写两个类，如.cm-nav, .m-nav，我们知道，这相当于让两个（组）类共享一套样式，然后我们再单独对.m-nav进行补充，实现继承和定制；
+在class属性里并写两个类，如<img class="u-logo logo">，这样我们只需要在页面css中单独对.logo类进行补充，就可以实现定制；
+在页面css中直接对类进行引用
+，然后补充样式，实现定制，如.cm-nav { margin-bottom: 20px; }；
+
+第一种在我们这套模式里是不可取的，因为我们的公共模块都是放在common里，不可能每继承一次就上去补一个类；
+第二种可取，但是需要多一个近似的类名，不提倡；
+第三种又简单又靠谱。
+
+css预处理语言主要有两种：less和sass
+  官网（英语）或者w3cplus sass guide（中文）
+  
+  sass有两种后缀名文件：一种后缀名为sass，不使用大括号和分号；另一种就是我们这里使用的scss文件，这种和我们平时写的css文件格式
+  差不多，使用大括号和分号。
+  
+  1 嵌套
+
+  sass的嵌套包括两种  一种是选择的嵌套，另一种是属性的嵌套
+  
+  选择器嵌套 所谓选择器嵌套的是一个选择器中嵌套另一个选择器来实现继承，从而增强了sass文件的结构行和可读性，在选择器嵌套中，可以使
+  用&表示父级选择器
+  
+  2 变量
+      默认变量 sass的默认变量仅需要在值后面加上 !default即可。
+      sass的默认变量一般是用来设置默认值，然后根据需求来覆盖的，覆盖的方式也很简单，只需要在默认变量之前重新声明下变量即可
+        
+    // index.scss
+    
+
+    $fontSize: 16px;
+    $grey: #ccc;
+    
+    .m-nav {
+      font-size: $fontSize;
+      color: $grey;
+    }
+    编译结果：
+    
+    /* index.css */
+    
+    .m-nav {
+      font-size: 16px;
+      color: #ccc;
+    }
+    
+    特殊变量
+一般我们定义的变量都为属性值，可直接使用，但是如果变量作为属性或在某些特殊情况下等则必须要以 #{$variables}形式使用。
+    //sass style
+    //-------------------------------
+    $borderDirection:       top !default; 
+    $baseFontSize:          12px !default;
+    $baseLineHeight:        1.5 !default;
+    
+    //应用于class和属性
+    .border-#{$borderDirection}{
+      border-#{$borderDirection}:1px solid #ccc;
+    }
+    //应用于复杂的属性值
+    body{
+        font:#{$baseFontSize}/#{$baseLineHeight};
+    }
+    
+    //css style
+    //-------------------------------
+    .border-top{
+      border-top:1px solid #ccc;
+    }
+    body {
+      font: 12px/1.5;
+    }
+
+  3 函数
+    @function rem($px) {
+        @return $px / 640 * 16rem;
+    }
+  
+  扩展/继承
+     sass可通过 @extend来实现代码组合声明，使代码更加优越简洁。
+  运算
+    sass可进行简单的加减乘除运算等
+    //sass style
+    //-----------------------------------
+    .container { width: 100%; }
+    
+    article[role="main"] {
+      float: left;
+      width: 600px / 960px * 100%;
+    }
+    
+    aside[role="complimentary"] {
+      float: right;
+      width: 300px / 960px * 100%;
+    }
+
+  4 混合（mixin） 混合，顾名思义，就是混合的意思。。。也就是我们可以事先定义一段代码块，在需要使用到的地方，直接引用（include），
+  而在引用之前，这段代码都不会出现在编译文件中，也就是不会生成任何内容。
+  
+  
+.m-nav { ... }
+.m-news { ... }
+.m-copy_right { ... }
+
+改造后
+
+// common.scss
+
+@mixin m-nav {
+  .m-nav { ... }
+}
+
+@mixin m-news {
+  .m-news { ... }
+}
+
+@mixin m-copy_right {
+  .m-copy_right { ... }
+}
+
+
+// index.scss
+
+.g-index {
+  @include m-nav;
+  @include m-news;
+  @include m-copy_right;
+}
+   
+  5 import
+   css的import是阻塞的，而sass的import在编译后，其实是合并文件，最后只产出一个css文件，而css则没有合并，该多少个文件就还是多少个文件。
+
+注意：
+
+只有import一个.sass/.scss文件的时候，才可以省去后缀名，如果是直接import一个.css文件，要补全文件名；
+import之后的分号;不要漏写，会报错；
+sass如果import的是一个.css文件的话，那它的作用就跟css原生的import作用一样，只有import一个sass文件的时候，才是合并文件。
+
+  // index.scss
+@import 'common';
+@import 'a.css';
+编译结果：
+
+/* index.scss */
+
+.m-nav { ... }
+.m-news { ... }
+.m-copy_right { ... }
+
+@import url('a.css');
+
+css的import之所以没有被普遍使用是有原因的。我们可以大概猜到它的工作原理：a.css import b.css以后，当浏览器加载到页面中的a.css的时候，
+已经准备按照a.css的内容来渲染页面了，刚解析到第一行，发现a.css居然还import了一个b.css，于是它不得不先放下a.css（既阻塞a.css），去加载
+b.css，直到b.css加载完，并且优先解析它，然后才开始回来解析a.css——鬼知道b.css会不会又import了c.css……这直接导致了渲染工作滞后，引发性能
+问题。
+
+  sass的import主要的好处就是把文件合并了，减少了请求
+  
+  
+  模块化
+    问题  1 冗余的代码
+          2 使用cm-模块区别 m-模块
+  
+  为了方便，在这里我们把每个页面所对应的scss文件叫做 页面scss；把变量、函数、混合等（没有被引用或者执行的情况下）编译后不产生实际内容的
+  代码叫做 定义类代码 ，那么相对应的其他内容就是 实际内容代码。
+  
+  1 mixin.scss
+    .m-nav { ... }
+    .m-news { ... }
+    .m-copy_right { ... }
+    改造后
+    
+    // common.scss
+    
+    @mixin m-nav {
+      .m-nav { ... }
+    }
+    
+    @mixin m-news {
+      .m-news { ... }
+    }
+    
+    @mixin m-copy_right {
+      .m-copy_right { ... }
+    }
+    
+    调用方式如下：
+
+    // index.scss
+    
+    @import 'common'; // 记得先引入common
+    
+    .g-index {
+      @include m-nav;
+      @include m-news;
+      @include m-copy_right;
+    }
+    
+    页面中用引入 一个index.css  index.css中@import 'common'
+ 
+   2、common.scss
+     2.1、css reset(normalize)
+
+    我们知道浏览器千差万别，各浏览器的默认样式也是不尽相同，最常见的比如body的默认内边距，p标签的默认内边距，以及ul/ol等等。这些不统一
+    的默认样式经常让我们感到头疼，所以就有人提出一开始写样式就先把它们消除的想法，于是就催生了后来非常流行的reset.css。
+
+  只是后来有人提出，这种方式太过粗暴（居然还心疼浏览器了）。。。而且会降低页面渲染的性能，最重要的是，这使得我们原本设计出来的表达各种含
+  义的标签儿们，变得毫无特点了
+  于是，就出现了normalize.css，normalize的目的同样是为了统一各个浏览器下各不相同的默认样式，不过它并不是简单粗暴地全部抹平，而是根据规
+  范，来人为地把那些不符合规范的默认样式“扶正”，从而达到统一各个浏览器默认样式，同时保留各个标签原有特点的目的。
+  
+  2.2、插件
+  
+    所以最终，我们的common大概是这样子的：
+    
+    // common.scss
+    
+    @import './reset';
+    @import './bootstrap.min';
+    @import './mixin';
+    事实上，如果我们不需要使用到 mixin.scss 中的变量和mixin的话，我们可以不引用它。
+    
+    那么我们的页面scss应该是这样的：
+    
+    // index.scss
+    
+    @import './common';
+    @import './mixin';
+    
+    .g-index {
+      ...
+    }
+    
+  3、mixin编写规范
+    所以我们需要对（全局）变量进行管理，就像我们当初管理mixin那样，不能想在哪里定义就在哪里定义，也不能动不动就修改一个全局变量：
+    
+    全局变量只在mixin中定义，其他scss文件定义的变量（无论是暴露到全局还是局部）都只看作局部变量，不在当前文件以外的地方使用（即便
+    是在能引用到的情况下，也避免使用）；
+    需要使用全局变量的地方直接import mixin；
+    一般来说，定义全局变量应该慎重，全局变量的数量应该尽量少；
+    尽可能不改动，如果需求变动，除非是对用途十分确定的情况，否则请新增一个全局变量来逐步替换需要修改的地方；
+    不要使用太过笼统的名词来作为全局变量，比如color，建议直接是用色值的描述，比如$orange: #ff9900，这使得我们在维护上更方便扩展，如
+    果色值需要修改，但是又不是所有的地方都需要修改，那么我们可以新定义一个变量来扩展它，比如$red： red。
+ 
+    再提个问题，在页面scss的哪里调用模块？
+
+    例一，根类外：
+    
+    // index.scss
+    
+    @import './common';
+    @import './mixin';
+    
+    @include m-nav;
+    @include m-news;
+    @include m-copy_right;
+    
+    .g-index {
+      ...
+    }
+    例二，根类内：
+    
+    // index.scss
+    
+    @import './common';
+    @import './mixin';
+    
+    .g-index {
+      @include m-nav;
+      @include m-news;
+      @include m-copy_right;
+    
+      ...
+    }
+      
+  性能优化
+    1、缓存
+           我们只需要把common独立出来，那么common就可以做为被缓存的公共文件了。最终我们从一个页面只引用一个文件变成了一个页面引
+           用两个文件，即common和页面css：
+    
+    // common.scss
+    
+    @import './reset';
+    @import './bootstrap.min';
+    @import './mixin';
+    // index.scss
+    
+    @import './mixin';
+    
+    .g-index {
+      ...
+    }
+    注意，不同于之前，我们这里的index.scss不再引入common.scss，所以我们最终是得到了两个css文件，而common.css是在所有页面中通过
+    link标签引入的。
+
+如此一来，我们就实现了既能够合并文件，减少请求数，又可以利用缓存，提高加载速度。
+
+     2、压缩
+         代码压缩是优化工作中最基本的一步，css的压缩空间是很大的，尤其是我们这种 垂直的书写方式 ，压缩起来是相当高效的。
+    
+        在sass中这很简单，sass在编译的时候提供了几种模式，其中的compressed模式是最高效的压缩模式，记得在编译打包的时候选择compressed
+        模式就行了
+  
   属性             属性值
   width  宽度      数字 单位px，百分号 %，less rem， rpx，
   height  高度     数字 单位px，百分号 %，less rem， rpx，
