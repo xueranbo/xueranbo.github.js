@@ -105,23 +105,23 @@ const 命令  用来声明一个常量，常量就是不可以变化的量
 		
 		//null undefind  不能进行结构赋值
 		
-		数据结构set
+		数据结构Set
 		  集合的概念：集合是由一组无序且唯一（即不能重复）的项组成的，这个数据结构使用了与有限集合相同的数学概念，应用在计算机的数据结构总。
 		  特点 ；key和value相同，没有重复的value
 		  
-		  es6提供了数据结构set 。他类似于数组，但是成员的值都是唯一的，没有重复的值
+		  es6提供了数据结构Set 。他类似于数组，但是成员的值都是唯一的，没有重复的值
 		  
-		  如何创建一个set
+		  如何创建一个Set
 		  
-		  const s = new set([1,2,3])
+		  const s = new Set([1,2,3])
 		  
 		  console.log(s);
 		  
-		  set类的属性
+		 Set类的属性
 		  console.(s.size);//3
 		  
-		  set类的方法
-		   1 set.add(value)添加一个数据，返回set结构本身
+		  Set类的方法
+		   1 Set.add(value)添加一个数据，返回set结构本身
 		     s.add('a').add('b').add('c')
 		     console.log(s);
 		   
