@@ -1402,8 +1402,17 @@ http://www.w3school.com.cn/My first/
       #right{width: 200px float: left; margin-left: -200px;}
       .content{height: 500px;margin: 0 200px;}
       
-      
       url，urn  和 uri的区别 
         uri是统一资源的标识符 ，通过这个标识符可以找到这个资源
+	url是统一资源的位置（地址），可以通过这个地址找到这个资源
+	urn是统一资源的名字
+	
+	
+	
+	
+	
+	
+	
+	
 	
       
