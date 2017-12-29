@@ -1,1 +1,104 @@
+1 基本数据类型
+  数字 Number 
+    八进制数和十六进制数
+    浮点数
+      要定义浮点值，必须包括小数点和小数点后的一位数字（例如，用 1.0 而不是 1）。这被看作浮点数字面量。
+    特殊的 Number 
+       几个特殊值也被定义为 Number 类型。前两个是 Number.MAX_VALUE 和 Number.MIN_VALUE，它们定义了 Number 值集合的外边界。所有 ECMAScript
+       数都必须在这两个值之间。不过计算生成的数值结果可以不落在这两个值之间。
+      当计算生成的数大于 Number.MAX_VALUE 时，它将被赋予值 Number.POSITIVE_INFINITY，意味着不再有数字值。同样，生成的数值小于 
+      Number.MIN_VALUE 的计算也会被赋予值 Number.NEGATIVE_INFINITY，也意味着不再有数字值。如果计算返回的是无穷大值，那么生成的结果不能再用
+      于其他计算。
+      事实上，有专门的值表示无穷大，（如你猜到的）即 Infinity。Number.POSITIVE_INFINITY 的值为 Infinity。Number.NEGATIVE_INFINITY 的值为
+      -Infinity。
+     由于无穷大数可以是正数也可以是负数，所以可用一个方法判断一个数是否是有穷的（而不是单独测试每个无穷数）。可以对任何数调用 isFinite() 方法
+     ，以确保该数不是无穷大。
+     特殊值  NAN
+     
+  布尔值 booleans  值为true 或false
+    Boolean 类型是 ECMAScript 中最常用的类型之一。它有两个值 true 和 false （即两个 Boolean 字面量）。
+    即使 false 不等于 0，0 也可以在必要时被转换成 false，这样在 Boolean 语句中使用两者都是安全的
+    
+  空 null  object - 如果变量是一种引用类型或 Null 类型的
+    typeof 运算符对于 null 值会返回 "Object"。这实际上是 JavaScript 最初实现中的一个错误，然后被 ECMAScript 沿用了。现在，null 被认为是对象的
+    占位符，从而解释了这一矛盾，但从技术上来说，它仍然是原始值。
+    alert(null == undefined);  //输出 "true"
+    
+  未定义 undefined
+    当声明的变量未初始化时，该变量的默认值是 undefined
+    var oTemp;
+    前面一行代码声明变量 oTemp，没有初始值。该变量将被赋予值 undefined，即 undefined 类型的字面量。可以用下面的代码段测试该变量的值是否等于
+    undefined：
+    var oTemp;  alert(oTemp == undefined);
+    这段代码将显示 "true"，说明这两个值确实相等。还可以用 typeof 运算符显示该变量的值是 undefined：
+    var oTemp;  alert(typeof oTemp); //输出 "undefined"
+    提示：值 undefined 并不同于未定义的值。但是，typeof 运算符并不真正区分这两种值。考虑下面的代码：
+    var oTemp;
+
+    alert(typeof oTemp);  //输出 "undefined"
+    alert(typeof oTemp2);  //输出 "undefined"
+    前面的代码对两个变量输出的都是 "undefined"，即使只有变量 oTemp2 从未被声明过。如果对 oTemp2 使用除 typeof 之外的其他运算符的话，会引起
+    错误，因为其他运算符只能用于已声明的变量上。
+    例如，下面的代码将引发错误：
+    var oTemp;  alert(oTemp2 == undefined);
+    当函数无明确返回值时，返回的也是值 "undefined"，如下所示：
+    function testFunc() {
+    }
+
+    alert(testFunc() == undefined); //输出 "true"
+    
+  字符串 string
+    String 类型的独特之处在于，它是唯一没有固定大小的原始类型。可以用字符串存储 0 或更多的 Unicode 字符，有 16 位整数表示（Unicode 是一种
+    国际字符集，本教程后面将讨论它）。
+    字符串中每个字符都有特定的位置，首字符从位置 0 开始，第二个字符在位置 1，依此类推。这意味着字符串中的最后一个字符的位置一定是字符串的长度减 1：
+    字符串字面量是由双引号（"）或单引号（'）声明的。而 Java 则是用双引号声明字符串，用单引号声明字符。但是由于 ECMAScript 没有字符类型，所以
+    可使用这两种表示法中的任何一种
+    
+  判断数据类型  typeof 其中 判断未定义的数据类型不安全
+  
+\n
+换行
+\t
+制表符
+\b
+空格
+\r
+回车
+\f
+换页符
+\\
+反斜杠
+\'
+单引号
+\"
+双引号
+\0nnn
+八进制代码 nnn 表示的字符（n 是 0 到 7 中的一个八进制数字）
+\xnn
+十六进制代码 nn 表示的字符（n 是 0 到 F 中的一个十六进制数字）
+\unnnn
+十六进制代码 nnnn 表示的 Unicode 字符（n 是 0 到 F 中的一个十六进制数字）
+
+
+2 数据类型
+
+3 字符串
+
+4 数组
+
+5 对象
+
+6 循环
+
+7 定时器
+
+8 函数 及 作用域
+
+9 面向对象
+
+
+
+
+
+
 
