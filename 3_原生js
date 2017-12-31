@@ -81,10 +81,152 @@
 
 
 2 数据类型
+   字符串  数组  object  json
 
 3 字符串
+    创建 String 对象的语法：
+    new String(s);
+    String(s);
+    参数
+    参数 s 是要存储在 String 对象中或转换成原始字符串的值。
+    返回值
+    当 String() 和运算符 new 一起作为构造函数使用时，它返回一个新创建的 String 对象，存放的是字符串 s 或 s 的字符串表示。
+    当不用 new 运算符调用 String() 时，它只把 s 转换成原始的字符串，并返回转换后的值。
+    String 对象属性
+    属性	描述
+    constructor	对创建该对象的函数的引用
+    length	字符串的长度
+    prototype	允许您向对象添加属性和方法
+anchor()	创建 HTML 锚。
+big()	用大号字体显示字符串。
+blink()	显示闪动字符串。
+bold()	使用粗体显示字符串。
+charAt()	返回在指定位置的字符。
+charCodeAt()	返回在指定的位置的字符的 Unicode 编码。
+concat()	连接字符串。
+fixed()	以打字机文本显示字符串。
+fontcolor()	使用指定的颜色来显示字符串。
+fontsize()	使用指定的尺寸来显示字符串。
+fromCharCode()	从字符编码创建一个字符串。
+indexOf()	检索字符串。
+italics()	使用斜体显示字符串。
+lastIndexOf()	从后向前搜索字符串。
+link()	将字符串显示为链接。
+localeCompare()	用本地特定的顺序来比较两个字符串。
+match()	找到一个或多个正则表达式的匹配。
+replace()	替换与正则表达式匹配的子串。
+search()	检索与正则表达式相匹配的值。
+slice()	提取字符串的片断，并在新的字符串中返回被提取的部分。
+small()	使用小字号来显示字符串。
+split()	把字符串分割为字符串数组。
+strike()	使用删除线来显示字符串。
+sub()	把字符串显示为下标。
+substr()	从起始索引号提取字符串中指定数目的字符。
+substring()	提取字符串中两个指定的索引号之间的字符。
+sup()	把字符串显示为上标。
+toLocaleLowerCase()	把字符串转换为小写。
+toLocaleUpperCase()	把字符串转换为大写。
+toLowerCase()	把字符串转换为小写。
+toUpperCase()	把字符串转换为大写。
+toSource()	代表对象的源代码。
+toString()	返回字符串。
+valueOf()	返回某个字符串对象的原始值
+
+
 
 4 数组
+创建 Array 对象的语法：
+new Array();
+new Array(size);
+new Array(element0, element1, ..., elementn);
+
+参数
+参数 size 是期望的数组元素个数。返回的数组，length 字段将被设为 size 的值。
+参数 element ..., elementn 是参数列表。当使用这些参数来调用构造函数 Array() 时，新创建的数组的元素就会被初始化为这些值
+。它的 length 字段也会被设置为参数的个数。
+Array 对象属性
+属性	描述
+constructor	返回对创建此对象的数组函数的引用。
+length	设置或返回数组中元素的数目。
+prototype	使您有能力向对象添加属性和方法。
+
+concat()	连接两个或更多的数组，并返回结果。
+join()	把数组的所有元素放入一个字符串。元素通过指定的分隔符进行分隔。
+pop()	删除并返回数组的最后一个元素
+push()	向数组的末尾添加一个或更多元素，并返回新的长度。
+reverse()	颠倒数组中元素的顺序。
+shift()	删除并返回数组的第一个元素
+slice()	从某个已有的数组返回选定的元素
+sort()	对数组的元素进行排序
+splice()	删除元素，并向数组添加新元素。
+toSource()	返回该对象的源代码。
+toString()	把数组转换为字符串，并返回结果。
+toLocaleString()	把数组转换为本地数组，并返回结果。
+unshift()	向数组的开头添加一个或更多元素，并返回新的长度。
+valueOf()	返回数组对象的原始值
+
+  //数组去掉重复
+  var arr11 = [1,2,2,4,2];
+  for(var i=0;i<arr11.length;i++){
+    for(var j=i+1;j<arr11.length;j++){
+	  if(arr11[i] == arr11[j]){
+	    arr11.splice(j,1);
+		j--;
+	  }
+	}
+  }
+  //alert(arr11);
+  
+  //排序
+  var arr12 = ['c','d','a','e'];
+  //arr12.sort();//按字符的编码的高低排序；
+ // alert(arr12);
+  
+  var arr13 = [0,23,2,5,86,32,20,9,66,76];
+  //arr13.sort(); //会把数字变成字符串 第一位比较 不支持056
+  //alert(arr13);
+  //比较函数
+  arr13.sort(function(a,b){
+    return a - b;
+  });
+  //alert(arr13)//从小到大排序 b-a 从大到小排序
+  
+  //快速排序法 希尔，谢尔 冒泡 归并 选择 插入 。。。
+  
+  var arrwidth = ['345px','23px','10px','1000px'];
+  arrwidth.sort(function(a,b){
+    return parseInt(a)-parseInt(b);
+  }); 
+  //alert(arrwidth); //10px 23px 345px 1000px
+  
+  //随机排序
+  var arr14 = [1,2,3,4,5,6,7,8];
+  arr14.sort(function(a,b){
+    return Math.random()-0.1;
+  });
+  //alert(arr14);
+  
+  //随机函数
+  //Math.round(Math.random()); 0~1
+  //alert(Math.round(Math.random()))
+  //alert(Math.round(3.5));  //4舍5入
+  //alert(Math.round(Math.random()*10)); //0~10
+  //alert(Math.round(Math.random()*5+5));//5~10;
+ // alert(Math.round(Math.random()*10+10));//10~20;
+  //alert(Math.round(Math.random()*80+20));//20~100
+  //x~y Math.round(Math.random()*(y-x)+x));
+  
+  var x = 42;
+  var y = 49;
+  //alert(Math.round(Math.random()*(y-x)+x)); //42~49的随机数；
+  
+  //0~x
+  var x1 = 3;
+  //alert(Math.round(Math.random()*x1));
+  
+  //1~x
+  var x2 = 3
+  //alert(Math.ceil(Math.random()*x2));//ceil 向上取整
 
 5 对象
 
