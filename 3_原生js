@@ -229,8 +229,77 @@ valueOf()	返回数组对象的原始值
   //alert(Math.ceil(Math.random()*x2));//ceil 向上取整
 
 5 对象
+对象
+ECMA-262 把对象（object）定义为“属性的无序集合，每个属性存放一个原始值、对象或函数”。严格来说，这意味着对象是无特定顺序的值的数组。
+类
+每个对象都由类定义，可以把类看做对象的配方。类不仅要定义对象的接口（interface）（开发者访问的属性和方法），还要定义对象的内部工作
+（使属性和方法发挥作用的代码）。编译器和解释程序都根据类的说明构建对象。
 
-6 循环
+创建 JavaScript 对象
+通过 JavaScript，您能够定义并创建自己的对象。
+创建新对象有两种不同的方法：
+定义并创建对象的实例
+使用函数来定义对象，然后创建新的对象实例
+
+JavaScript 类
+JavaScript 是面向对象的语言，但 JavaScript 不使用类。
+在 JavaScript 中，不会创建类，也不会通过类来创建对象（就像在其他面向对象的语言中那样）。
+JavaScript 基于 prototype，而不是基于类的。
+JavaScript for...in 循环
+JavaScript for...in 语句循环遍历对象的属性。
+
+ECMAScript 只有公用作用域
+对 ECMAScript 讨论上面这些作用域几乎毫无意义，因为 ECMAScript 中只存在一种作用域 - 公用作用域。ECMAScript 中的所有对象的所有属性和
+方法都是公用的。因此，定义自己的类和对象时，必须格外小心。记住，所有属性和方法默认都是公用的！
+静态作用域
+静态作用域定义的属性和方法任何时候都能从同一位置访问。在 Java 中，类可具有属性和方法，无需实例化该类的对象，即可访问这些属性和方法，例如 
+java.net.URLEncoder 类，它的函数 encode() 就是静态方法
+
+ECMAScript 没有静态作用域
+严格来说，ECMAScript 并没有静态作用域。不过，它可以给构造函数提供属性和方法。还记得吗，构造函数只是函数。函数是对象，对象可以有属性和方法。例如：
+function sayHello() {
+  alert("hello");
+}
+
+sayHello.alternate = function() {
+  alert("hi");
+}
+
+sayHello();		//输出 "hello"
+sayHello.alternate();	//输出 "hi"
+
+关键字 this
+this 的功能
+在 ECMAScript 中，要掌握的最重要的概念之一是关键字 this 的用法，它用在对象的方法中。关键字 this 总是指向调用该方法的对象，例如：
+var oCar = new Object;
+oCar.color = "red";
+oCar.showColor = function() {
+  alert(this.color);
+};
+
+oCar.showColor();		//输出 "red"
+
+使用 this 的原因
+为什么使用 this 呢？因为在实例化对象时，总是不能确定开发者会使用什么样的变量名。使用 this，即可在任何多个地方重用同一个函数。请思考下面的例子：
+function showColor() {
+  alert(this.color);
+};
+
+var oCar1 = new Object;
+oCar1.color = "red";
+oCar1.showColor = showColor;
+
+var oCar2 = new Object;
+oCar2.color = "blue";
+oCar2.showColor = showColor;
+
+oCar1.showColor();		//输出 "red"
+oCar2.showColor();		//输出 "blue"
+如果不用对象或 this 关键字引用变量，ECMAScript 就会把它看作局部变量或全局变量。然后该函数将查找名为 color 的局部或全局变量，但是不会找到。结果
+如何呢？该函数将在警告中显示 "null"
+
+6 循环，判断和运算符
+
 
 7 定时器
 
