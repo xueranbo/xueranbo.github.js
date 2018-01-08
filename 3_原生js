@@ -514,6 +514,216 @@ cancelAnimationFrame函数来取消requestAnimationFrame的回调
 
 8 函数 及 作用域
 
+JavaScript 函数语法
+函数就是包裹在花括号中的代码块，前面使用了关键词 function：
+function functionname()
+{
+这里是要执行的代码
+}
+当调用该函数时，会执行函数内的代码。
+可以在某事件发生时直接调用函数（比如当用户点击按钮时），并且可由 JavaScript 在任何位置进行调用。
+提示：JavaScript 对大小写敏感。关键词 function 必须是小写的，并且必须以与函数名称相同的大小写来调用函数。
+调用带参数的函数
+在调用函数时，您可以向其传递值，这些值被称为参数。
+这些参数可以在函数中使用。
+您可以发送任意多的参数，由逗号 (,) 分隔：
+myFunction(argument1,argument2)
+当您声明函数时，请把参数作为变量来声明：
+function myFunction(var1,var2)
+{
+这里是要执行的代码
+}
+变量和参数必须以一致的顺序出现。第一个变量就是第一个被传递的参数的给定的值，以此类推。
+实例
+<button onclick="myFunction('Bill Gates','CEO')">点击这里</button>
+
+<script>
+function myFunction(name,job)
+{
+alert("Welcome " + name + ", the " + job);
+}
+</script>
+
+带有返回值的函数
+有时，我们会希望函数将值返回调用它的地方。
+通过使用 return 语句就可以实现。
+在使用 return 语句时，函数会停止执行，并返回指定的值。
+语法
+function myFunction()
+{
+var x=5;
+return x;
+}
+上面的函数会返回值 5。
+注释：整个 JavaScript 并不会停止执行，仅仅是函数。JavaScript 将继续执行代码，从调用函数的地方。
+函数调用将被返回值取代：
+var myVar=myFunction();
+myVar 变量的值是 5，也就是函数 "myFunction()" 所返回的值。
+即使不把它保存为变量，您也可以使用返回值：
+document.getElementById("demo").innerHTML=myFunction();
+"demo" 元素的 innerHTML 将成为 5，也就是函数 "myFunction()" 所返回的值。
+您可以使返回值基于传递到函数中的参数：
+实例
+计算两个数字的乘积，并返回结果：
+function myFunction(a,b)
+{
+return a*b;
+}
+
+document.getElementById("demo").innerHTML=myFunction(4,3);
+"demo" 元素的 innerHTML 将是：
+12
+亲自试一试
+在您仅仅希望退出函数时 ，也可使用 return 语句。返回值是可选的：
+function myFunction(a,b)
+{
+if (a>b)
+  {
+  return;
+  }
+x=a+b
+}
+如果 a 大于 b，则上面的代码将退出函数，并不会计算 a 和 b 的总和。
+局部 JavaScript 变量
+在 JavaScript 函数内部声明的变量（使用 var）是局部变量，所以只能在函数内部访问它。（该变量的作用域是局部的）。
+您可以在不同的函数中使用名称相同的局部变量，因为只有声明过该变量的函数才能识别出该变量。
+只要函数运行完毕，本地变量就会被删除。
+全局 JavaScript 变量
+在函数外声明的变量是全局变量，网页上的所有脚本和函数都能访问它。
+JavaScript 变量的生存期
+JavaScript 变量的生命期从它们被声明的时间开始。
+局部变量会在函数运行以后被删除。
+全局变量会在页面关闭后被删除。
+向未声明的 JavaScript 变量来分配值
+如果您把值赋给尚未声明的变量，该变量将被自动作为全局变量声明。
+这条语句：
+carname="Volvo";
+将声明一个全局变量 carname，即使它在函数内执行。
+
+1.函数声明
+
+function sum1(n1,n2){
+    return n1+n2;
+  };
+2.函数表达式，又叫函数字面量
+
+var sum2=function(n1,n2){
+    return n1+n2;
+};
+两者的区别：解析器会先读取函数声明，并使其在执行任何代码之前可以访问；而函数表达式则必须等到解析器执行到它所在的代码行才会真正被解释执行。
+自执行函数严格来说也叫函数表达式，它主要用于创建一个新的作用域，在此作用域内声明的变量，不会和其它作用域内的变量冲突或混淆，大多是以匿名函
+数方式存在，且立即自动执行。
+
+(function(n1,n2){
+    console.log (n1+n2)
+})(1,3);//4
+
+另外几种自执行函数：
+//可用来传参
+(function(x,y){
+  console.log(x+y);
+})(2,3);
+ 
+//带返回值
+var sum=(function(x,y){
+  return x+y;
+})(2,3);
+console.log(sum);
+ 
+~function(){
+  var name='~'
+  console.log(name);
+}();
+ 
+!function(){
+  var name='!'
+  console.log(name);
+}();
+ 
+;(function(){
+  var name=';'
+  console.log(name);
+})();
+ 
+-function(){
+  var name='-'
+  console.log(name);
+}();
+ 
+//逗号运算符
+1,function(){
+  var name=',';
+  console.log(name);
+}();
+ 
+//异或
+1^function(){
+  var name='^';
+  console.log(name);
+}();
+ 
+//比较运算符
+1>function(){
+  var name='>';
+  console.log(name);
+}();
+ 
+~+-!(function(){
+  var name='~+-!';
+  console.log(name);
+})();
+ 
+~!(function(){
+  var name='~!';
+  console.log(name);
+})();
+ 
+(function(){
+  var name='call';
+  console.log(name);
+}).call();
+ 
+(function(){
+  var name='apply';
+  console.log(name);
+}).apply();
+
+3.函数构造法，参数必须加引号
+
+
+var sum3=new Function('n1','n2','return n1+n2');
+console.log(sum3(2,3));//5
+从技术角度讲，这是一个函数表达式。一般不推荐用这种方法定义函数，因为这种语法会导致解析两次代码（第一次是解析常规ECMAScript代码，第二次是解析
+传入构造函数中的字符串），从而影响性能。
+
+var name='haoxl';
+  function fun(){
+    var name='lili';
+    return new Function('return name');//不能获取局部变量
+  }
+ console.log(fun()());//haoxl
+ Function()构造函数每次执行时都会解析函数主体，并创建一个新的函数对象，所以当在一个循环或频繁执行的函数中调用Function()构造函数效率是非常低的。
+ 而函数字面量却不是每次遇到都会重新编译的，用Function()构造函数创建一个函数时并不遵循典型的作用域，它一直把它当作是顶级函数来执行。
+ 
+ 4 作为函数方法调用函数：(这种可以设置this的值，我可以返回不同this！)
+   在js中函数是对象，是对象就有属性个方法，而call（）和apply（）是预定义的函数方法！
+   这两个方法都可以调用函数，两个方法的第一个参数必须是对象的本身！
+   
+如果想要对函数有更深刻的理解，或者正确认识函数！需要我们先做一件事，那就是了解js的运行机制问题：
+        1、在js中js引擎会优先解析var变量和function定义！在预解析完成后从上到下逐步进行！
+        2、解析var变量时，会把值存储在“执行环境”中，而不会去赋值，值是存储作用！例如:
+        alert（a）;  var a = 5;  这时会输出undifiend,意思是没有被初始化没有被赋值!
+        这并不是没有被定义，错误了的意思！
+        3、在解析function时会把函数整体定义，这也就解释了为什么在function定义函数时为什么可以先调用后声明了！其实表面上看是先调用了，其实在内部机
+	制中第一步实行的是把以function方式定义的函数先声明了！
+
+javascrit中函数有一个内置的对象arguments对象！
+      作用是：1.在js中函数定义没有任何参数，调用该函数时可以传递任意参数！
+      2.arguments对象是数组对象。
+      3.arguments对象的length属性：获取函数的实参个数！
+      4.利用Arguments对象特性,实现模拟函数的重载的效果.
+	
+
 9 面向对象
 
 
