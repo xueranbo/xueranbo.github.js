@@ -1685,3 +1685,174 @@ testFn2内未声明变量a，为什么testFn2能调用全局变量a？整个过�
 新的作用域链。
 testFn2调用变量a时，首先在当前的testFn2活动对象中查找，如果没有找到就顺着作用域链向上，在testFn活动对象中查找变量a，如果没有找到再顺着作用域
 链向上查找，直到在最后Global对象中找到为止，否则报错。所以函数内部可以调用外部环境的变量，外部环境不能调用函数内部的变量，这就是作用域特性的原理。
+
+
+原型是JavaScript中一个比较难理解的概念，原型相关的属性也比较多，对象有”prototype”属性，函数对象有”prototype”属性，原型对象有”constructor”属性。
+一、初识原型
+在JavaScript中，原型也是一个对象，通过原型可以实现对象的属性继承，JavaScript的对象中都包含了一个”[[Prototype]]”内部属性，这个属性所对应的就是
+该对象的原型。
+“[[Prototype]]”作为对象的内部属性，是不能被直接访问的。所以为了方便查看一个对象的原型，Firefox和Chrome中提供了__proto__这个非标准（不是所有浏
+览器都支持）的访问器（ECMA引入了标准对象原型访问器”Object.getPrototype(object)”）。在JavaScript的原型对象中，还包含一个”constructor”属性，
+这个属性对应创建所有指向该原型的实例的构造函数
+二、规则
+在JavaScript中，每个函数 都有一个prototype属性，当一个函数被用作构造函数来创建实例时，这个函数的prototype属性值会被作为原型赋值给所有对象实例
+（也就是设置 实例的`__proto__`属性），也就是说，所有实例的原型引用的是函数的prototype属性。(****`只有函数对象才会有这个属性!`****)
+new 的过程分为三步  
+?
+1
+var p = new Person('张三',20);
+1. var p={}; 初始化一个对象p。
+2. p._proto_=Person.prototype;，将对象p的 __proto__ 属性设置为 Person.prototype
+3. Person.call(p,”张三”,20);调用构造函数Person来初始化p。关于call/apply使用
+三、初识Object
+Object对象本身是一个函数对象。(CODE TEST) 既然是Object函数，就肯定会有prototype属性，所以可以看到”Object.prototype”的值就是”Object {}”这
+个原型对象。反过来，当访问”Object.prototype”对象的”constructor”这个属性的时候，就得到了Obejct函数。
+另外，当通过”Object.prototype._proto_”获取Object原型的原型的时候，将会得到”null”，也就是说”Object {}”原型对象就是原型链的终点了。
+四、初识Function
+如上面例子中的构造函数，JavaScript中函数也是对象，所以就可以通过_proto_查找到构造函数对象的原型。
+Function对象作为一个函数，就会有prototype属性，该属性将对应”function () {}”对象。
+Function对象作为一个对象，就有__proto__属性，该属性对应”Function.prototype”，也就是说，”Function._proto_ === Function.prototype”。
+在这里对“prototype”和“proto”进行简单的介绍：
+对于所有的对象，都有__proto__属性，这个属性对应该对象的原型.
+对于函数对象，除了__proto__属性之外，还有prototype属性，当一个函数被用作构造函数来创建实例时，该函数的prototype属性值将被作为原型赋值给所有对象
+实例（也就是设置实例的__proto__属性）
+
+
+1、如何准确判断一个变量是数组类型？
+
+[javascript] view plain copy
+var array=[];  
+console.log(array instanceof Array);//true 判断引用类型的具体类型要用instanceof  
+console.log(typeof array);//Object  
+2、写一个原型链继承的的例子
+
+[javascript] view plain copy
+//封装一个DOM查询实例  
+function Elem(id){  
+    this.elem=document.getElementById(id);  
+}  
+Elem.prototype.html=function(val){  
+    var elem=this.elem;  
+    if(val){  
+        elem.innerHTML=val;  
+    }else{  
+        return elem.innerHTML;  
+    }  
+}  
+Elem.prototype.on=function(type,fn){  
+    var elem=this.elem;  
+    elem.addEventListener(type,fn);  
+    return this;  
+}  
+var dev=new Elem('dev1');  
+console.log(dev.html('<p>hello world!</p>'));  
+dev.on('click',function(){  
+    alert('clicked');  
+})  
+3、描述new一个对象的过程
+（1）创建一个新对象
+（2）this指向这个新对象
+（3）执行代码，即对this进行赋值
+（4）返回this
+
+[javascript] view plain copy
+//创建构造函数  
+function  Foo(name,age){  
+    //var this={};  
+    this.name=name;  
+   // return this;  
+}  
+Foo.prototype.alertName=function(){  
+    console.log(this.name);  
+}  
+//创建示例  
+var f=new Foo('zahngshan');  
+f.printName=function(){  
+    console.log(this.name);  
+};  
+//测试  
+f.printName();  
+f.alertName(); 
+
+4、zepto(或其他框架)源码中如何使用原型链
+
+二、知识点
+1、构造函数
+构造函数有个特点，函数名首字母大写，构造函数就类似于一个模板，可以new出来多个实例
+2、构造函数-扩展
+（1）var a={}其实是var a=new Object()的语法糖
+
+（2）var a=[]其实是var a=new Array()的语法糖
+
+（3）function Foo(){}其实是var Foo=new Function(...)
+
+（4）使用instanceof判断一个函数是否是一个变量的构造函数
+3、原型规则和示例
+（1）所有的引用类型（数组，对象，函数），都具有对象特征，即自由扩展属性（除了null以外），如下代码所示，都可以自由扩展属性a
+[javascript] view plain copy
+var obj = {};  
+obj.a = 100;  
+var arr = [];  
+arr.a = 100;  
+function fn() {  
+};  
+var f1=new fn();  
+fn.a = 100;  
+（2）所有的引用类型（数组，对象，函数），都有一个__proto__属性，属性值是一个普通的对象,如下代码所示：
+
+[javascript] view plain copy
+var obj = {};  
+obj.a = 100;  
+var arr = [];  
+arr.a = 100;  
+function fn() {  
+};  
+var f1=new fn();  
+fn.a = 100;  
+console.log(obj.__proto__);  
+console.log(arr.__proto__);  
+console.log(fn.__proto__);  
+（3）所有的函数，都有一个prototype属性，属性值也是一个普通的对象
+
+[javascript] view plain copy
+function fn() {  
+};  
+var f1=new fn();  
+fn.a = 100;  
+console.log(fn.__proto__);  
+console.log(fn.prototype);  
+（4）所有的引用类型（数组，对象，函数），__proto__属性值指向他的构造函数的“prototype”属性值
+
+[javascript] view plain copy
+var obj = {};  
+obj.a = 100;  
+var arr = [];  
+arr.a = 100;  
+function fn() {  
+};  
+var f1=new fn();  
+fn.a = 100;  
+console.log(obj.__proto__);  
+console.log(arr.__proto__);  
+console.log(fn.__proto__);  
+console.log(fn.prototype);  
+console.log(obj.__proto__ === Object.prototype);//true  
+console.log(fn.__proto__ === fn.prototype);//true  
+（5）当试图得到一个对象的某个属性时，如果这个对象本身没有这个属性，那么会去它的__proto__(即它的构造函数的prototype)中寻找，即
+console.log(obj.__proto__ === Object.prototype);
+4、原型链
+
+5、循环对象自身属性
+
+[javascript] view plain copy
+var item;  
+for(item in f){  
+    //高级浏览器已经在for in 中屏蔽了来自原型的属性  
+    //但是这里建议大家还是加上这个判断，保证程序的健壮性  
+    if(f.hasOwnProperty((item))){  
+        console.log(item);  
+    }  
+}  
+5、instanceof
+
+用于判断引用类型属于哪个构造函数的方法
