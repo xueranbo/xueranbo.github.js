@@ -114,3 +114,86 @@ if (userAgent.indexOf("Safari") > -1) {
   clearTimeout  clearInterval()   //清除定时器
 
   注意： 当定时器停止时，一定要把定时器清除掉。
+  
+ Bom可以对浏览器的窗口进行访问和操作.使用Bom,开发者可以移动窗口,改变状态栏中的文本以及执行其他与页面内容不直接相关的动作.
+
+window对象:
+
+1.窗口操作
+
+其中moveTo,moveBy是窗口的移动,resizeTo,resizeBo是设置窗口的大小,scrollTo,scrollBy是设置滚动条每次滚动的位置.
+
+打开和关闭新窗口:
+
+openBtn.onclick = function() {
+    newWindow = window.open("./test.html", "_blank", "width=300px, height=300px, left=500px, top=300px, toolbar=no")
+};
+
+closeBtn.onclick = function() {
+    newWindow.window.close();
+};
+
+时间间隔和暂停:
+
+时间间隔:
+setInterval
+暂停:
+ window.clearInterval
+示例:
+start.onclick = function() {
+    // 3. 设置定时器
+    times = setInterval(function() {
+       window.scrollBy(0, 5);
+    }, 40);
+};
+stop.onclick = function() {
+    //4. 清除定时器
+    window.clearInterval(times);
+};
+
+setTimeOut:只在时间间隔后执行一次操作
+
+
+下面附上一个倒计时的例子:
+
+
+ 
+
+历史记录:
+
+history.go()
+
+括号中的参数可以是1,-1
+
+history.go(1)表示前进一页.相当于history.forward()
+
+history.go(-1)表示后退一页,相当于history.back()
+
+
+location:
+
+location对象表示载入窗口的URL,此外,他还可以解析URL
+
+1.hash:返回URL中#之后的部分
+
+2.host:返回服务器的名字
+
+3.href:当前载入页面完整的URL
+
+4.search:执行GET请求的URL中的问号后面的部分
+
+ 
+
+location对象有一个reload方法:可重新载入当前页面(刷新).
+
+reload为false,从缓存中载入,reload为true,从服务器端载入,省略参数,默认为false
+
+ 
+
+screen对象:
+
+window.screen.availWidth+" "+window.screen.availheight    (窗口可以事情的屏幕的宽度和高度)
+
+window.screen.Width+" "+window.screen.height  (屏幕的宽度和高度)
+
+确定新窗口的大小时,availHeight和availWidth属性非常有用
