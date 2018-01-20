@@ -1856,3 +1856,75 @@ for(item in f){
 5、instanceof
 
 用于判断引用类型属于哪个构造函数的方法
+
+js中constructor的作用
+
+function Person(area){
+  this.type = 'person';
+  this.area = area;
+}
+Person.prototype.sayArea = function(){
+  console.log(this.area);
+}
+var Father = function(age){
+  this.age = age;
+} 
+Father.prototype = new Person('Beijin');
+console.log(Person.prototype.constructor) //function person()
+console.log(Father.prototype.constructor); //function person()
+Father.prototype.constructor = Father;     //修正
+console.log(Father.prototype.constructor); //function father()
+var one = new Father(25);
+
+Father.prototype.constructor = Father,这里修正了的Father的constructor。我们知道prototype下的constructor属性返回对创建此对象的函数的引用。
+　　
+一、不修正时
+　　Father.constructor = function Function()，Father.prototype.constructor = function Person()，这里引出
+一个题外话，为什么Father.constructor ！== Father.prototype.constructor。
+ 
+  1. _proto_是所有对象(包括函数)都有的，它才叫做对象的原型，原型链就是靠它形成的。
+  2. prototype只有函数(准确地说是构造函数)才有的。它跟原型链没有关系。它的作用是：构造函数new对象的时候，告诉构造函数新创建的对象的原型是谁。
+　　Father.constructor，是从Father的原型链查找属性，也就是__proto__,因为Father继承的是Function(){}，而Function(){}的constructor就是它自己
+所以Father.constructor = function Function()；
+　　为什么Father.prototype.constructor 是 function Person()，首先Father.prototype = new Person('Beijin');当我们用new
+运算符会产生以下步骤：
+ var obj={}; 也就是说，初始化一个对象obj。
+obj.__proto__=a.prototype;
+ a.call(obj);也就是说构造obj，也可以称之为初始化obj。
+　　也就是说(new Person('Beijin')).__proto__ === Person.prototype //true 
+前面我们说过new Person('Beijin')对象是没有prototype的，prototype只有函数才有；Father.prototype.constructor将会沿着new Person('Beijin')的
+原型链向下查找constructor，new Person('Beijin')没有constructor就去它的__proto__找，因为(new Person('Beijin')).__proto__ === 
+Person.prototype
+而Person.prototype.constructor ==  function Person()，所以 Father.prototype.constructor == Person.prototype.constructor 
+//function Person()
+　　当我们var one = new Father(25) 时 ,one.constructor = Father.prototype.constructor,所以one.constructor指向function Person()，
+
+二、修正时
+当我们加上Father.prototype.constructor = Father;对象one的原型链变成
+
+显而易见，one.constructor = Father.prototype.constructor = function Father();
+
+三、作用
+
+var man;
+(function(){
+  function Father (name) {
+    this.name = name;
+  }
+
+  Father.prototype.sayName= function () {
+    console.log(this.name);
+  }
+  man = new Father('aoyo');
+})()
+man.sayName();//aoyo
+
+console.log(Father); //Father is not defined
+
+因为Father在闭包中，当我们想对Father类增加方法时可以通过
+
+man.constructor.prototype.sayAge = function(age){
+    console.log(age);
+}
+man.sayAge('20'); //20
+如果不进行修正，我们的方法将会添加到Person类，而不是Father类。
